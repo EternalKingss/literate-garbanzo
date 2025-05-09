@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lords Mobile Battle Guide</title>
+    <style>
+        /* Basic Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #f0f0f0;
+            background-color: #0d1117;
+            padding-bottom: 50px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        /* Header Styles */
+        header {
+            background-color: #161b22;
+            padding: 15px 0;
+            border-bottom: 1px solid #30363d;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: #f0f0f0;
+        }
+        
+        .logo-text h1 {
+            font-size: 1.5rem;
+            margin: 0;
+        }
+        
+        .subtitle {
+            font-size: 0.9rem;
+            color: #8b949e;
+        }
+        
+        /* Navigation */
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .dropbtn {
+            background-color: #238636;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            right: 0;
+            background-color: #161b22;
+            min-width: 200px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+            z-index: 1;
+            border-radius: 6px;
+            border: 1px solid #30363d;
+        }
+        
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+        
+        .nav-item {
+            color: #f0f0f0;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            border-left: 3px solid transparent;
+        }
+        
+        .nav-item:hover {
+            background-color: #1f2937;
+            border-left: 3px solid #238636;
+        }
+        
+        .nav-item.active {
+            background-color: #1a4721;
+            border-left: 3px solid #2ea043;
+        }
+        
+        /* Content Sections */
+        .section-content {
+            display: none;
+            padding-top: 20px;
+        }
+        
+        .section-content.active {
+            display: block;
+        }
+        
+        /* Comps Navigation */
+        .comps-nav {
+            display: flex;
+            overflow-x: auto;
+            background-color: #161b22;
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        
+        .comp-button {
+            background-color: transparent;
+            color: #f0f0f0;
+            border: 1px solid #30363d;
+            padding: 8px 16px;
+            margin-right: 10px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        
+        .comp-button:hover {
+            background-color: #1f2937;
+        }
+        
+        .comp-button.active {
+            background-color: #238636;
+            border-color: #238636;
+        }
+        
+        .comp-container {
+            display: none;
+        }
+        
+        .comp-container.active {
+            display: block;
+        }
+        
+        /* Card Styles */
+        .card {
+            background-color: #161b22;
+            border-radius: 8px;
+            border: 1px solid #30363d;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+        
+        .card-header {
+            background-color: #1f2937;
+            padding: 15px;
+            border-bottom: 1px solid #30363d;
+        }
+        
+        .card-title {
+            font-size: 1.5rem;
+            color: #58a6ff;
+            margin: 0;
+        }
+        
+        .card-body {
+            padding: 20px;
+        }
+        
+        /* Typography */
+        h2 {
+            color: #58a6ff;
+            margin-bottom: 15px;
+        }
+        
+        h3 {
+            color: #79c0ff;
+            margin: 20px 0 10px;
+        }
+        
+        p {
+            margin-bottom: 15px;
+        }
+        
+        /* Lists */
+        ul, ol {
+            margin: 15px 0 15px 30px;
+        }
+        
+        li {
+            margin-bottom: 8px;
+        }
+        
+        /* Image Containers */
+        .image-container {
+            margin: 20px 0;
+            text-align: center;
+        }
+        
+        .image-container img {
+            max-width: 100%;
+            border-radius: 8px;
+            border: 1px solid #30363d;
+        }
+        
+        /* Troop Distribution */
+        .troop-display {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .troop-box {
+            flex: 1;
+            min-width: 200px;
+            padding: 15px;
+            border-radius: 8px;
+            color: white;
+            text-align: center;
+        }
+        
+        .infantry {
+            background-color: #4361ee;
+        }
+        
+        .ranged {
+            background-color: #06d6a0;
+        }
+        
+        .cavalry {
+            background-color: #ef476f;
+        }
+        
+        .troop-count {
+            font-size: 24px;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        
+        /* Alerts */
+        .alert {
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 8px;
+            border-left: 4px solid;
+        }
+        
+        .alert-info {
+            background-color: rgba(56, 139, 253, 0.1);
+            border-left-color: #58a6ff;
+        }
+        
+        .alert-warning {
+            background-color: rgba(187, 128, 9, 0.1);
+            border-left-color: #bb8009;
+        }
+        
+        .alert-success {
+            background-color: rgba(46, 160, 67, 0.1);
+            border-left-color: #2ea043;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: #161b22;
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+            color: #8b949e;
+            border-top: 1px solid #30363d;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .dropdown {
+                width: 100%;
+            }
+            
+            .dropbtn {
+                width: 100%;
+            }
+            
+            .dropdown-content {
+                width: 100%;
+            }
+            
+            .troop-display {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container header-container">
+            <a href="#" class="logo">
+                <div class="logo-text">
+                    <h1>Lords Mobile Battle Guide</h1>
+                    <div class="subtitle">Master Battle Strategies & Formations</div>
+                </div>
+            </a>
+            
+            <div class="dropdown">
+                <button class="dropbtn">Navigation ▼</button>
+                <div class="dropdown-content">
+                    <a href="#comps" class="nav-item active" onclick="openSection('comps', this)">Compositions</a>
+                    <a href="#basics" class="nav-item" onclick="openSection('basics', this)">Basic Knowledge</a>
+                    <a href="#battle-reports" class="nav-item" onclick="openSection('battle-reports', this)">Battle Reports</a>
+                    <a href="#advanced" class="nav-item" onclick="openSection('advanced', this)">Advanced Tactics</a>
+                    <a href="#formations" class="nav-item" onclick="openSection('formations', this)">Formations</a>
+                    <a href="#heroes" class="nav-item" onclick="openSection('heroes', this)">Heroes & Familiars</a>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <div class="container">
+        <!-- Compositions Section -->
+        <div id="comps" class="section-content active">
+            <div class="comps-nav">
+                <button class="comp-button active" onclick="openCompTab('comp-1433', this)">1433 Composition</button>
+                <button class="comp-button" onclick="openCompTab('comp-659', this)">659 Composition</button>
+                <button class="comp-button" onclick="openCompTab('comp-974', this)">974 Composition</button>
+                <button class="comp-button" onclick="openCompTab('comp-442', this)">442 Composition</button>
+            </div>
+            
+            <!-- 1433 Composition -->
+            <div id="comp-1433" class="comp-container active">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">1433 Composition Overview</h2>
+                    </div>
+                    <div class="card-body">
+                        <p>The 1433 composition is a powerful infantry-focused formation used for rallies against specific enemy compositions. This guide will break down the troop counts, gear requirements, hero selection, and battle strategies for optimizing your 1433 rallies.</p>
+                        
+                        <div class="alert alert-info">
+                            <strong>Key Advantage:</strong> The 1433 composition is mainly effective against enemy formations with low cavalry counts (under 700k cavalry troops).
+                        </div>
+                        
+                        <h3>Troop Distribution for a 4.21M Rally</h3>
+                        <div class="troop-display">
+                            <div class="troop-box infantry">
+                                <h3>Infantry (14 parts)</h3>
+                                <div class="troop-count">2,947,000</div>
+                                <p>(14/20) × 4.21M troops</p>
+                            </div>
+                            
+                            <div class="troop-box ranged">
+                                <h3>Ranged (3 parts)</h3>
+                                <div class="troop-count">631,500</div>
+                                <p>(3/20) × 4.21M troops</p>
+                            </div>
+                            
+                            <div class="troop-box cavalry">
+                                <h3>Cavalry (3 parts)</h3>
+                                <div class="troop-count">631,500</div>
+                                <p>(3/20) × 4.21M troops</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">When to Use the 1433 Composition</h2>
+                    </div>
+                    <div class="card-body">
+                        <p>The 1433 composition excels in specific battle scenarios and against certain enemy formations:</p>
+                        
+                        <ul>
+                            <li>Effective against enemy formations with low cavalry counts (less than 700k)</li>
+                            <li>Particularly strong against 442 and 974 compositions</li>
+                            <li>Works regardless of enemy gear or formation when their cavalry count is below the threshold</li>
+                        </ul>
+                        
+                        <div class="alert alert-warning">
+                            <strong>Important:</strong> Always scout your opponent before launching a 1433 rally. If they have more than 700k cavalry troops, consider a different composition.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">Hero & Familiar Selection</h2>
+                    </div>
+                    <div class="card-body">
+                        <p>The 1433 composition uses full infantry heroes and familiars to maximize the power of your infantry troops.</p>
+                        
+                        <div class="image-container">
+                            <img src="1433 comp.png" alt="Infantry Heroes for 1433 Composition" onerror="this.src='https://via.placeholder.com/800x400?text=Heroes+and+Familiars+Image'; this.alt='Heroes image placeholder'">
+                        </div>
+                        
+                        <div class="alert alert-info">
+                            <strong>Hero Selection Tip:</strong> If you don't have a specific infantry hero, make sure to replace it with another infantry hero of similar quality. <strong>Do not</strong> include ranged or cavalry heroes in this composition setup.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">Gear Recommendations</h2>
+                    </div>
+                    <div class="card-body">
+                        <p>For the 1433 composition, prioritize gear that boosts Infantry Attack, Infantry HP, and overall Army Attack stats.</p>
+                        
+                        <div class="image-container">
+                            <img src="1433 gear.png" alt="Infantry Gear Set for 1433 Composition" onerror="this.src='https://via.placeholder.com/800x400?text=Gear+Image'; this.alt='Gear image placeholder'">
+                        </div>
+                        
+                        <div class="alert alert-success">
+                            <h4>Optimal Gear Stats to Focus:</h4>
+                            <ul>
+                                <li><strong>Infantry Attack:</strong> Primary stat to maximize</li>
+                                <li><strong>Infantry HP:</strong> Secondary stat to focus on</li>
+                                <li><strong>Army Attack:</strong> Tertiary but important overall stat</li>
+                                <li><strong>Army HP:</strong> Helps reduce losses</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">Battle Strategy</h2>
+                    </div>
+                    <div class="card-body">
+                        <p>When using the 1433 composition for rallies, follow these strategic steps:</p>
+                        
+                        <ol>
+                            <li>Scout enemy troops to confirm they have less than 700k cavalry</li>
+                            <li>Verify the enemy is not in cavalry phalanx (which would counter your infantry-heavy rally)</li>
+                            <li>Set your formation to Infantry Phalanx C</li>
+                            <li>Equip full infantry-focused gear, heroes, and familiars</li>
+                            <li>Fill the rally with the correct 1433 troop distribution</li>
+                            <li>Activate any relevant boosts or talents before launching</li>
+                            <li>Launch the rally and watch for victory!</li>
+                        </ol>
+                        
+                        <div class="alert alert-info">
+                            <strong>Strategic Tip:</strong> The 1433 composition works best when the enemy doesn't expect it. Try to hide your rally composition until the last moment to prevent them from changing their formation or reinforcing with cavalry.
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 659 Composition (Placeholder) -->
+            <div id="comp-659" class="comp-container">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">659 Composition Overview</h2>
+                    </div>
+                    <div class="card-body">
+                        <p>The 659 composition is a balanced formation with a focus on cavalry. This section will provide information about troop counts, strategies, and best use cases.</p>
+                        
+                        <div class="image-container">
+                            <img src="659-comp.png" alt="659 Composition Heroes and Gear" onerror="this.src='https://via.placeholder.com/800x400?text=659+Composition'; this.alt='659 composition placeholder'">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 974 Composition (Placeholder) -->
+            <div id="comp-974" class="comp-container">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">974 Composition Overview</h2>
+                    </div>
+                    <div class="card-body">
+                        <p>The 974 composition is a powerful infantry-range hybrid that's effective against many enemy formations. This section will provide information about troop counts, strategies, and best use cases.</p>
+                        
+                        <div class="image-container">
+                            <img src="974-comp.png" alt="974 Composition Heroes and Gear" onerror="this.src='https://via.placeholder.com/800x400?text=974+Composition'; this.alt='974 composition placeholder'">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 442 Composition (Placeholder) -->
+            <div id="comp-442" class="comp-container">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">442 Composition Overview</h2>
+                    </div>
+                    <div class="card-body">
+                        <p>The 442 composition is a balanced formation that's effective in range phalanx setups. This section will provide information about troop counts, strategies, and best use cases.</p>
+                        
+                        <div class="image-container">
+                            <img src="442-comp.png" alt="442 Composition Heroes and Gear" onerror="this.src='https://via.placeholder.com/800x400?text=442+Composition'; this.alt='442 composition placeholder'">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Basic Knowledge Section (Placeholder) -->
+        <div id="basics" class="section-content">
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">Basic Knowledge</h2>
+                </div>
+                <div class="card-body">
+                    <p>This section covers the basics of compositions, formations, and troop matchups in Lords Mobile.</p>
+                    <div class="alert alert-info">
+                        <p>Detailed content will be added here.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Battle Reports Section (Placeholder) -->
+        <div id="battle-reports" class="section-content">
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">Battle Reports</h2>
+                </div>
+                <div class="card-body">
+                    <p>Analysis of real battle reports to understand what works and what doesn't.</p>
+                    <div class="alert alert-info">
+                        <p>Detailed battle reports will be added here.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Advanced Tactics Section (Placeholder) -->
+        <div id="advanced" class="section-content">
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">Advanced Tactics</h2>
+                </div>
+                <div class="card-body">
+                    <p>Advanced battle tactics and strategies for experienced players.</p>
+                    <div class="alert alert-info">
+                        <p>Detailed advanced tactics will be added here.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Formations Section (Placeholder) -->
+        <div id="formations" class="section-content">
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">Formations</h2>
+                </div>
+                <div class="card-body">
+                    <p>Guide to different formations and their matchups against enemy compositions.</p>
+                    <div class="alert alert-info">
+                        <p>Detailed formation guide will be added here.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Heroes & Familiars Section (Placeholder) -->
+        <div id="heroes" class="section-content">
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">Heroes & Familiars</h2>
+                </div>
+                <div class="card-body">
+                    <p>Information about the best heroes and familiars for different battle scenarios.</p>
+                    <div class="alert alert-info">
+                        <p>Detailed hero and familiar guide will be added here.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p>Lords Mobile Battle Guide © 2025</p>
+        <p>Game content and materials are trademarks and copyrights of their respective publisher and licensors.</p>
+    </footer>
+    
+    <script>
+        // Function to show selected section and hide others
+        function openSection(sectionId, clickedItem) {
+            // Hide all sections
+            var sections = document.getElementsByClassName("section-content");
+            for (var i = 0; i < sections.length; i++) {
+                sections[i].style.display = "none";
+            }
+            
+            // Remove active class from all nav items
+            var navItems = document.getElementsByClassName("nav-item");
+            for (var i = 0; i < navItems.length; i++) {
+                navItems[i].classList.remove("active");
+            }
+            
+            // Show selected section and mark nav item as active
+            document.getElementById(sectionId).style.display = "block";
+            clickedItem.classList.add("active");
+        }
+        
+        // Function to show selected composition tab
+        function openCompTab(compId, clickedButton) {
+            // Hide all comp containers
+            var compContainers = document.getElementsByClassName("comp-container");
+            for (var i = 0; i < compContainers.length; i++) {
+                compContainers[i].style.display = "none";
+            }
+            
+            // Remove active class from all comp buttons
+            var compButtons = document.getElementsByClassName("comp-button");
+            for (var i = 0; i < compButtons.length; i++) {
+                compButtons[i].classList.remove("active");
+            }
+            
+            // Show selected comp container and mark button as active
+            document.getElementById(compId).style.display = "block";
+            clickedButton.classList.add("active");
+        }
+    </script>
+</body>
+</html>
