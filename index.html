@@ -5,6 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lords Mobile Ultimate Guide</title>
     <link rel="stylesheet" href="lords-styles.css">
+    
+    <!-- Preload critical resources -->
+    <link rel="preload" href="lords-styles.css" as="style">
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" as="script">
+    
     <style>
         :root {
             --primary-color: #4361ee;
@@ -17,6 +22,168 @@
             --border-color: #30363d;
             --glow-color: rgba(76, 201, 240, 0.3);
         }
+
+        /* Video Preloader Styles */
+        .video-preloader {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: var(--dark-bg);
+        z-index: 9999;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transition: opacity 0.5s ease;
+    }
+
+    .video-preloader.fade-out {
+        opacity: 0;
+        pointer-events: none;
+    }
+
+    .video-container {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+    }
+
+    /* Make video fill entire viewport */
+    .preloader-video {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        min-width: 100%;
+        min-height: 100%;
+        width: auto;
+        height: auto;
+        transform: translate(-50%, -50%);
+        object-fit: cover;
+    }
+
+    /* Alternative method if above doesn't work perfectly */
+    @media (aspect-ratio > 16/9) {
+        .preloader-video {
+            width: 100%;
+            height: auto;
+        }
+    }
+
+    @media (aspect-ratio <= 16/9) {
+        .preloader-video {
+            width: auto;
+            height: 100%;
+        }
+    }
+
+    /* Rest of your video preloader styles remain the same... */
+    .skip-button {
+        position: absolute;
+        bottom: 30px;
+        right: 30px;
+        background: rgba(67, 97, 238, 0.7);
+        color: var(--light-text);
+        border: none;
+        padding: 10px 20px;
+        border-radius: 25px;
+        cursor: pointer;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        z-index: 10;
+        display: none;
+    }
+
+    .skip-button:hover {
+        background: var(--primary-color);
+        transform: translateY(-2px);
+    }
+
+    .skip-button.show {
+        display: block;
+        animation: fadeIn 0.5s ease;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+
+    .loading-progress {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 0%;
+        height: 4px;
+        background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+        transition: width 0.3s ease;
+        z-index: 10;
+    }
+
+    .sound-control {
+        position: absolute;
+        bottom: 30px;
+        left: 30px;
+        background: rgba(0, 0, 0, 0.5);
+        color: var(--light-text);
+        border: none;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 1.5rem;
+        transition: all 0.3s ease;
+        z-index: 10;
+    }
+
+    .sound-control:hover {
+        background: rgba(0, 0, 0, 0.7);
+        transform: scale(1.1);
+    }
+
+    .play-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.7);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        z-index: 15;
+    }
+
+    .play-button {
+        width: 100px;
+        height: 100px;
+        background: var(--primary-color);
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 3rem;
+        color: var(--light-text);
+        margin-bottom: 20px;
+        transition: all 0.3s ease;
+    }
+
+    .play-button:hover {
+        transform: scale(1.1);
+        background: var(--accent-color);
+    }
+
+    .play-text {
+        color: var(--light-text);
+        font-size: 1.5rem;
+        text-align: center;
+    }
 
         /* Landing Page Specific Styles */
         body {
@@ -157,6 +324,7 @@
             -webkit-text-fill-color: transparent;
             position: relative;
             display: inline-block;
+            perspective: 1000px;
         }
 
         .hero-title::after {
@@ -174,10 +342,34 @@
             -webkit-text-fill-color: transparent;
         }
 
+        .hero-title .word {
+            display: inline-block;
+            margin: 0 8px;
+            opacity: 0;
+            transform: translateY(50px) rotateX(-90deg);
+            transform-origin: bottom center;
+        }
+
+        .title-underline {
+            height: 3px;
+            width: 0;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+            margin: 20px auto;
+            animation: expandWidth 1s ease-out forwards;
+            animation-delay: 2s;
+            box-shadow: 0 0 20px var(--glow-color);
+        }
+
+        @keyframes expandWidth {
+            to { width: 300px; }
+        }
+
         .hero-subtitle {
             font-size: 1.5rem;
             margin-bottom: 40px;
             color: var(--medium-text);
+            overflow: hidden;
+            position: relative;
         }
 
         .hero-buttons {
@@ -245,7 +437,63 @@
             left: 100%;
         }
 
-        .features {
+        .battle-icons {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+        }
+
+        .icon-wrapper {
+            position: absolute;
+            opacity: 0;
+            transform: scale(0);
+        }
+
+        .icon-wrapper:nth-child(1) {
+            top: 20%;
+            left: 10%;
+            animation: iconAppear 1s ease-out forwards;
+            animation-delay: 2.5s;
+        }
+
+        .icon-wrapper:nth-child(2) {
+            top: 15%;
+            right: 10%;
+            animation: iconAppear 1s ease-out forwards;
+            animation-delay: 2.7s;
+        }
+
+        .icon-wrapper:nth-child(3) {
+            bottom: 25%;
+            left: 15%;
+            animation: iconAppear 1s ease-out forwards;
+            animation-delay: 2.9s;
+        }
+
+        .icon {
+            font-size: 3rem;
+            color: var(--accent-color);
+            filter: drop-shadow(0 0 10px var(--glow-color));
+            animation: iconFloat 3s ease-in-out infinite;
+        }
+
+        @keyframes iconAppear {
+            to {
+                opacity: 0.3;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes iconFloat {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(10deg); }
+        }
+
+        /* YouTube Section Styles */
+        .youtube-section {
             padding: 120px 40px;
             position: relative;
             background-color: rgba(13, 17, 23, 0.8);
@@ -273,88 +521,60 @@
             background: linear-gradient(to right, var(--primary-color), var(--accent-color));
         }
 
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 40px;
+        .youtube-container {
             max-width: 1200px;
             margin: 0 auto;
-        }
-
-        .feature-card {
-            background: var(--dark-section);
-            border-radius: 15px;
-            padding: 30px;
-            text-align: center;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            border: 1px solid var(--border-color);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
             position: relative;
+        }
+
+        .video-wrapper {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            height: 0;
             overflow: hidden;
-            cursor: pointer;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--border-color);
+            background-color: var(--dark-section);
         }
 
-        .feature-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3), 0 0 15px var(--glow-color);
-        }
-
-        .feature-card::before {
-            content: '';
+        .video-wrapper iframe {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
-            height: 5px;
-            background: linear-gradient(to right, var(--primary-color), var(--accent-color));
+            height: 100%;
+            border: none;
+            border-radius: 15px;
         }
 
-        .feature-icon {
-            width: 70px;
-            height: 70px;
-            margin: 0 auto 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
-            background: linear-gradient(135deg, rgba(67, 97, 238, 0.1), rgba(76, 201, 240, 0.1));
-            font-size: 2rem;
-            color: var(--accent-color);
-        }
-
-        .feature-title {
-            font-size: 1.5rem;
-            margin-bottom: 15px;
-            color: var(--light-text);
-        }
-
-        .feature-desc {
-            color: var(--medium-text);
-            line-height: 1.6;
-        }
-
-        .cta {
-            padding: 120px 40px;
+        .channel-info {
             text-align: center;
-            position: relative;
-            background-image: linear-gradient(to bottom, var(--dark-bg), var(--dark-section));
+            margin-top: 40px;
         }
 
-        .cta-content {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .cta-title {
-            font-size: 3rem;
-            margin-bottom: 30px;
+        .channel-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 15px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
             color: var(--light-text);
+            text-decoration: none;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(67, 97, 238, 0.3);
         }
 
-        .cta-desc {
-            font-size: 1.2rem;
-            margin-bottom: 50px;
-            color: var(--medium-text);
+        .channel-link:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(67, 97, 238, 0.5);
+        }
+
+        .channel-link i {
+            font-size: 1.5rem;
         }
 
         .mobile-menu-btn {
@@ -554,14 +774,6 @@
                 gap: 15px;
             }
 
-            .features-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .cta-title {
-                font-size: 2rem;
-            }
-
             .footer-content {
                 flex-direction: column;
                 text-align: center;
@@ -570,10 +782,38 @@
             .footer-logo-container {
                 justify-content: center;
             }
+
+            .battle-icons {
+                display: none;
+            }
+            
+            .hero-title .word {
+                margin: 0 2px;
+            }
         }
     </style>
 </head>
 <body>
+    <!-- Video Preloader -->
+    <div class="video-preloader" id="videoPreloader">
+        <div class="video-container">
+            <video class="preloader-video" id="preloaderVideo" muted>
+                <source src="sword-animation.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            
+            <div class="play-overlay" id="playOverlay">
+                <div class="play-button">▶</div>
+                <div class="play-text">Click to Enter Battle Guide</div>
+            </div>
+            
+            <button class="sound-control" id="soundControl">🔇</button>
+            <button class="skip-button" id="skipButton">Skip Intro</button>
+            <div class="loading-progress" id="loadingProgress"></div>
+        </div>
+    </div>
+
+    <!-- Main Content (Hidden initially) -->
     <div id="particles-js"></div>
     
     <nav class="navbar">
@@ -602,17 +842,61 @@
         </div>
         
         <div class="hero-content hidden" id="heroContent">
-            <h1 class="hero-title" data-text="LORDS MOBILE ULTIMATE GUIDE">LORDS MOBILE ULTIMATE GUIDE</h1>
+            <h1 class="hero-title split-text" data-text="LORDS MOBILE ULTIMATE GUIDE">
+                <span class="word">LORDS</span>
+                <span class="word">MOBILE</span>
+                <span class="word">ULTIMATE</span>
+                <span class="word">GUIDE</span>
+            </h1>
+            
+            <div class="title-underline"></div>
+            
             <p class="hero-subtitle">Master the game with our comprehensive guides, compositions, and strategies</p>
             
             <div class="hero-buttons">
                 <a href="CompGears.html" class="hero-btn hero-btn-primary">Battle Compositions</a>
+                <a href="#videos" class="hero-btn hero-btn-secondary">Watch Guides</a>
+            </div>
+            
+            <div class="battle-icons">
+                <div class="icon-wrapper">
+                    <i class="fas fa-shield-alt icon"></i>
+                </div>
+                <div class="icon-wrapper">
+                    <i class="fas fa-sword icon"></i>
+                </div>
+                <div class="icon-wrapper">
+                    <i class="fas fa-horse icon"></i>
+                </div>
             </div>
         </div>
         
         <div class="hero-scroll-indicator">
             <span>Scroll Down</span>
             <div class="hero-scroll-icon"></div>
+        </div>
+    </section>
+    
+    <!-- YouTube Video Section -->
+    <section class="youtube-section lazy-content" id="videos">
+        <h2 class="section-title">Lords Mobile Video Guides</h2>
+        
+        <div class="youtube-container">
+            <div class="video-wrapper">
+                <iframe 
+                    src="https://www.youtube.com/embed/videoseries?list=PLzuKhqZC_zUtNJ4tO7azSG-UR7GsIfyl6" 
+                    title="Crystal Briefs YouTube Channel" 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                    allowfullscreen>
+                </iframe>
+            </div>
+            
+            <div class="channel-info">
+                <a href="https://www.youtube.com/@crystalbriefs" target="_blank" class="channel-link">
+                    <i class="fab fa-youtube"></i>
+                    Visit Crystal Briefs Channel
+                </a>
+            </div>
         </div>
     </section>
     
@@ -627,6 +911,10 @@
     
     <!-- Particles.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js"></script>
+    
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     
     <script>
         // Initialize particles.js
@@ -776,77 +1064,22 @@
             });
         });
 
-        // Animate elements on scroll
-        const observerOptions = {
-            root: null,
-            rootMargin: '0px',
-            threshold: 0.1
-        };
-
-        const observer = new IntersectionObserver((entries, observer) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, observerOptions);
-
-        const elements = document.querySelectorAll('.hidden');
-        elements.forEach(element => {
-            observer.observe(element);
-        });
-
-        // Add animation delay to feature cards
-        document.getElementById('feature1').style.transitionDelay = '0.1s';
-        document.getElementById('feature2').style.transitionDelay = '0.3s';
-        document.getElementById('feature3').style.transitionDelay = '0.5s';
-
-        // Page load animation
-        window.addEventListener('load', () => {
-            setTimeout(() => {
-                document.getElementById('heroContent').classList.add('visible');
-            }, 500);
-        });
-
         // Hero title glow effect
         const heroTitle = document.querySelector('.hero-title');
         document.addEventListener('mousemove', (e) => {
             const x = e.clientX / window.innerWidth;
             const y = e.clientY / window.innerHeight;
             
-            heroTitle.style.textShadow = `
-                ${x * 20 - 10}px ${y * 20 - 10}px 15px rgba(76, 201, 240, 0.3),
-                ${-x * 20 + 10}px ${-y * 20 + 10}px 15px rgba(67, 97, 238, 0.3)
-            `;
-        });
-
-        // Feature card hover effect
-        const featureCards = document.querySelectorAll('.feature-card');
-        featureCards.forEach(card => {
-            card.addEventListener('mousemove', (e) => {
-                const rect = card.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
-                
-                const xPercent = x / rect.width;
-                const yPercent = y / rect.height;
-                
-                const rotateX = (0.5 - yPercent) * 10;
-                const rotateY = (xPercent - 0.5) * 10;
-                
-                card.style.transform = `translateY(-10px) perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
-                card.style.boxShadow = `
-                    ${rotateY/2}px ${-rotateX/2}px 30px rgba(0, 0, 0, 0.3),
-                    0 0 20px rgba(76, 201, 240, ${0.2 + (xPercent + yPercent) / 10})
+            if (heroTitle) {
+                heroTitle.style.textShadow = `
+                    ${x * 20 - 10}px ${y * 20 - 10}px 15px rgba(76, 201, 240, 0.3),
+                    ${-x * 20 + 10}px ${-y * 20 + 10}px 15px rgba(67, 97, 238, 0.3)
                 `;
-            });
-            
-            card.addEventListener('mouseleave', () => {
-                card.style.transform = 'translateY(-10px)';
-                card.style.boxShadow = '0 15px 40px rgba(0, 0, 0, 0.3), 0 0 15px rgba(76, 201, 240, 0.3)';
-            });
+            }
         });
     </script>
+    
+    <!-- Your existing lords-script.js -->
+    <script src="lords-script.js"></script>
 </body>
 </html>
