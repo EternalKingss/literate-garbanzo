@@ -626,3 +626,228 @@ footer {
 .section {
     padding: 30px;
 }
+/* Performance optimizations */
+img {
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+img.loaded {
+    opacity: 1;
+}
+
+.lazy-content {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.lazy-content.content-loaded {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Mouse follower */
+.mouse-follower {
+    position: fixed;
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--accent-color);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    transform-origin: center;
+    mix-blend-mode: difference;
+}
+
+/* Optimized animations */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+/* Loading states */
+.skeleton {
+    background: linear-gradient(90deg, var(--dark-section) 25%, var(--dark-bg) 50%, var(--dark-section) 75%);
+    background-size: 200% 100%;
+    animation: skeleton-loading 1.5s ease-in-out infinite;
+}
+
+@keyframes skeleton-loading {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+
+/* Optimized shadows */
+.optimized-shadow {
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    will-change: transform;
+    transform: translateZ(0); /* Hardware acceleration */
+}
+
+.optimized-shadow:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+}
+
+/* Loading placeholder */
+.img-placeholder {
+    background-color: var(--dark-section);
+    display: inline-block;
+    position: relative;
+    overflow: hidden;
+}
+
+.img-placeholder::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.05), transparent);
+    animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+}
+
+/* Performance optimization for mobile */
+@media (max-width: 768px) {
+    .mouse-follower {
+        display: none;
+    }
+    
+    .floating-elements {
+        display: none;
+    }
+    
+    /* Simplify animations on mobile */
+    .section {
+        transition: none;
+    }
+    
+    .hero-title::after {
+        display: none;
+    }
+}
+/* Preloader Styles - Add to lords-styles.css */
+.preloader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--dark-bg);
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: opacity 0.5s ease;
+}
+
+.preloader.fade-out {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.preloader-content {
+    text-align: center;
+}
+
+.sword-animation {
+    position: relative;
+    width: 100px;
+    height: 100px;
+    margin: 0 auto 30px;
+}
+
+.sword {
+    position: absolute;
+    width: 4px;
+    height: 80px;
+    background: linear-gradient(to bottom, var(--accent-color), var(--primary-color));
+    left: 50%;
+    top: 10px;
+    transform-origin: bottom center;
+    animation: swordSlash 1.5s infinite alternate ease-in-out;
+}
+
+.sword::before {
+    content: '';
+    position: absolute;
+    width: 30px;
+    height: 4px;
+    background: var(--accent-color);
+    top: -2px;
+    left: -13px;
+}
+
+.sword::after {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background: var(--primary-color);
+    border-radius: 50%;
+    bottom: -10px;
+    left: -8px;
+}
+
+.sword-2 {
+    animation-delay: 0.75s;
+    opacity: 0.7;
+}
+
+@keyframes swordSlash {
+    0% { transform: translateX(-30px) rotate(-45deg); }
+    100% { transform: translateX(30px) rotate(45deg); }
+}
+
+.loading-text {
+    font-size: 1.5rem;
+    color: var(--light-text);
+    margin-bottom: 20px;
+    letter-spacing: 3px;
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 0.7; }
+    50% { opacity: 1; }
+}
+
+.progress-bar {
+    width: 200px;
+    height: 4px;
+    background: var(--dark-section);
+    border-radius: 2px;
+    overflow: hidden;
+    margin: 0 auto;
+}
+
+.progress-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+    animation: progressFill 2s ease-out forwards;
+}
+
+@keyframes progressFill {
+    to { width: 100%; }
+}
+
+/* Split text animation for title */
+.hero-title .word {
+    display: inline-block;
+    margin: 0 8px;
+    opacity: 0;
+    transform: translateY(50px) rotateX(-90deg);
+    transform-origin: bottom center;
+}
