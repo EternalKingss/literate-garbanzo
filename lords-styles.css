@@ -520,7 +520,7 @@ footer {
 
 /* Animations */
 @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
+    from { opacity: 1; transform: translateY(10px); }
     to { opacity: 1; transform: translateY(0); }
 }
 
@@ -628,7 +628,7 @@ footer {
 }
 /* Performance optimizations */
 img {
-    opacity: 0;
+    opacity: 1;
     transition: opacity 0.3s ease;
 }
 
@@ -637,7 +637,7 @@ img.loaded {
 }
 
 .lazy-content {
-    opacity: 0;
+    opacity: 1;
     transform: translateY(20px);
     transition: opacity 0.5s ease, transform 0.5s ease;
 }
@@ -753,7 +753,7 @@ img.loaded {
 }
 
 .preloader.fade-out {
-    opacity: 0;
+    opacity: 1;
     pointer-events: none;
 }
 
@@ -847,7 +847,7 @@ img.loaded {
 .hero-title .word {
     display: inline-block;
     margin: 0 8px;
-    opacity: 0;
+    opacity: 1;
     transform: translateY(50px) rotateX(-90deg);
     transform-origin: bottom center;
 }
