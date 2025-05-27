@@ -1,0 +1,967 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lords Mobile Ultimate Guide</title>
+    <link rel="stylesheet" href="lords-styles.css">
+    
+    <!-- Preload critical resources -->
+    <link rel="preload" href="lords-styles.css" as="style">
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" as="script">
+    <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-HQWMRF3SKE"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-HQWMRF3SKE');
+</script>
+    <style>
+        :root {
+            --primary-color: #4361ee;
+            --secondary-color: #3a0ca3;
+            --accent-color: #4cc9f0;
+            --dark-bg: #0d1117;
+            --dark-section: #161b22;
+            --light-text: #e6edf3;
+            --medium-text: #b2becd;
+            --border-color: #30363d;
+            --glow-color: rgba(76, 201, 240, 0.3);
+        }
+
+        /* Landing Page Specific Styles */
+        body {
+            overflow-x: hidden;
+            background-color: var(--dark-bg);
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', 'Roboto', sans-serif;
+            color: var(--light-text);
+            background-image: none;
+        }
+
+        .hidden {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .visible {
+            opacity: 1;
+            transform: translateY(0);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+
+        #particles-js {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 40px;
+            background: rgba(13, 17, 23, 0.9);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .navbar.scrolled {
+            padding: 12px 40px;
+            background: rgba(13, 17, 23, 0.98);
+        }
+        
+        .nav-title {
+            color: var(--light-text);
+            font-size: 1.5rem;
+            margin: 0;
+            background: linear-gradient(to right, var(--primary-color), var(--accent-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 600;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 40px;
+        }
+
+        .nav-links a {
+            color: var(--light-text);
+            text-decoration: none;
+            font-size: 1.1rem;
+            font-weight: 500;
+            position: relative;
+            padding: 5px 0;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 3px;
+            background-color: var(--accent-color);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-color);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        
+        .nav-links a.active::after {
+            width: 100%;
+        }
+
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(67, 97, 238, 0.15) 0%, transparent 30%),
+                radial-gradient(circle at 80% 70%, rgba(76, 201, 240, 0.1) 0%, transparent 30%);
+            z-index: -1;
+        }
+
+        .hero-content {
+            max-width: 900px;
+            width: 100%;
+            z-index: 2;
+        }
+
+        .hero-title {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            background: linear-gradient(to right, var(--primary-color), var(--accent-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            position: relative;
+            display: inline-block;
+            perspective: 1000px;
+        }
+
+        .hero-title::after {
+            content: attr(data-text);
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            filter: blur(15px);
+            opacity: 0.5;
+            background: linear-gradient(to right, var(--primary-color), var(--accent-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-title .word {
+            display: inline-block;
+            margin: 0 8px;
+            opacity: 0;
+            transform: translateY(50px) rotateX(-90deg);
+            transform-origin: bottom center;
+        }
+
+        .title-underline {
+            height: 3px;
+            width: 0;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+            margin: 20px auto;
+            animation: expandWidth 1s ease-out forwards;
+            animation-delay: 1s;
+            box-shadow: 0 0 20px var(--glow-color);
+        }
+
+        @keyframes expandWidth {
+            to { width: 300px; }
+        }
+
+        .hero-subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 40px;
+            color: var(--medium-text);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 30px;
+        }
+
+        .hero-btn {
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            cursor: pointer;
+        }
+
+        .hero-btn-primary {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: var(--light-text);
+            border: none;
+            box-shadow: 0 5px 15px rgba(67, 97, 238, 0.3);
+        }
+
+        .hero-btn-primary:hover {
+            box-shadow: 0 8px 25px rgba(67, 97, 238, 0.5);
+            transform: translateY(-3px);
+        }
+
+        .hero-btn-secondary {
+            background: transparent;
+            color: var(--light-text);
+            border: 2px solid var(--accent-color);
+        }
+
+        .hero-btn-secondary:hover {
+            background-color: rgba(76, 201, 240, 0.1);
+            box-shadow: 0 0 15px rgba(76, 201, 240, 0.3);
+            transform: translateY(-3px);
+        }
+
+        .hero-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(255, 255, 255, 0.2),
+                transparent
+            );
+            transition: left 0.7s ease;
+            z-index: -1;
+        }
+
+        .hero-btn:hover::before {
+            left: 100%;
+        }
+
+        .battle-icons {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+        }
+
+        .icon-wrapper {
+            position: absolute;
+            opacity: 0;
+            transform: scale(0);
+        }
+
+        .icon-wrapper:nth-child(1) {
+            top: 20%;
+            left: 10%;
+            animation: iconAppear 1s ease-out forwards;
+            animation-delay: 1.5s;
+        }
+
+        .icon-wrapper:nth-child(2) {
+            top: 15%;
+            right: 10%;
+            animation: iconAppear 1s ease-out forwards;
+            animation-delay: 1.7s;
+        }
+
+        .icon-wrapper:nth-child(3) {
+            bottom: 25%;
+            left: 15%;
+            animation: iconAppear 1s ease-out forwards;
+            animation-delay: 1.9s;
+        }
+
+        .icon {
+            font-size: 3rem;
+            color: var(--accent-color);
+            filter: drop-shadow(0 0 10px var(--glow-color));
+            animation: iconFloat 3s ease-in-out infinite;
+        }
+
+        @keyframes iconAppear {
+            to {
+                opacity: 0.3;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes iconFloat {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(10deg); }
+        }
+
+        /* YouTube Section Styles */
+        .youtube-section {
+            padding: 120px 40px;
+            position: relative;
+            background-color: rgba(13, 17, 23, 0.8);
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 60px;
+            color: var(--light-text);
+            position: relative;
+            display: inline-block;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(to right, var(--primary-color), var(--accent-color));
+        }
+
+        .youtube-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .video-wrapper {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            height: 0;
+            overflow: hidden;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--border-color);
+            background-color: var(--dark-section);
+        }
+
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 15px;
+        }
+
+        .channel-info {
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .channel-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 15px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: var(--light-text);
+            text-decoration: none;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(67, 97, 238, 0.3);
+        }
+
+        .channel-link:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(67, 97, 238, 0.5);
+        }
+
+        .channel-link i {
+            font-size: 1.5rem;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--light-text);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .floating-elements {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .float-el {
+            position: absolute;
+            border-radius: 50%;
+            background: linear-gradient(135deg, rgba(67, 97, 238, 0.1), rgba(76, 201, 240, 0.1));
+            border: 1px solid rgba(76, 201, 240, 0.3);
+            box-shadow: 0 0 20px rgba(76, 201, 240, 0.2);
+            animation: float 15s infinite linear;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0) rotate(0deg);
+            }
+            50% {
+                transform: translateY(-20px) rotate(180deg);
+            }
+            100% {
+                transform: translateY(0) rotate(360deg);
+            }
+        }
+
+        .hero-scroll-indicator {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            animation: bounce 2s infinite;
+        }
+
+        .hero-scroll-indicator span {
+            color: var(--medium-text);
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+        }
+
+        .hero-scroll-icon {
+            width: 30px;
+            height: 50px;
+            border: 2px solid var(--medium-text);
+            border-radius: 25px;
+            position: relative;
+        }
+
+        .hero-scroll-icon::before {
+            content: '';
+            position: absolute;
+            top: 8px;
+            left: 50%;
+            width: 6px;
+            height: 6px;
+            margin-left: -3px;
+            background-color: var(--accent-color);
+            border-radius: 50%;
+            animation: scrollDown 2s infinite;
+        }
+
+        @keyframes scrollDown {
+            0% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+            80% {
+                transform: translateY(20px);
+                opacity: 0;
+            }
+            100% {
+                transform: translateY(0);
+                opacity: 0;
+            }
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0) translateX(-50%);
+            }
+            40% {
+                transform: translateY(-10px) translateX(-50%);
+            }
+            60% {
+                transform: translateY(-5px) translateX(-50%);
+            }
+        }
+
+        footer {
+            padding: 50px 40px;
+            text-align: center;
+            background-color: var(--dark-section);
+            color: var(--medium-text);
+            position: relative;
+            z-index: 2;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 30px;
+        }
+        
+        .footer-title {
+            color: var(--light-text);
+            font-size: 1.4rem;
+            margin: 0;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .footer-links a {
+            color: var(--medium-text);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent-color);
+        }
+
+        .footer-bottom {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 12px 20px;
+            }
+            
+            .nav-title {
+                font-size: 1.2rem;
+            }
+
+            .nav-links {
+                position: fixed;
+                top: 60px;
+                left: 0;
+                width: 100%;
+                background: var(--dark-section);
+                flex-direction: column;
+                align-items: center;
+                padding: 20px 0;
+                gap: 20px;
+                transform: translateY(-150%);
+                transition: transform 0.3s ease;
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+                z-index: 999;
+            }
+
+            .nav-links.active {
+                transform: translateY(0);
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1.2rem;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .footer-logo-container {
+                justify-content: center;
+            }
+
+            .battle-icons {
+                display: none;
+            }
+            
+            .hero-title .word {
+                margin: 0 2px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="particles-js"></div>
+    
+    <nav class="navbar">
+        <h1 class="nav-title">Lords Mobile Battle Guide</h1>
+        
+        <button class="mobile-menu-btn">
+            <i class="fas fa-bars"></i>
+        </button>
+        
+        <div class="nav-links">
+            <a href="index.html" class="active">Home</a>
+            <a href="CompGears.html">Compositions</a>
+            <a href="advanced.html">Advanced Tips</a>
+            <a href="formations.html">Formations</a>
+            <a href="battle-reports.html">Reports</a>
+            <a href="heroes.html">Heroes</a>
+        </div>
+    </nav>
+    
+    <section class="hero">
+        <div class="floating-elements">
+            <div class="float-el" style="width: 80px; height: 80px; top: 20%; left: 10%; animation-duration: 20s;"></div>
+            <div class="float-el" style="width: 50px; height: 50px; top: 30%; right: 15%; animation-duration: 17s; animation-delay: 2s;"></div>
+            <div class="float-el" style="width: 100px; height: 100px; bottom: 20%; right: 10%; animation-duration: 23s;"></div>
+            <div class="float-el" style="width: 60px; height: 60px; bottom: 30%; left: 15%; animation-duration: 19s; animation-delay: 1s;"></div>
+        </div>
+        
+        <div class="hero-content" id="heroContent">
+            <h1 class="hero-title split-text" data-text="LORDS MOBILE ULTIMATE GUIDE">
+                <span class="word">LORDS</span>
+                <span class="word">MOBILE</span>
+                <span class="word">ULTIMATE</span>
+                <span class="word">GUIDE</span>
+            </h1>
+            
+            <div class="title-underline"></div>
+            
+            <p class="hero-subtitle">Master the game with our comprehensive guides, compositions, and strategies</p>
+            
+            <div class="hero-buttons">
+                <a href="CompGears.html" class="hero-btn hero-btn-primary">Battle Compositions</a>
+                <a href="#videos" class="hero-btn hero-btn-secondary">Watch Guides</a>
+            </div>
+            
+            <div class="battle-icons">
+                <div class="icon-wrapper">
+                    <i class="fas fa-shield-alt icon"></i>
+                </div>
+                <div class="icon-wrapper">
+                    <i class="fas fa-sword icon"></i>
+                </div>
+                <div class="icon-wrapper">
+                    <i class="fas fa-horse icon"></i>
+                </div>
+            </div>
+        </div>
+        
+        <div class="hero-scroll-indicator">
+            <span>Scroll Down</span>
+            <div class="hero-scroll-icon"></div>
+        </div>
+    </section>
+    
+    <!-- YouTube Video Section -->
+    <section class="youtube-section lazy-content" id="videos">
+        <h2 class="section-title">Lords Mobile Video Guides</h2>
+        
+        <div class="youtube-container">
+            <div class="video-wrapper">
+                <iframe 
+                    src="https://www.youtube.com/embed/videoseries?list=PLzuKhqZC_zUtNJ4tO7azSG-UR7GsIfyl6" 
+                    title="Crystal Briefs YouTube Channel" 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                    allowfullscreen>
+                </iframe>
+            </div>
+            
+            <div class="channel-info">
+                <a href="https://www.youtube.com/@crystalbriefs" target="_blank" class="channel-link">
+                    <i class="fab fa-youtube"></i>
+                    Visit Crystal Briefs Channel
+                </a>
+            </div>
+        </div>
+    </section>
+    
+    <footer>
+        <div class="footer-bottom">
+            <p>© 2025 Lords Mobile Battle Guide</p>
+        </div>
+    </footer>
+    
+    <!-- Font Awesome -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"></script>
+    
+    <!-- Particles.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js"></script>
+    
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    
+    <script>
+        // Initialize particles.js
+        particlesJS('particles-js', {
+            "particles": {
+                "number": {
+                    "value": 80,
+                    "density": {
+                        "enable": true,
+                        "value_area": 800
+                    }
+                },
+                "color": {
+                    "value": "#4cc9f0"
+                },
+                "shape": {
+                    "type": "circle",
+                    "stroke": {
+                        "width": 0,
+                        "color": "#000000"
+                    },
+                    "polygon": {
+                        "nb_sides": 5
+                    }
+                },
+                "opacity": {
+                    "value": 0.2,
+                    "random": true,
+                    "anim": {
+                        "enable": true,
+                        "speed": 1,
+                        "opacity_min": 0.1,
+                        "sync": false
+                    }
+                },
+                "size": {
+                    "value": 3,
+                    "random": true,
+                    "anim": {
+                        "enable": false,
+                        "speed": 40,
+                        "size_min": 0.1,
+                        "sync": false
+                    }
+                },
+                "line_linked": {
+                    "enable": true,
+                    "distance": 150,
+                    "color": "#4361ee",
+                    "opacity": 0.2,
+                    "width": 1
+                },
+                "move": {
+                    "enable": true,
+                    "speed": 2,
+                    "direction": "none",
+                    "random": false,
+                    "straight": false,
+                    "out_mode": "out",
+                    "bounce": false,
+                    "attract": {
+                        "enable": false,
+                        "rotateX": 600,
+                        "rotateY": 1200
+                    }
+                }
+            },
+            "interactivity": {
+                "detect_on": "canvas",
+                "events": {
+                    "onhover": {
+                        "enable": true,
+                        "mode": "grab"
+                    },
+                    "onclick": {
+                        "enable": true,
+                        "mode": "push"
+                    },
+                    "resize": true
+                },
+                "modes": {
+                    "grab": {
+                        "distance": 140,
+                        "line_linked": {
+                            "opacity": 0.5
+                        }
+                    },
+                    "bubble": {
+                        "distance": 400,
+                        "size": 40,
+                        "duration": 2,
+                        "opacity": 8,
+                        "speed": 3
+                    },
+                    "repulse": {
+                        "distance": 200,
+                        "duration": 0.4
+                    },
+                    "push": {
+                        "particles_nb": 4
+                    },
+                    "remove": {
+                        "particles_nb": 2
+                    }
+                }
+            },
+            "retina_detect": true
+        });
+
+        // Mobile menu toggle
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const navLinks = document.querySelector('.nav-links');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+
+                    // Close mobile menu if open
+                    if (navLinks.classList.contains('active')) {
+                        navLinks.classList.remove('active');
+                    }
+                }
+            });
+        });
+
+        // Hero title glow effect
+        const heroTitle = document.querySelector('.hero-title');
+        document.addEventListener('mousemove', (e) => {
+            const x = e.clientX / window.innerWidth;
+            const y = e.clientY / window.innerHeight;
+            
+            if (heroTitle) {
+                heroTitle.style.textShadow = `
+                    ${x * 20 - 10}px ${y * 20 - 10}px 15px rgba(76, 201, 240, 0.3),
+                    ${-x * 20 + 10}px ${-y * 20 + 10}px 15px rgba(67, 97, 238, 0.3)
+                `;
+            }
+        });
+        
+        // Initialize GSAP animations for the hero section
+        document.addEventListener('DOMContentLoaded', function() {
+            // Make hero content visible immediately
+            const heroContent = document.getElementById('heroContent');
+            if (heroContent) {
+                heroContent.classList.remove('hidden');
+            }
+            
+            // Animate the hero title words
+            gsap.to('.hero-title .word', {
+                opacity: 1,
+                y: 0,
+                rotationX: 0,
+                stagger: 0.2,
+                ease: "back.out(1.7)",
+                duration: 1.2
+            });
+            
+            // Other hero animations
+            gsap.from('.hero-subtitle', {
+                opacity: 0,
+                y: 30,
+                duration: 1,
+                delay: 1
+            });
+            
+            gsap.from('.hero-buttons .hero-btn', {
+                opacity: 0,
+                y: 20,
+                duration: 0.8,
+                stagger: 0.2,
+                delay: 1.2
+            });
+            
+            // Initialize lazy loading
+            initializeLazyLoading();
+        });
+        
+        // Function to initialize lazy loading
+        function initializeLazyLoading() {
+            // Create intersection observer for lazy content
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            // Observe all elements with 'lazy-content' class
+            document.querySelectorAll('.lazy-content').forEach(el => {
+                observer.observe(el);
+            });
+        }
+    </script>
+    
+    <!-- Your existing lords-script.js without video preloader code -->
+    <script src="lords-script.js"></script>
+</body>
+</html>
