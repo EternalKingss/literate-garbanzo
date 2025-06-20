@@ -17,11 +17,11 @@
     <div class="container">
         <!-- Navigation Bar -->
         <div class="comps-nav">
-            <button class="comp-button active" onclick="openTab('heroes-compositions')">Hero Selection</button>
-            <button class="comp-button" onclick="openTab('heroes-retargeting')">Retargeting Mechanics</button>
-            <button class="comp-button" onclick="openTab('heroes-gear')">Hero Gear</button>
-            <button class="comp-button" onclick="openTab('heroes-familiars')">Familiars</button>
-            <button class="comp-button" onclick="openTab('heroes-utility')">Utility Familiars</button>
+            <button class="comp-button active" onclick="openTab('heroes-compositions', event)">Hero Selection</button>
+            <button class="comp-button" onclick="openTab('heroes-retargeting', event)">Retargeting Mechanics</button>
+            <button class="comp-button" onclick="openTab('heroes-gear', event)">Hero Gear</button>
+            <button class="comp-button" onclick="openTab('heroes-familiars', event)">Familiars</button>
+            <button class="comp-button" onclick="openTab('heroes-utility', event)">Utility Familiars</button>
         </div>
 
         <!-- Hero Compositions -->
@@ -406,7 +406,7 @@
     </footer>
 
     <script>
-        function openTab(tabName) {
+        function openTab(tabName, evt) {
             // Hide all tab content
             var tabContent = document.getElementsByClassName("tab-content");
             for (var i = 0; i < tabContent.length; i++) {
@@ -423,7 +423,9 @@
             document.getElementById(tabName).classList.add("active");
             
             // Add active class to the clicked button
-            event.currentTarget.classList.add("active");
+            if (evt && evt.currentTarget) {
+                evt.currentTarget.classList.add('active');
+            }
         }
     </script>
 </body>

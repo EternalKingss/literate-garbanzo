@@ -17,13 +17,13 @@
     <div class="container">
         <!-- Composition Navigation Bar -->
         <div class="comps-nav">
-            <button class="comp-button active" onclick="openTab('comp-1433')">1433 Composition</button>
-            <button class="comp-button" onclick="openTab('comp-659')">659 Composition</button>
-            <button class="comp-button" onclick="openTab('comp-866')">866 Composition</button>
-            <button class="comp-button" onclick="openTab('comp-055')">055 Composition</button>
-            <button class="comp-button" onclick="openTab('comp-442')">668 Composition</button>
-            <button class="comp-button" onclick="openTab('comp-208')">208 Composition</button>
-            <button class="comp-button" onclick="openTab('comp-541')">541 Composition</button>
+            <button class="comp-button active" onclick="openTab('comp-1433', event)">1433 Composition</button>
+            <button class="comp-button" onclick="openTab('comp-659', event)">659 Composition</button>
+            <button class="comp-button" onclick="openTab('comp-866', event)">866 Composition</button>
+            <button class="comp-button" onclick="openTab('comp-055', event)">055 Composition</button>
+            <button class="comp-button" onclick="openTab('comp-442', event)">668 Composition</button>
+            <button class="comp-button" onclick="openTab('comp-208', event)">208 Composition</button>
+            <button class="comp-button" onclick="openTab('comp-541', event)">541 Composition</button>
         </div>
 
         <!-- 1433 Composition Content -->
@@ -856,7 +856,7 @@
     </footer>
 
     <script>
-        function openTab(tabName) {
+        function openTab(tabName, evt) {
             // Hide all tab content
             var tabContent = document.getElementsByClassName("tab-content");
             for (var i = 0; i < tabContent.length; i++) {
@@ -873,7 +873,9 @@
             document.getElementById(tabName).classList.add("active");
             
             // Add active class to the clicked button
-            event.currentTarget.classList.add("active");
+            if (evt && evt.currentTarget) {
+                evt.currentTarget.classList.add("active");
+            }
         }
     </script>
 </body>
