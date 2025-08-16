@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lords Mobile - Advanced Tactics</title>
+    <link rel="stylesheet" href="lords-styles.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Lords Mobile Battle Guide</h1>
+            <div class="subtitle">Advanced Tactics</div>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- Navigation Bar -->
+        <div class="comps-nav">
+            <button class="comp-button active" onclick="openTab('tactics-wedge', event)">Wedge Tactics</button>
+            <button class="comp-button" onclick="openTab('tactics-comps', event)">Comp Weaknesses</button>
+            <button class="comp-button" onclick="openTab('tactics-retargeting', event)">Retargeting</button>
+            <button class="comp-button" onclick="openTab('tactics-special', event)">Special Comps</button>
+            <button class="comp-button" onclick="openTab('tactics-stats', event)">Attack vs HP</button>
+            <button class="comp-button" onclick="openTab('tactics-heroes', event)">Heroes</button>
+            <button class="comp-button" onclick="openTab('tactics-familiars', event)">Familiars</button>
+        </div>
+
+        <!-- Wedge Formation Tactics -->
+        <div id="tactics-wedge" class="tab-content active">
+            <div class="section">
+                <h2>🎯 Wedge Formation Tactics</h2>
+                <p>Understanding how wedge formations change battle dynamics is critical for advanced players.</p>
+                
+                <div class="example-box">
+                    <h4>Range Wedge vs Specific enemies:</h4>
+                    <ul>
+                        <li>Spreads Infantry wider</li>
+                        <li>Makes Cavalry stay back longer</li>
+                        <li>Result: Cavalry survives longer, joins battle later when Range squads are already softened</li>
+                        <li><strong>Range Wedge should ONLY be used AGAINST 7112 comp or 208 comp</strong></li>
+                        <li><strong>NEVER use Range Wedge against heavy cavalry comps like 659</strong> - you will get destroyed</li>
+                    </ul>
+                    
+                    <h4>Cavalry Phalanx vs Heavy Cavalry enemies:</h4>
+                    <ul>
+                        <li>For enemy compositions with heavy cavalry (like 659), always use 668 comp with Cavalry Phalanx</li>
+                        <li>This is the proper counter to cavalry-heavy compositions</li>
+                        <li>Example: If enemy is using a 659 comp, counter with 668 in Cavalry Phalanx</li>
+                    </ul>
+
+                    <h4>Infantry Wedge vs Cavalry-heavy enemies:</h4>
+                    <ul>
+                        <li>Wider Infantry spread stalls Cavalry charges longer</li>
+                        <li>Gives Range squads more time to clean up</li>
+                    </ul>
+
+                    <h4>Hero Impact on Wedge Formations:</h4>
+                    <ul>
+                        <li>For Range Wedge - 2 Range heroes are essential to maintain proper squad positioning</li>
+                        <li>For Infantry Wedge - Oath Keeper and Twilight Priestess enhance effectiveness significantly</li>
+                        <li>Heroes with tactical skills create more spread when in Wedge formations</li>
+                    </ul>
+                </div>
+                
+                <div class="highlight">
+                    <strong>Strategic Tip:</strong> Wedge formations are often underestimated but can completely counter certain compositions when used correctly. However, using the wrong wedge formation against the wrong enemy composition will result in catastrophic losses.
+                </div>
+            </div>
+        </div>
+
+        <!-- Common Comp Weaknesses -->
+        <div id="tactics-comps" class="tab-content">
+            <div class="section">
+                <h2>⚡ Common Comp Weaknesses</h2>
+                <p>Every composition has specific weaknesses that can be exploited with the right counter strategy.</p>
+                
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Comp Example</th>
+                            <th>Main Weakness</th>
+                            <th>Hero/Familiar Counter</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>659 (6-5-9)</td>
+                            <td>Over-reliant on Cavalry. Counter with 668 in Cavalry Phalanx.</td>
+                            <td>Use Snow Queen and Black Crow (range heroes) with Queen Bee familiar</td>
+                        </tr>
+                        <tr>
+                            <td>866 (8-6-6)</td>
+                            <td>Tanky, but can be punched by heavy Cav or DPS Range setups.</td>
+                            <td>Storm Fox and Barbarian (cavalry heroes) with Gargantua familiar</td>
+                        </tr>
+                        <tr>
+                            <td>4412 (4-4-12)</td>
+                            <td>Destroys Infantry walls. Weak if enemy Range heavy.</td>
+                            <td>Petite Devil and Grove Guardian (range heroes) with Blackwing familiar</td>
+                        </tr>
+                        <tr>
+                            <td>7112 (7-1-12)</td>
+                            <td>Strong versus Range Phalanx. Can be countered by using Range Wedge formation against it.</td>
+                            <td>When attacking a 7112, use Range Wedge formation with 2 Range heroes; Jade Wyrm familiar helps with counter stats</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <div class="warning">
+                    <strong>Important:</strong> Always scout your opponent before selecting a counter composition. A well-executed counter can overcome even significant stat disadvantages. Using the wrong formation against certain compositions can lead to devastating losses.
+                </div>
+            </div>
+        </div>
+
+        <!-- Retargeting Mechanics -->
+        <div id="tactics-retargeting" class="tab-content">
+            <div class="section">
+                <h2>🔍 Retargeting Mechanics</h2>
+                <p>Retargeting in battle is a critical mechanic that decides who wins in mirror matchups.</p>
+                
+                <div class="note-box">
+                    <strong>Important:</strong> In many 4-2-4 vs 4-2-4 Range Phalanx battles, whoever gets their Range killed FIRST often gains battle dynamics in their favor.
+                </div>
+                
+                <p>When Range squads are eliminated:</p>
+                <ul>
+                    <li>The timing of Range destruction heavily influences battle outcome</li>
+                    <li>Killing enemy Range faster can sometimes be a disservice</li>
+                    <li>If both Range are killed simultaneously, expect a close match</li>
+                </ul>
+
+                <div class="example-box">
+                    <h4>Hero Impact on Retargeting:</h4>
+                    <p>Heroes play a significant role in determining retargeting sequences - this is why the 2 Range Hero rule is so critical.</p>
+                    <ul>
+                        <li><strong>Hero Tactical Skills:</strong> When activated, have slightly longer reach than ordinary squad attacks</li>
+                        <li><strong>Squad Positioning:</strong> Squads with heroes stay slightly further back compared to unattended squads</li>
+                        <li><strong>Positioning Impact:</strong> With 1 Range hero, your middle Range squad sticks out toward the enemy</li>
+                        <li><strong>Retargeting Result:</strong> Enemy Infantry squads ignore the Range squad and move backward, creating a major disadvantage</li>
+                    </ul>
+
+                    <h4>Examples of Hero Impact on Battle Outcomes:</h4>
+                    <table>
+                        <tr>
+                            <th>Scenario</th>
+                            <th>Result</th>
+                        </tr>
+                        <tr>
+                            <td>4-4-2 with two Range heroes vs. 749 Range Phalanx</td>
+                            <td>Easy win for the 4-4-2</td>
+                        </tr>
+                        <tr>
+                            <td>4-4-2 with one Range hero</td>
+                            <td>Loss</td>
+                        </tr>
+                        <tr>
+                            <td>4-4-2 with zero Range heroes</td>
+                            <td>Terrible loss</td>
+                        </tr>
+                    </table>
+                </div>
+                
+                <div class="highlight">
+                    <strong>Strategic Tip:</strong> The 2 Range hero rule applies to almost all compositions that use Range Phalanx formation. This is non-negotiable for optimal performance.
+                </div>
+            </div>
+        </div>
+
+<!-- 992 and Special Compositions -->
+        <div id="tactics-special" class="tab-content">
+            <div class="section">
+                <h2>🧪 Special Compositions</h2>
+                <p>Several specialized compositions like 992, 055, 208, and 1433 are designed for specific battle scenarios and counter strategies. These formations require precise execution but can deliver devastating results when used correctly.</p>
+                
+                <div class="subsection">
+                    <h3 class="subsection-title">992 Composition</h3>
+                    <p>The 992 composition is special because:</p>
+                    <ul>
+                        <li>Cavalry acts as buffer against Infantry Blast/Phalanx</li>
+                        <li>Almost always requires carpeting</li>
+                        <li>Frequently used in Emperor and Baron Wonders</li>
+                        <li>Intended to counter 424 variants in Range Phalanx</li>
+                    </ul>
+                    
+                    <div class="note-box">
+                        <strong>Why not use 550?</strong> The 992's Cavalry serves as protection for its Infantry after the 442 winning mechanism is induced. It reduces casualties while still getting reasonable kills.
+                    </div>
+
+                    <div class="recommendation-box">
+                        <h4>992 With Optimal Heroes and Familiars:</h4>
+                        <ul>
+                            <li><strong>Hero Setup:</strong> 122 hero comp (1 Infantry, 2 Range, 2 Cavalry) maximizes 992 effectiveness</li>
+                            <li><strong>Top Heroes:</strong> Petite Devil and Grove Guardian (Range), Storm Fox and Barbarian (Cavalry), Oath Keeper (Infantry)</li>
+                            <li><strong>Familiar Strategy:</strong> Jade Wyrm for counter boost, Blackwing for its powerful attack, Queen Bee for sustained damage</li>
+                            <li><strong>Formation Choice:</strong> Almost always Range Phalanx for 992 compositions</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="subsection">
+                    <h3 class="subsection-title">055 Composition (Zero Infantry Strategy)</h3>
+                    <p>The 055 composition is a highly specialized formation with minimal infantry and balanced ranged/cavalry troops:</p>
+                    <ul>
+                        <li><strong>Precise Troop Count:</strong> Exactly 50,000 infantry troops (no more, no less)</li>
+                        <li><strong>Balance:</strong> Equal parts ranged and cavalry (approximately 2.075M each for a full rally)</li>
+                        <li><strong>Formation Requirement:</strong> <em>Only</em> works with Infantry Wedge formation</li>
+                        <li><strong>Target Selection:</strong> Only effective against enemies with less than 1.1M ranged troops</li>
+                        <li><strong>Hero Setup:</strong> Balance between ranged and cavalry heroes, maximum one infantry hero</li>
+                    </ul>
+                    
+                    <div class="highlight">
+                        <strong>Strategic Value:</strong> The 055 composition can deliver devastating results against opponents with low ranged troop counts when executed perfectly.
+                    </div>
+                    
+                    <div class="warning">
+                        <strong>Counter Strategy:</strong> To counter an 055 comp, use Ranged Phalanx formation. The 055 comp will struggle against enemies with more than 1.3M ranged troops or those with 2+ infantry heroes.
+                    </div>
+                </div>
+                
+                <div class="subsection">
+                    <h3 class="subsection-title">208 Composition (Cavalry-Dominant Strike)</h3>
+                    <p>The 208 composition maximizes cavalry impact with precise infantry and minimal ranged support:</p>
+                    <ul>
+                        <li><strong>Troop Distribution:</strong> Approximately 3M cavalry, 1M infantry, and exactly 120K ranged</li>
+                        <li><strong>Range Count:</strong> Always fixed at 120K sent by rally lead only (never increase this)</li>
+                        <li><strong>Infantry Adjustment:</strong> Only increase infantry count (never range) when facing enemies with >1.1M ranged troops</li>
+                        <li><strong>Formation Specificity:</strong> Range Wedge is the standard formation for this composition</li>
+                        <li><strong>Target Selection:</strong> Generally works against all compositions as long as their range count meets requirements</li>
+                        <li><strong>Danger Zone:</strong> <em>Any composition with more than 1.1M ranged troops poses a significant risk</em></li>
+                    </ul>
+                    
+                    <div class="example-box">
+                        <h4>Advanced 208 Tactics:</h4>
+                        <ul>
+                            <li><strong>Carpeting Strategy:</strong> Always carpet aggressively with standard approaches</li>
+                            <li><strong>Formation Baiting:</strong> For experienced players, can use Ranged Phalanx to bait enemy into Range Wedge (extremely high risk)</li>
+                            <li><strong>Troop Buffer:</strong> 120K ranged serves as a buffer only - maintain this exact count</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="warning">
+                        <strong>Counter Strategy:</strong> When facing a 208 comp, a Range Wedge formation can be effective as a counter. 208 comps are also devastated by cavalry-heavy compositions using Cavalry Phalanx.
+                    </div>
+                </div>
+                
+                <div class="subsection">
+                    <h3 class="subsection-title">1433 Composition (Infantry Specialist)</h3>
+                    <p>The 1433 composition is a powerful infantry-focused formation:</p>
+                    <ul>
+                        <li><strong>Troop Distribution:</strong> Heavily infantry-focused (14/20 parts or ~2.5M troops)</li>
+                        <li><strong>Target Selection:</strong> Only effective against enemies with less than 1M cavalry troops</li>
+                        <li><strong>Formation Requirement:</strong> <em>Must</em> use Infantry Phalanx formation</li>
+                        <li><strong>Heroes:</strong> Full infantry heroes (4-5) to maximize effectiveness</li>
+                        <li><strong>Carpeting:</strong> Not required if troop requirements are met</li>
+                    </ul>
+                    
+                    <div class="highlight">
+                        <strong>Strategic Value:</strong> 1433 is particularly effective against 442 and 974 compositions regardless of enemy gear when their cavalry count is below threshold.
+                    </div>
+                    
+                    <div class="warning">
+                        <strong>Counter Strategy:</strong> To counter a 1433 comp, use Infantry Phalanx. The 1433 comp will fail against enemies with more than 1M cavalry troops.
+                    </div>
+                </div>
+                
+                <div class="subsection">
+                    <h3 class="subsection-title">Special Composition Selection Framework</h3>
+                    <div class="example-box">
+                        <h4>When to Use Special Compositions:</h4>
+                        <table>
+                            <tr>
+                                <th>Composition</th>
+                                <th>Best Used Against</th>
+                                <th>Recommended Formation</th>
+                                <th>Avoid Using Against</th>
+                            </tr>
+                            <tr>
+                                <td>055</td>
+                                <td>Targets with <strong>less than 1.1M ranged</strong> troops</td>
+                                <td><strong>Infantry Wedge</strong></td>
+                                <td>Targets with <strong>1.3M+ ranged</strong> or <strong>2+ infantry heroes</strong></td>
+                            </tr>
+                            <tr>
+                                <td>208</td>
+                                <td>Generally works against all comps so long their range count meets the requirements</td>
+                                <td><strong>Range Wedge</strong></td>
+                                <td>Any comps that has more than <strong>1.1M ranged troops is a risk to you</strong></td>
+                            </tr>
+                            <tr>
+                                <td>1433</td>
+                                <td>Targets with <strong>under 1M cavalry</strong></td>
+                                <td><strong>Infantry Phalanx</strong></td>
+                                <td>Enemies with <strong>1M+ cavalry</strong></td>
+                            </tr>
+                            <tr>
+                                <td>992</td>
+                                <td><strong>424 variants</strong> in <strong>Ranged Phalanx</strong></td>
+                                <td><strong>Ranged Phalanx</strong></td>
+                                <td>Counters like <strong>668</strong> or <strong>875</strong>, especially if run in <strong>Cavalry Phalanx</strong></td>
+                            </tr>
+                        </table>
+                    </div>
+                    
+                    <div class="warning">
+                        <strong>Critical Reminder:</strong> Special compositions require precise execution and target selection. Always scout thoroughly before deploying these specialized tactics.
+                    </div>
+                </div>
+                
+                <div class="subsection">
+                    <h3 class="subsection-title">442 vs 424 Ranged Phalanx Dynamics</h3>
+                    <p>When a 442 ranged phalanx and a 424 ranged phalanx collide, the outcome depends on squad retargeting sequences.</p>
+                    
+                    <div class="example-box">
+                        <h4>Timeline Dynamics:</h4>
+                        <table>
+                            <tr>
+                                <th>Scenario</th>
+                                <th>Outcome</th>
+                            </tr>
+                            <tr>
+                                <td>424 ranged troops are dismantled before half the ranged in 442 are destroyed</td>
+                                <td>442 is bound to win</td>
+                            </tr>
+                            <tr>
+                                <td>424 ranged have high hp and don't go down quickly</td>
+                                <td>424 wins by a large margin</td>
+                            </tr>
+                        </table>
+                    </div>
+                    
+                    <div class="note-box">
+                        <h4>442 Derivatives:</h4>
+                        <p>To manipulate these timings, players use variations like:</p>
+                        <ul>
+                            <li>974</li>
+                            <li>992</li>
+                            <li>794</li>
+                            <li>983</li>
+                        </ul>
+                        <p>These have been effective as carpeted rallies.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Attack vs HP Stats -->
+        <div id="tactics-stats" class="tab-content">
+            <div class="section">
+                <h2>⚔️ Attack vs HP Stats</h2>
+                <p>Both Attack and HP stats are equally important in different battle scenarios.</p>
+                
+                <ul>
+                    <li>HP reduces your losses</li>
+                    <li>Attack increases damage to opponents</li>
+                    <li>Their synergy creates robust outcomes</li>
+                </ul>
+                
+                <div class="recommendation-box">
+                    <h4>Strategic Considerations:</h4>
+                    <ul>
+                        <li>Multiple Rallies/Reduced Losses: HP might be more suitable</li>
+                        <li>Earning Points (KvK, etc.): Attack stats might be better</li>
+                        <li>Increasing Win Chance: Both Attack and HP are ideal</li>
+                    </ul>
+                </div>
+
+                <div class="example-box">
+                    <h4>Counter-Intuitive Stat Effects:</h4>
+                    <ul>
+                        <li>Increasing HP can sometimes cause more damage to the opponent</li>
+                        <li>Increasing Attack can sometimes worsen results in specific matchups (like 442 vs 659 Range Phalanx)</li>
+                        <li>Army Attack can sometimes reduce losses more effectively than equivalent HP stats</li>
+                        <li>Stats influence familiar activation timing, which can dramatically shift battle results</li>
+                    </ul>
+                </div>
+                
+                <div class="highlight">
+                    <strong>Strategic Tip:</strong> Specialized rally leaders often have different gear sets optimized for Attack vs HP depending on the battle scenario and objectives.
+                </div>
+            </div>
+        </div>
+
+        <!-- Top Heroes -->
+        <div id="tactics-heroes" class="tab-content">
+            <div class="section">
+                <h2>👑 Top Heroes for Each Troop Type</h2>
+                <p>Selecting the right heroes for your composition is critical for maximizing effectiveness.</p>
+                
+                <div class="example-box">
+                    <h4>P2P Infantry Heroes:</h4>
+                    <ul>
+                        <li><strong>Twilight Priestess:</strong> #1 choice for Infantry rallies</li>
+                        <li><strong>Oath Keeper:</strong> Excellent Infantry leader for war</li>
+                        <li><strong>Grim Wolf:</strong> Strong secondary Infantry hero</li>
+                        <li><strong>The Big Guy:</strong> Great for F2P or light P2P players</li>
+                    </ul>
+
+                    <h4>P2P Range Heroes:</h4>
+                    <ul>
+                        <li><strong>Petite Devil:</strong> Top Range hero for war</li>
+                        <li><strong>Snow Queen:</strong> Excellent for Range formations</li>
+                        <li><strong>Grove Guardian:</strong> Great in Colosseum and as Range leader</li>
+                        <li><strong>Black Crow:</strong> Effective Range leader in marches</li>
+                    </ul>
+
+                    <h4>P2P Cavalry Heroes:</h4>
+                    <ul>
+                        <li><strong>Barbarian:</strong> Top Cavalry war hero</li>
+                        <li><strong>Child of Light:</strong> Excellent Cavalry leader</li>
+                        <li><strong>Storm Fox:</strong> Incredible army stats, especially for Cavalry</li>
+                        <li><strong>Lore Weaver:</strong> Top-tier hero with amazing war army stats</li>
+                    </ul>
+                </div>
+
+                <div class="subsection">
+                    <h3 class="subsection-title">F2P Hero Options</h3>
+                    <div class="example-box">
+                        <h4>F2P Heroes:</h4>
+                        <ul>
+                            <li><strong>Rose Knight:</strong> #1 F2P hero, provides army attack boost</li>
+                            <li><strong>Trickster:</strong> Important for research boosts</li>
+                            <li><strong>Prima Donna:</strong> Excellent healing abilities</li>
+                            <li><strong>Demon Slayer:</strong> Great Infantry hero during wars</li>
+                            <li><strong>Tracker:</strong> Strong single hit attack, good Range ATK</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="warning">
+                    <strong>Important:</strong> For Range Phalanx compositions, always use at least 2 Range heroes. This is non-negotiable for optimal battle performance.
+                </div>
+            </div>
+        </div>
+
+        <!-- Pact 5 Familiars -->
+        <div id="tactics-familiars" class="tab-content">
+            <div class="section">
+                <h2>✨ Familiars Impact</h2>
+                <p>Pact 5 / 4 familiars provide substantial boosts to your battle capabilities and can decisively influence battle outcomes.</p>
+                
+                <div class="example-box">
+                    <h4>Top Pact 5/ 4/ 3 Familiars:</h4>
+                    <table>
+                        <tr>
+                            <th>Familiar</th>
+                            <th>Key Skills</th>
+                            <th>Best For</th>
+                        </tr>
+                        <tr>
+                            <td>Jade Wyrm</td>
+                            <td>Reduces damage inflicted by enemies by 9% when 4% of your troops have fallen.</td>
+                            <td>Any composition; universally useful</td>
+                        </tr>
+                        <tr>
+                            <td>Blackwing</td>
+                            <td>Deals 600% damage based on your intial Range ATK to one of the largest enemy squads when 4% of your troops have fallen</td>
+                            <td>Range familiar if you want more earlier damage in the battle</td>
+                        </tr>
+                        <tr>
+                            <td>Queen Bee</td>
+                            <td>Deals 150% damage every 4 seconds for up to 5 times to one of the largest enemy squads. Damage is based on your intial Ranged ATK when 8% of your troops have fallen</td>
+                            <td>Range Phalanx setups</td>
+                        </tr>
+                        <tr>
+                            <td>Gargantua</td>
+                            <td>Deals 600% damage based on your intial cavalary ATK to one of the largest enemy squads when 4% of your troops have fallen</td>
+                            <td>Cavalry-heavy compositions</td>
+                        </tr>
+                        <tr>
+                            <td>Frostwing</td>
+                            <td>Deals 150% damage every 4 seconds for up to 5 times to one of the largest enemy squads. Damage is based on your intial Cavalary ATK when 8% of your troops have fallen</td>
+                            <td>Generally used to help Cav fronts</td>
+                        </tr>
+                        <td>SaberFang</td>
+                            <td>Summons a shield that protects 7% of your Cavalary troops from a killing blow when 12% of your Cavalary troops have fallen</td>
+                            <td>Generally used to help Cavalary take more damage to survive longer.</td>
+                        </tr>
+                        <tr>
+                            <td>Huey Hops</td>
+                            <td>Deals 150% damage every 4 seconds for up to 5 times to one of the largest enemy squads. Damage is based on your intial Infantry ATK when 8% of your troops have fallen</td>
+                            <td>Generally used to help Inf do more damage</td>
+                        </tr>
+                             <td>Hell Drider</td>
+                            <td>Petrifies one of the largest enemy squads for 11 seconds when 7% of your troops have fallen</td>
+                            <td>Used in every comp as its a universal</td>
+                        </tr>
+                        <td>Bon Appeti</td>
+                            <td>Deals 600% damage based on your intial Infantry ATK to one of the largest enemy squads when 4% of your troops have fallen</td>
+                            <td>Used to boost Infantry damage</td>
+                        </tr>
+                        <td>Snow Beast</td>
+                            <td>Summons a shield that protects 7% of your Ranged troops from a killing blow when 12% of your Cavalary troops have fallen</td>
+                            <td>Used to help range troops survive longer in battle</td>
+                        </tr>
+                        <td>Hoarder</td>
+                            <td>Summons a shield that protects 7% of your Infantry troops from a killing blow when 12% of your Cavalary troops have fallen</td>
+                            <td>Used to help Infantry troops survive longer in battle</td>
+                        </tr>
+                    </table>
+
+                    <h4>Familiar Strategy by Formation:</h4>
+                    <ul>
+                        <li><strong>Range Phalanx:</strong> Snow Beast, Blackwing or Queen Bee, Jade Wyrm, Hell Drider</li>
+                        <li><strong>Cavalry Phalanx:</strong> Gargantua, Jade Wyrm, Hell Drider, SaberFang, Frostwing</li>
+                        <li><strong>Infantry Phalanx:</strong> Huey Hops, Jade Wyrm,Hell Drider, Bon Appeti, Hoarder</li>
+                        <li><strong>All Formations:</strong> Jade Wyrm,Hell Drider, is essential; add familiars matching your frontline</li>
+                    </ul>
+                </div>
+
+                <div class="note-box">
+                    <h4>Complicated Effects of Familiars:</h4>
+                    <ul>
+                        <li>Familiars activate at different timings based on troop death percentages</li>
+                        <li>Their activation can dramatically shift retargeting sequences</li>
+                        <li>In 442 vs 424 scenarios, familiar timing often determines the winner</li>
+                        <li>Early activation familiars (4% threshold) vs. later activation (8% threshold) create different battle dynamics</li>
+                        <li>Familiar choice should complement your formation and counter the enemy's expected setup</li>
+                    </ul>
+                </div>
+                
+                <div class="highlight">
+                    <strong>Strategic Tip:</strong> Jade Wyrm is considered essential for almost any rally composition due to its counter stat boosts and versatility.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>Lords Mobile Advanced Tactics Guide © 2025</p>
+            <p>Game content and materials are trademarks and copyrights of their respective publisher and licensors.</p>
+        </div>
+    </footer>
+
+    <script>
+        function openTab(tabName, evt) {
+            // Hide all tab content
+            var tabContent = document.getElementsByClassName("tab-content");
+            for (var i = 0; i < tabContent.length; i++) {
+                tabContent[i].classList.remove("active");
+            }
+            
+            // Remove active class from all buttons
+            var tabButtons = document.getElementsByClassName("comp-button");
+            for (var i = 0; i < tabButtons.length; i++) {
+                tabButtons[i].classList.remove("active");
+            }
+            
+            // Show the selected tab content
+            document.getElementById(tabName).classList.add("active");
+            
+            // Add active class to the clicked button
+            if (evt && evt.currentTarget) {
+                evt.currentTarget.classList.add('active');
+            }
+        }
+    </script>
+</body>
+</html>

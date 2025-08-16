@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lords Mobile - Heroes & Familiars</title>
+    <link rel="stylesheet" href="lords-styles.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Lords Mobile Battle Guide</h1>
+            <div class="subtitle">Heroes & Familiars</div>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- Navigation Bar -->
+        <div class="comps-nav">
+            <button class="comp-button active" onclick="openTab('heroes-compositions', event)">Hero Selection</button>
+            <button class="comp-button" onclick="openTab('heroes-retargeting', event)">Retargeting Mechanics</button>
+            <button class="comp-button" onclick="openTab('heroes-gear', event)">Hero Gear</button>
+            <button class="comp-button" onclick="openTab('heroes-familiars', event)">Familiars</button>
+            <button class="comp-button" onclick="openTab('heroes-utility', event)">Utility Familiars</button>
+        </div>
+
+        <!-- Hero Compositions -->
+        <div id="heroes-compositions" class="tab-content active">
+            <div class="section">
+                <h2>🦸‍♂️ Hero Selection</h2>
+                <p>Selecting the right heroes is critical for maximizing your battle effectiveness. This guide covers the best heroes for each troop type and their specific advantages.</p>
+                
+                <div class="note-box">
+                    <h4>Hero Type Impact:</h4>
+                    <p>Heroes provide both statistical boosts and tactical advantages through their abilities and positioning effects. The type of hero (Infantry, Range, Cavalry) determines which troop squads they impact most significantly.</p>
+                </div>
+
+                <div class="recommendation-box">
+                    <h4>Top Pay-to-Play Heroes by Type:</h4>
+                    <table>
+                        <tr>
+                            <th>Infantry Heroes</th>
+                            <th>Range Heroes</th>
+                            <th>Cavalry Heroes</th>
+                        </tr>
+                        <tr>
+                            <td>1. Twilight Priestess</td>
+                            <td>1. Petite Devil</td>
+                            <td>1. Barbarian</td>
+                        </tr>
+                        <tr>
+                            <td>2. Grim Wolf</td>
+                            <td>2. Grove Guardian</td>
+                            <td>2. Storm Fox</td>
+                        </tr>
+                        <tr>
+                            <td>3. The Big Guy</td>
+                            <td>3. Snow Queen</td>
+                            <td>3. Child of Light</td>
+                        </tr>
+                        <tr>
+                            <td>4. Oath Keeper</td>
+                            <td>4. Black Crow</td>
+                            <td>4. Vengeful Centaur</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="example-box">
+                    <h4>Top F2P Heroes:</h4>
+                    <ul>
+                        <li><strong>Rose Knight:</strong> #1 hero for Colosseum and provides army attack boost</li>
+                        <li><strong>Trickster:</strong> Important for research boosts and physical attacks</li>
+                        <li><strong>Prima Donna:</strong> Excellent healing capabilities, perfect for most combos</li>
+                        <li><strong>Demon Slayer:</strong> Lethal in both Colosseum and during wars</li>
+                        <li><strong>Tracker:</strong> Strongest single hit attack, great for ATK Monster Hunting</li>
+                    </ul>
+                </div>
+                
+                <div class="subsection">
+                    <h3 class="subsection-title">Hero Skills & Stats</h3>
+                    
+                    <div class="example-box">
+                        <h4>Key Hero Attributes:</h4>
+                        <ul>
+                            <li><strong>Leader Skills:</strong> Active only when the hero is designated as the leader</li>
+                            <li><strong>Battle Skills:</strong> Active in all battles regardless of leader position</li>
+                            <li><strong>Tactical Skills:</strong> Special abilities that activate during battle</li>
+                            <li><strong>Army Stats:</strong> Some heroes provide valuable army-wide bonuses</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="note-box">
+                        <h4>Hero Star Levels:</h4>
+                        <p>Higher star levels dramatically increase a hero's effectiveness:</p>
+                        <ul>
+                            <li>Gold (5 stars) heroes provide full skill benefits</li>
+                            <li>P2P heroes typically need gold grade to outperform F2P alternatives</li>
+                            <li>Focus on getting core battle heroes to gold before upgrading secondary heroes</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="highlight">
+                    <strong>Strategic Tip:</strong> Even a gold P2P hero with perfect gear can perform poorly if placed in the wrong battle formation. Always consider the hero's role in your overall battle strategy.
+                </div>
+            </div>
+        </div>
+
+        <!-- Heroes' Role in Retargeting -->
+        <div id="heroes-retargeting" class="tab-content">
+            <div class="section">
+                <h2>🎮 Retargeting Mechanics</h2>
+                <p>Understanding how heroes affect squad positioning and targeting is crucial for optimizing battle performance.</p>
+                
+                <div class="subsection">
+                    <h3 class="subsection-title">How Heroes Impact Squad Positioning</h3>
+                    <p>Heroes fundamentally change how squads behave in battle through their tactical skills and positioning effects.</p>
+                    
+                    <div class="note-box">
+                        <h4>Theoretical Explanation: Hero Tactical Skills</h4>
+                        <ul>
+                            <li>The difference in squad position is caused by the hero's tactical skill</li>
+                            <li>When activated, it has a slightly longer reach than an ordinary squad attack</li>
+                            <li>This keeps the squad position a little bit further away compared to a squad unattended by any hero</li>
+                            <li>The activation is characterized by the enlargement of the hero figure on the field</li>
+                            <li>When the hero figure shrinks, that's the finish point of the longer reach, followed by a position correction</li>
+                            <li>When squads attended by heroes face each other, both activate at similar timings, maintaining relative position</li>
+                            <li>If only one side has a hero, the squad without the hero makes an extra step toward the opposing squad</li>
+                            <li>This applies to any troop type, not just ranged heroes</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="example-box">
+                    <h4>Visual Example of Squad Positioning:</h4>
+                    <p>In a battle, each hero creates a "zone of control" around their assigned squad that alters its positioning:</p>
+                    <ul>
+                        <li>Squads with heroes stay slightly further back (safer position)</li>
+                        <li>Squads without heroes advance further forward (exposed position)</li>
+                        <li>This positioning difference can lead to targeting advantages or disadvantages</li>
+                        <li>The effect compounds when comparing armies with different hero distributions</li>
+                    </ul>
+                </div>
+                
+                <div class="recommendation-box">
+                    <h4>Hero Distribution Impact:</h4>
+                    <p>Different hero distributions create different squad formations on the battlefield:</p>
+                    <ul>
+                        <li><strong>Balanced Distribution:</strong> Even protection across all squad types</li>
+                        <li><strong>Front-loaded Distribution:</strong> Better protection for front-line troops</li>
+                        <li><strong>Specialized Distribution:</strong> Enhanced performance for specific troop types</li>
+                    </ul>
+                </div>
+                
+                <div class="highlight">
+                    <strong>Strategic Tip:</strong> Understanding hero positioning effects is one of the most advanced mechanics in Lords Mobile. This knowledge can help you defeat opponents with significantly higher might.
+                </div>
+            </div>
+        </div>
+
+        <!-- Gear and Stat Considerations -->
+        <div id="heroes-gear" class="tab-content">
+            <div class="section">
+                <h2>🛡️ Hero Gear</h2>
+                <p>Hero gear selection dramatically affects both individual hero performance and overall battle effectiveness.</p>
+                
+                <div class="subsection">
+                    <h3 class="subsection-title">Hero-Specific Gear</h3>
+                    <p>Different heroes benefit from different gear sets based on their role and abilities.</p>
+                    
+                    <div class="example-box">
+                        <h4>Infantry Hero Gear Focus:</h4>
+                        <ul>
+                            <li><strong>Twilight Priestess:</strong> Focus on Infantry ATK/HP gear with Army bonuses</li>
+                            <li><strong>Oath Keeper:</strong> Maximize Infantry DEF stats and Army HP</li>
+                            <li><strong>The Big Guy:</strong> Balance Infantry ATK with Army ATK gear</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="example-box">
+                        <h4>Range Hero Gear Focus:</h4>
+                        <ul>
+                            <li><strong>Petite Devil:</strong> Prioritize Range ATK and Army ATK</li>
+                            <li><strong>Snow Queen:</strong> Focus on Range ATK with some Range HP</li>
+                            <li><strong>Grove Guardian:</strong> Balance Range ATK with Army stats</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="example-box">
+                        <h4>Cavalry Hero Gear Focus:</h4>
+                        <ul>
+                            <li><strong>Barbarian:</strong> Maximum Cavalry ATK and Army ATK</li>
+                            <li><strong>Storm Fox:</strong> Focus on Cavalry ATK and Army HP</li>
+                            <li><strong>Child of Light:</strong> Balance between Cavalry and Army stats</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="recommendation-box">
+                    <h4>Gear Set Strategies:</h4>
+                    <ul>
+                        <li><strong>Multiple Sets:</strong> Develop different gear sets for different battle scenarios</li>
+                        <li><strong>P2P Options:</strong> Champion and Mythic gear offer the highest stat bonuses</li>
+                        <li><strong>F2P Options:</strong> Focus on event gear, Hell Events, and Guild Fest rewards</li>
+                        <li><strong>Jewels:</strong> Infantry/Range/Cavalry ATK jewels offer the best value for their specific troop types</li>
+                    </ul>
+                </div>
+                
+                <div class="note-box">
+                    <h4>Stat Priority for Heroes:</h4>
+                    <p>Different scenarios may require different stat priorities:</p>
+                    <ul>
+                        <li><strong>Rally Leader:</strong> Balance ATK and HP stats for sustained performance</li>
+                        <li><strong>Defending:</strong> HP stats generally provide better survival value</li>
+                        <li><strong>KvK Points:</strong> ATK stats maximize kills and point generation</li>
+                    </ul>
+                </div>
+                
+                <div class="highlight">
+                    <strong>Strategic Tip:</strong> Having specialized gear sets for different heroes allows you to quickly adapt to different battle scenarios without needing to reconfigure your gear each time.
+                </div>
+            </div>
+        </div>
+
+        <!-- Combat Familiars -->
+        <div id="heroes-familiars" class="tab-content">
+            <div class="section">
+                <h2>✨ Combat Familiars</h2>
+                <p>Combat familiars provide significant stat boosts and powerful battle abilities that can turn the tide of battle.</p>
+                
+                <div class="example-box">
+                    <h4>Top Pact 5 Combat Familiars:</h4>
+                    <table>
+                        <tr>
+                            <th>Familiar</th>
+                            <th>Key Skills</th>
+                            <th>Activation Timing</th>
+                        </tr>
+                        <tr>
+                            <td>Jade Wyrm</td>
+                            <td>
+                                <ul>
+                                    <li>Fiery Blessing – Infantry: +15% Infantry-Ranged Counter Boost</li>
+                                    <li>Fiery Blessing – Ranged: +15% Ranged-Cavalry Counter Boost</li>
+                                    <li>Fiery Blessing – Cavalry: +15% Cavalry-Infantry Counter Boost</li>
+                                    <li>Divine Fire: Reduces enemy damage by 9%</li>
+                                </ul>
+                            </td>
+                            <td>4% of troops defeated</td>
+                        </tr>
+                        <tr>
+                            <td>Blackwing</td>
+                            <td>
+                                <ul>
+                                    <li>Soulburst: +5% Army ATK</li>
+                                    <li>Bad Blood: +10% Army HP (Battle Fury)</li>
+                                    <li>Hellfire: Eliminates 100% of wounded enemy troops</li>
+                                    <li>Savage Breath: 600% of Ranged ATK damage</li>
+                                </ul>
+                            </td>
+                            <td>4% of troops defeated</td>
+                        </tr>
+                        <tr>
+                            <td>Queen Bee</td>
+                            <td>
+                                <ul>
+                                    <li>Honeyed Words: +10% Cavalry Max HP</li>
+                                    <li>Buzz Kill: +10% Ranged ATK</li>
+                                    <li>Poison Sting: Sends enemy troops to infirmary, decreases Army ATK</li>
+                                    <li>Stinging Swarm: 150% of Ranged ATK damage, multiple hits</li>
+                                </ul>
+                            </td>
+                            <td>8% of troops defeated</td>
+                        </tr>
+                        <tr>
+                            <td>Gargantua</td>
+                            <td>
+                                <ul>
+                                    <li>Protective Layer: +20% Cavalry DEF</li>
+                                    <li>Big Shot: +10% Cavalry ATK</li>
+                                    <li>Saving Grace: Extends Guild Fest quests duration</li>
+                                    <li>Giant Fist: 60-600% of Cavalry ATK damage</li>
+                                </ul>
+                            </td>
+                            <td>4% of troops defeated</td>
+                        </tr>
+                        <tr>
+                            <td>Frostwing</td>
+                            <td>
+                                <ul>
+                                    <li>Ice Shield: +20% Infantry DEF</li>
+                                    <li>Glacial Blast: +5% Army ATK</li>
+                                    <li>Frost Bite: Slows enemy Travel Time</li>
+                                    <li>Killing Frost: 150% of Cavalry ATK damage, multiple hits</li>
+                                </ul>
+                            </td>
+                            <td>8% of troops defeated</td>
+                        </tr>
+                    </table>
+                </div>
+                
+                <div class="subsection">
+                    <h3 class="subsection-title">Familiar Activation Timing</h3>
+                    <p>Understanding familiar activation timing is crucial for maximizing their effectiveness in battle.</p>
+                    
+                    <div class="note-box">
+                        <h4>Activation Thresholds:</h4>
+                        <ul>
+                            <li><strong>Early Activation (4% Troops):</strong> Jade Wyrm, Blackwing, Gargantua, Bon Appeti</li>
+                            <li><strong>Later Activation (8% Troops):</strong> Queen Bee, Frostwing, Tidal Titan</li>
+                            <li><strong>Multiple Activation:</strong> Queen Bee and Frostwing skills activate up to 5 times</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="example-box">
+                        <h4>Activation Impact:</h4>
+                        <p>Different activation timings can dramatically affect battle outcomes:</p>
+                        <ul>
+                            <li>Early activation familiars help establish initial advantage</li>
+                            <li>Sustained damage familiars (Queen Bee/Frostwing) excel in longer battles</li>
+                            <li>Burst damage familiars can instantly eliminate key enemy squads</li>
+                            <li>Familiar abilities can change which enemy squads retarget to which of your squads</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="highlight">
+                    <strong>Strategic Tip:</strong> Jade Wyrm is considered the most valuable Pact 5 familiar due to its universal counter boosts and damage reduction that benefit any composition and formation.
+                </div>
+            </div>
+        </div>
+
+        <!-- Utility Familiars -->
+        <div id="heroes-utility" class="tab-content">
+            <div class="section">
+                <h2>🧰 Utility Familiars</h2>
+                <p>Beyond combat, familiars provide valuable utility functions that can accelerate your growth and resource generation.</p>
+                
+                <div class="note-box">
+                    <h4>Top Utility Familiars:</h4>
+                    <ul>
+                        <li><strong>Territe (Pact 1A):</strong> 8/10 - Increases merging speeds by 20%</li>
+                        <li><strong>Aquiris (Pact 1B):</strong> 8.5/10 - Generates 60-120 STA every 12 hours</li>
+                        <li><strong>Gemming Gremlin (Pact 3):</strong> 8.7/10 - Generates 1,000-2,000 gems every 2 days</li>
+                        <li><strong>Goblin (Pact 3):</strong> 9.5/10 - Generates 6-12M gold every 24 hours</li>
+                        <li><strong>Hoarder (Pact 4):</strong> Best in Pact 4 - Provides 3 random jewels every 3 days</li>
+                        <li><strong>Mecha Trojan (Pact 4):</strong> Adds 125,000 troops to rally capacity</li>
+                        <li><strong>Grim Reaper (Pact 4):</strong> Kills 20-50K highest tier troops in enemy barracks</li>
+                    </ul>
+                </div>
+                
+                <div class="subsection">
+                    <h3 class="subsection-title">Development Priority</h3>
+                    <p>Developing familiars requires careful resource allocation and priority setting.</p>
+                    
+                    <div class="recommendation-box">
+                        <h4>Development Order:</h4>
+                        <ol>
+                            <li><strong>Pact 3 Resource Familiars:</strong> Gemming Gremlin and Goblin should be prioritized for their passive resource generation</li>
+                            <li><strong>Pact 1 Utility Familiars:</strong> Aquiris and Territe provide immediate value for a small investment</li>
+                            <li><strong>Pact 4 Key Familiars:</strong> Hoarder and Mecha Trojan offer unique benefits worth investing in</li>
+                            <li><strong>Pact 5 Combat Familiars:</strong> Jade Wyrm, Blackwing, and Queen Bee for battle optimization</li>
+                        </ol>
+                    </div>
+                    
+                    <div class="example-box">
+                        <h4>F2P Familiar Focus:</h4>
+                        <ul>
+                            <li><strong>Daily Activation:</strong> Focus on familiars that provide daily bonuses first</li>
+                            <li><strong>Resource Management:</strong> Resource-generating familiars help sustain growth</li>
+                            <li><strong>Contract Balance:</strong> Balance anima use between combat and utility familiars</li>
+                            <li><strong>Event Value:</strong> Save puzzle pieces for events that provide additional rewards</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="subsection">
+                    <h3 class="subsection-title">Special Familiars</h3>
+                    <p>Some familiars provide unique benefits that don't fit into standard categories.</p>
+                    
+                    <div class="example-box">
+                        <h4>Notable Special Familiars:</h4>
+                        <ul>
+                            <li><strong>Gryphon (Pact 4):</strong> Increases army size by up to 20%</li>
+                            <li><strong>Hell Drider (Pact 3):</strong> Significantly increases gathering speed</li>
+                            <li><strong>Snow Beast (Pact 3):</strong> Increases Army DEF during Wonder battles</li>
+                            <li><strong>Magus (Pact 3):</strong> Grants energy when shields are broken</li>
+                            <li><strong>Noceros (Pact 4):</strong> Increases Army DEF when reinforcing allies</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="highlight">
+                    <strong>Strategic Tip:</strong> Balance your familiar development between combat effectiveness and economic utility. Resource-generating familiars help sustain your growth and fund your war activities.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>Lords Mobile Heroes & Familiars Guide © 2025</p>
+            <p>Game content and materials are trademarks and copyrights of their respective publisher and licensors.</p>
+        </div>
+    </footer>
+
+    <script>
+        function openTab(tabName, evt) {
+            // Hide all tab content
+            var tabContent = document.getElementsByClassName("tab-content");
+            for (var i = 0; i < tabContent.length; i++) {
+                tabContent[i].classList.remove("active");
+            }
+            
+            // Remove active class from all buttons
+            var tabButtons = document.getElementsByClassName("comp-button");
+            for (var i = 0; i < tabButtons.length; i++) {
+                tabButtons[i].classList.remove("active");
+            }
+            
+            // Show the selected tab content
+            document.getElementById(tabName).classList.add("active");
+            
+            // Add active class to the clicked button
+            if (evt && evt.currentTarget) {
+                evt.currentTarget.classList.add('active');
+            }
+        }
+    </script>
+</body>
+</html>
