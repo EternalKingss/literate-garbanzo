@@ -7,27 +7,45 @@
     <link rel="stylesheet" href="lords-styles.css">
 </head>
 <body>
+    <a href="#main-content" class="skip-link">Skip to content</a>
     <header>
-        <div class="container">
-            <h1>Lords Mobile Battle Guide</h1>
-            <div class="subtitle">Advanced Tactics</div>
+        <div class="container header-container">
+            <a href="index.html" class="logo">
+                <div class="logo-icon">LM</div>
+                <div class="logo-text">
+                    <h1>Lords Mobile Battle Guide</h1>
+                    <div class="subtitle">Advanced Tactics</div>
+                </div>
+            </a>
+            <nav class="dropdown-nav">
+                <button class="dropdown-button">Navigate</button>
+                <div class="dropdown-content">
+                    <a href="index.html" class="nav-item">Home</a>
+                    <a href="CompGears.html" class="nav-item">Compositions</a>
+                    <a href="advanced.html" class="nav-item active">Advanced Tips</a>
+                    <a href="formations.html" class="nav-item">Formations</a>
+                    <a href="battle-reports.html" class="nav-item">Reports</a>
+                    <a href="heroes.html" class="nav-item">Heroes</a>
+                </div>
+            </nav>
         </div>
     </header>
 
+    <main id="main-content">
     <div class="container">
         <!-- Navigation Bar -->
-        <div class="comps-nav">
-            <button class="comp-button active" onclick="openTab('tactics-wedge', event)">Wedge Tactics</button>
-            <button class="comp-button" onclick="openTab('tactics-comps', event)">Comp Weaknesses</button>
-            <button class="comp-button" onclick="openTab('tactics-retargeting', event)">Retargeting</button>
-            <button class="comp-button" onclick="openTab('tactics-special', event)">Special Comps</button>
-            <button class="comp-button" onclick="openTab('tactics-stats', event)">Attack vs HP</button>
-            <button class="comp-button" onclick="openTab('tactics-heroes', event)">Heroes</button>
-            <button class="comp-button" onclick="openTab('tactics-familiars', event)">Familiars</button>
+        <div class="comps-nav" role="tablist" aria-label="Advanced tactics sections">
+            <button class="comp-button active" role="tab" aria-selected="true" aria-controls="tactics-wedge" onclick="openTab('tactics-wedge', event)">Wedge Tactics</button>
+            <button class="comp-button" role="tab" aria-selected="false" aria-controls="tactics-comps" onclick="openTab('tactics-comps', event)">Comp Weaknesses</button>
+            <button class="comp-button" role="tab" aria-selected="false" aria-controls="tactics-retargeting" onclick="openTab('tactics-retargeting', event)">Retargeting</button>
+            <button class="comp-button" role="tab" aria-selected="false" aria-controls="tactics-special" onclick="openTab('tactics-special', event)">Special Comps</button>
+            <button class="comp-button" role="tab" aria-selected="false" aria-controls="tactics-stats" onclick="openTab('tactics-stats', event)">Attack vs HP</button>
+            <button class="comp-button" role="tab" aria-selected="false" aria-controls="tactics-heroes" onclick="openTab('tactics-heroes', event)">Heroes</button>
+            <button class="comp-button" role="tab" aria-selected="false" aria-controls="tactics-familiars" onclick="openTab('tactics-familiars', event)">Familiars</button>
         </div>
 
         <!-- Wedge Formation Tactics -->
-        <div id="tactics-wedge" class="tab-content active">
+        <div id="tactics-wedge" class="tab-content active" role="tabpanel">
             <div class="section">
                 <h2>🎯 Wedge Formation Tactics</h2>
                 <p>Understanding how wedge formations change battle dynamics is critical for advanced players.</p>
@@ -70,7 +88,7 @@
         </div>
 
         <!-- Common Comp Weaknesses -->
-        <div id="tactics-comps" class="tab-content">
+        <div id="tactics-comps" class="tab-content" role="tabpanel">
             <div class="section">
                 <h2>⚡ Common Comp Weaknesses</h2>
                 <p>Every composition has specific weaknesses that can be exploited with the right counter strategy.</p>
@@ -114,7 +132,7 @@
         </div>
 
         <!-- Retargeting Mechanics -->
-        <div id="tactics-retargeting" class="tab-content">
+        <div id="tactics-retargeting" class="tab-content" role="tabpanel">
             <div class="section">
                 <h2>🔍 Retargeting Mechanics</h2>
                 <p>Retargeting in battle is a critical mechanic that decides who wins in mirror matchups.</p>
@@ -168,7 +186,7 @@
         </div>
 
 <!-- 992 and Special Compositions -->
-        <div id="tactics-special" class="tab-content">
+        <div id="tactics-special" class="tab-content" role="tabpanel">
             <div class="section">
                 <h2>🧪 Special Compositions</h2>
                 <p>Several specialized compositions like 992, 055, 208, and 1433 are designed for specific battle scenarios and counter strategies. These formations require precise execution but can deliver devastating results when used correctly.</p>
@@ -344,7 +362,7 @@
             </div>
         </div>
         <!-- Attack vs HP Stats -->
-        <div id="tactics-stats" class="tab-content">
+        <div id="tactics-stats" class="tab-content" role="tabpanel">
             <div class="section">
                 <h2>⚔️ Attack vs HP Stats</h2>
                 <p>Both Attack and HP stats are equally important in different battle scenarios.</p>
@@ -381,7 +399,7 @@
         </div>
 
         <!-- Top Heroes -->
-        <div id="tactics-heroes" class="tab-content">
+        <div id="tactics-heroes" class="tab-content" role="tabpanel">
             <div class="section">
                 <h2>👑 Top Heroes for Each Troop Type</h2>
                 <p>Selecting the right heroes for your composition is critical for maximizing effectiveness.</p>
@@ -433,7 +451,7 @@
         </div>
 
         <!-- Pact 5 Familiars -->
-        <div id="tactics-familiars" class="tab-content">
+        <div id="tactics-familiars" class="tab-content" role="tabpanel">
             <div class="section">
                 <h2>✨ Familiars Impact</h2>
                 <p>Pact 5 / 4 familiars provide substantial boosts to your battle capabilities and can decisively influence battle outcomes.</p>
@@ -471,29 +489,34 @@
                             <td>Deals 150% damage every 4 seconds for up to 5 times to one of the largest enemy squads. Damage is based on your intial Cavalary ATK when 8% of your troops have fallen</td>
                             <td>Generally used to help Cav fronts</td>
                         </tr>
-                        <td>SaberFang</td>
-                            <td>Summons a shield that protects 7% of your Cavalary troops from a killing blow when 12% of your Cavalary troops have fallen</td>
-                            <td>Generally used to help Cavalary take more damage to survive longer.</td>
+                        <tr>
+                            <td>SaberFang</td>
+                            <td>Summons a shield that protects 7% of your Cavalry troops from a killing blow when 12% of your Cavalry troops have fallen</td>
+                            <td>Generally used to help Cavalry take more damage to survive longer.</td>
                         </tr>
                         <tr>
                             <td>Huey Hops</td>
-                            <td>Deals 150% damage every 4 seconds for up to 5 times to one of the largest enemy squads. Damage is based on your intial Infantry ATK when 8% of your troops have fallen</td>
+                            <td>Deals 150% damage every 4 seconds for up to 5 times to one of the largest enemy squads. Damage is based on your initial Infantry ATK when 8% of your troops have fallen</td>
                             <td>Generally used to help Inf do more damage</td>
                         </tr>
-                             <td>Hell Drider</td>
+                        <tr>
+                            <td>Hell Drider</td>
                             <td>Petrifies one of the largest enemy squads for 11 seconds when 7% of your troops have fallen</td>
                             <td>Used in every comp as its a universal</td>
                         </tr>
-                        <td>Bon Appeti</td>
-                            <td>Deals 600% damage based on your intial Infantry ATK to one of the largest enemy squads when 4% of your troops have fallen</td>
+                        <tr>
+                            <td>Bon Appeti</td>
+                            <td>Deals 600% damage based on your initial Infantry ATK to one of the largest enemy squads when 4% of your troops have fallen</td>
                             <td>Used to boost Infantry damage</td>
                         </tr>
-                        <td>Snow Beast</td>
-                            <td>Summons a shield that protects 7% of your Ranged troops from a killing blow when 12% of your Cavalary troops have fallen</td>
+                        <tr>
+                            <td>Snow Beast</td>
+                            <td>Summons a shield that protects 7% of your Ranged troops from a killing blow when 12% of your Cavalry troops have fallen</td>
                             <td>Used to help range troops survive longer in battle</td>
                         </tr>
-                        <td>Hoarder</td>
-                            <td>Summons a shield that protects 7% of your Infantry troops from a killing blow when 12% of your Cavalary troops have fallen</td>
+                        <tr>
+                            <td>Hoarder</td>
+                            <td>Summons a shield that protects 7% of your Infantry troops from a killing blow when 12% of your Cavalry troops have fallen</td>
                             <td>Used to help Infantry troops survive longer in battle</td>
                         </tr>
                     </table>
@@ -525,6 +548,8 @@
         </div>
     </div>
 
+    </main>
+
     <footer>
         <div class="container">
             <p>Lords Mobile Advanced Tactics Guide © 2025</p>
@@ -532,28 +557,6 @@
         </div>
     </footer>
 
-    <script>
-        function openTab(tabName, evt) {
-            // Hide all tab content
-            var tabContent = document.getElementsByClassName("tab-content");
-            for (var i = 0; i < tabContent.length; i++) {
-                tabContent[i].classList.remove("active");
-            }
-            
-            // Remove active class from all buttons
-            var tabButtons = document.getElementsByClassName("comp-button");
-            for (var i = 0; i < tabButtons.length; i++) {
-                tabButtons[i].classList.remove("active");
-            }
-            
-            // Show the selected tab content
-            document.getElementById(tabName).classList.add("active");
-            
-            // Add active class to the clicked button
-            if (evt && evt.currentTarget) {
-                evt.currentTarget.classList.add('active');
-            }
-        }
-    </script>
+    <script src="lords-script.js"></script>
 </body>
 </html>

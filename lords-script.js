@@ -1,31 +1,49 @@
 // Function to show selected section and hide others
 function openSection(sectionId, clickedItem) {
     // Hide all sections
-    var sections = document.getElementsByClassName("section-content");
-    for (var i = 0; i < sections.length; i++) {
+    const sections = document.getElementsByClassName("section-content");
+    for (let i = 0; i < sections.length; i++) {
         sections[i].classList.remove("active");
     }
-    
+
     // Remove active class from all nav items
-    var navItems = document.getElementsByClassName("nav-item");
-    for (var i = 0; i < navItems.length; i++) {
+    const navItems = document.getElementsByClassName("nav-item");
+    for (let i = 0; i < navItems.length; i++) {
         navItems[i].classList.remove("active");
     }
-    
+
     // Show selected section and mark nav item as active
     document.getElementById(sectionId).classList.add("active");
     clickedItem.classList.add("active");
-    
+
     // Update URL hash
     window.location.hash = sectionId;
 }
 
+// Centralized tab switching function (used by all inner pages)
+function openTab(tabName, evt) {
+    const tabContent = document.getElementsByClassName("tab-content");
+    for (let i = 0; i < tabContent.length; i++) {
+        tabContent[i].classList.remove("active");
+    }
+    const tabButtons = document.getElementsByClassName("comp-button");
+    for (let i = 0; i < tabButtons.length; i++) {
+        tabButtons[i].classList.remove("active");
+        tabButtons[i].setAttribute('aria-selected', 'false');
+    }
+    document.getElementById(tabName).classList.add("active");
+    if (evt && evt.currentTarget) {
+        evt.currentTarget.classList.add("active");
+        evt.currentTarget.setAttribute('aria-selected', 'true');
+    }
+}
+
 // Handle URL hash on page load
 document.addEventListener("DOMContentLoaded", function() {
-    var hash = window.location.hash.substring(1);
+    const hash = window.location.hash.substring(1);
     if (hash) {
-        var section = document.getElementById(hash);
-        var navItem = document.querySelector('a[href="#' + hash + '"]');
+        const section = document.getElementById(hash);
+        const navItem = document.querySelector('a[href="#' + hash + '"]');
         if (section && navItem) {
             openSection(hash, navItem);
         }
@@ -107,11 +125,6 @@ function initializeLazyLoading() {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.classList.add('content-loaded');
-                
-                // Load any dynamic content here
-                if (entry.target.dataset.loadContent) {
-                    loadDynamicContent(entry.target);
-                }
             }
         });
     }, {
@@ -125,58 +138,30 @@ function initializeLazyLoading() {
     lazyContent.forEach(el => contentObserver.observe(el));
 }
 
-// Dynamic content loader
-function loadDynamicContent(element) {
-    const contentType = element.dataset.loadContent;
-    
-    switch(contentType) {
-        case 'heroes':
-            loadHeroData(element);
-            break;
-        case 'formations':
-            loadFormationData(element);
-            break;
-        case 'equipment':
-            loadEquipmentData(element);
-            break;
-    }
-}
-
-// Preload critical resources
-function preloadCriticalResources() {
-    const criticalResources = [
-        { href: 'lords-styles.css', as: 'style' },
-        { href: 'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js', as: 'script' }
-    ];
-
-    criticalResources.forEach(resource => {
-        const link = document.createElement('link');
-        link.rel = 'preload';
-        link.href = resource.href;
-        link.as = resource.as;
-        document.head.appendChild(link);
-    });
-}
-
-// Initialize preloading
-preloadCriticalResources();
-
 // Load GSAP and initialize animations
 function loadGSAP() {
-    // Load GSAP and plugins
+    // If GSAP is already loaded (e.g., via <script> tags on index.html), skip dynamic loading
+    if (typeof gsap !== 'undefined') {
+        if (typeof ScrollTrigger !== 'undefined') {
+            initializeAnimations();
+        } else {
+            const scrollTriggerScript = document.createElement('script');
+            scrollTriggerScript.src = 'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js';
+            document.head.appendChild(scrollTriggerScript);
+            scrollTriggerScript.onload = () => initializeAnimations();
+        }
+        return;
+    }
+
     const gsapScript = document.createElement('script');
     gsapScript.src = 'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js';
     document.head.appendChild(gsapScript);
 
     gsapScript.onload = () => {
-        // Load ScrollTrigger plugin
         const scrollTriggerScript = document.createElement('script');
         scrollTriggerScript.src = 'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js';
         document.head.appendChild(scrollTriggerScript);
-        
-        scrollTriggerScript.onload = () => {
-            initializeAnimations();
-        };
+        scrollTriggerScript.onload = () => initializeAnimations();
     };
 }
 
@@ -385,36 +370,36 @@ function initializeAnimations() {
     });
 }
 
-// Mouse follower effect
+// Mouse follower effect (only on hover-capable devices)
 document.addEventListener('DOMContentLoaded', () => {
+    if (!window.matchMedia('(hover: hover)').matches) return;
+
     const mouseFollower = document.createElement('div');
     mouseFollower.className = 'mouse-follower';
     document.body.appendChild(mouseFollower);
-    
+
     let mouseX = 0, mouseY = 0;
     let followerX = 0, followerY = 0;
-    
+
     document.addEventListener('mousemove', (e) => {
         mouseX = e.clientX;
         mouseY = e.clientY;
     });
-    
-    // Use requestAnimationFrame instead of GSAP ticker for mouse follower
+
     function updateMouseFollower() {
         followerX += (mouseX - followerX) * 0.1;
         followerY += (mouseY - followerY) * 0.1;
-        
         mouseFollower.style.transform = `translate(${followerX}px, ${followerY}px)`;
         requestAnimationFrame(updateMouseFollower);
     }
-    
+
     updateMouseFollower();
 });
 
 // Enable tooltips if Bootstrap is available
 if (typeof bootstrap !== 'undefined') {
-    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
-    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-        return new bootstrap.Tooltip(tooltipTriggerEl)
+    const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+    const tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl);
     });
 }

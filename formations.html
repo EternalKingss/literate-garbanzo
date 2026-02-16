@@ -7,26 +7,44 @@
     <link rel="stylesheet" href="lords-styles.css">
 </head>
 <body>
+    <a href="#main-content" class="skip-link">Skip to content</a>
     <header>
-        <div class="container">
-            <h1>Lords Mobile Battle Guide</h1>
-            <div class="subtitle">Formations</div>
+        <div class="container header-container">
+            <a href="index.html" class="logo">
+                <div class="logo-icon">LM</div>
+                <div class="logo-text">
+                    <h1>Lords Mobile Battle Guide</h1>
+                    <div class="subtitle">Formations</div>
+                </div>
+            </a>
+            <nav class="dropdown-nav">
+                <button class="dropdown-button">Navigate</button>
+                <div class="dropdown-content">
+                    <a href="index.html" class="nav-item">Home</a>
+                    <a href="CompGears.html" class="nav-item">Compositions</a>
+                    <a href="advanced.html" class="nav-item">Advanced Tips</a>
+                    <a href="formations.html" class="nav-item active">Formations</a>
+                    <a href="battle-reports.html" class="nav-item">Reports</a>
+                    <a href="heroes.html" class="nav-item">Heroes</a>
+                </div>
+            </nav>
         </div>
     </header>
 
+    <main id="main-content">
     <div class="container">
         <!-- Navigation Bar -->
-        <div class="comps-nav">
-            <button class="comp-button active" onclick="openTab('form-basics', event)">Basics</button>
-            <button class="comp-button" onclick="openTab('form-mechanics', event)">Battle Mechanics</button>
-            <button class="comp-button" onclick="openTab('form-phalanx', event)">Phalanx Types</button>
-            <button class="comp-button" onclick="openTab('form-wedge', event)">Wedge Formations</button>
-            <button class="comp-button" onclick="openTab('form-counters', event)">Counter System</button>
-            <button class="comp-button" onclick="openTab('form-mistakes', event)">Common Mistakes</button>
+        <div class="comps-nav" role="tablist" aria-label="Formation sections">
+            <button class="comp-button active" role="tab" aria-selected="true" aria-controls="form-basics" onclick="openTab('form-basics', event)">Basics</button>
+            <button class="comp-button" role="tab" aria-selected="false" aria-controls="form-mechanics" onclick="openTab('form-mechanics', event)">Battle Mechanics</button>
+            <button class="comp-button" role="tab" aria-selected="false" aria-controls="form-phalanx" onclick="openTab('form-phalanx', event)">Phalanx Types</button>
+            <button class="comp-button" role="tab" aria-selected="false" aria-controls="form-wedge" onclick="openTab('form-wedge', event)">Wedge Formations</button>
+            <button class="comp-button" role="tab" aria-selected="false" aria-controls="form-counters" onclick="openTab('form-counters', event)">Counter System</button>
+            <button class="comp-button" role="tab" aria-selected="false" aria-controls="form-mistakes" onclick="openTab('form-mistakes', event)">Common Mistakes</button>
         </div>
 
         <!-- Formation Basics -->
-        <div id="form-basics" class="tab-content active">
+        <div id="form-basics" class="tab-content active" role="tabpanel">
             <div class="section">
                 <h2>🔄 Formation Basics</h2>
                 <p>A formation in Lords Mobile determines the order in which troop types receive damage and influences the initial positions of squads on the battlefield.</p>
@@ -64,7 +82,7 @@
         </div>
 
         <!-- Formation Battle Mechanics -->
-        <div id="form-mechanics" class="tab-content">
+        <div id="form-mechanics" class="tab-content" role="tabpanel">
             <div class="section">
                 <h2>⚔️ Battle Mechanics</h2>
                 <p>Understanding how formations affect battle mechanics is essential for making optimal choices.</p>
@@ -112,7 +130,7 @@
         </div>
 
         <!-- Phalanx Formation Types -->
-        <div id="form-phalanx" class="tab-content">
+        <div id="form-phalanx" class="tab-content" role="tabpanel">
             <div class="section">
                 <h2>🛡️ Phalanx Formation Types</h2>
                 <p>Phalanx formations are the most commonly used formations in Lords Mobile. Each puts a different troop type at the front.</p>
@@ -197,7 +215,7 @@
         </div>
 
         <!-- Wedge Formations -->
-        <div id="form-wedge" class="tab-content">
+        <div id="form-wedge" class="tab-content" role="tabpanel">
             <div class="section">
                 <h2>🔺 Wedge Formation Types</h2>
                 <p>Wedge formations create different squad arrangements than phalanx formations, offering unique strategic options.</p>
@@ -278,7 +296,7 @@
         </div>
         
         <!-- Formation Counter System -->
-        <div id="form-counters" class="tab-content">
+        <div id="form-counters" class="tab-content" role="tabpanel">
             <div class="section">
                 <h2>🔄 Formation Counter System</h2>
                 <p>Lords Mobile battles follow a fundamental counter system that determines which formations are effective against others.</p>
@@ -367,7 +385,7 @@
         </div>
 
         <!-- Common Formation Mistakes -->
-        <div id="form-mistakes" class="tab-content">
+        <div id="form-mistakes" class="tab-content" role="tabpanel">
             <div class="section">
                 <h2>🚫 Common Formation Mistakes</h2>
                 <p>These common errors can turn a potentially winning battle into a devastating loss.</p>
@@ -415,6 +433,8 @@
         </div>
     </div>
 
+    </main>
+
     <footer>
         <div class="container">
             <p>Lords Mobile Formations Guide © 2025</p>
@@ -422,28 +442,6 @@
         </div>
     </footer>
 
-    <script>
-        function openTab(tabName, evt) {
-            // Hide all tab content
-            var tabContent = document.getElementsByClassName("tab-content");
-            for (var i = 0; i < tabContent.length; i++) {
-                tabContent[i].classList.remove("active");
-            }
-            
-            // Remove active class from all buttons
-            var tabButtons = document.getElementsByClassName("comp-button");
-            for (var i = 0; i < tabButtons.length; i++) {
-                tabButtons[i].classList.remove("active");
-            }
-            
-            // Show the selected tab content
-            document.getElementById(tabName).classList.add("active");
-            
-            // Add active class to the clicked button
-            if (evt && evt.currentTarget) {
-                evt.currentTarget.classList.add('active');
-            }
-        }
-    </script>
+    <script src="lords-script.js"></script>
 </body>
 </html>
