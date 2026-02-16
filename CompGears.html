@@ -7,27 +7,45 @@
     <link rel="stylesheet" href="lords-styles.css">
 </head>
 <body>
+    <a href="#main-content" class="skip-link">Skip to content</a>
     <header>
-        <div class="container">
-            <h1>Lords Mobile Battle Guide</h1>
-            <div class="subtitle">Comps</div>
+        <div class="container header-container">
+            <a href="index.html" class="logo">
+                <div class="logo-icon">LM</div>
+                <div class="logo-text">
+                    <h1>Lords Mobile Battle Guide</h1>
+                    <div class="subtitle">Comps</div>
+                </div>
+            </a>
+            <nav class="dropdown-nav">
+                <button class="dropdown-button">Navigate</button>
+                <div class="dropdown-content">
+                    <a href="index.html" class="nav-item">Home</a>
+                    <a href="CompGears.html" class="nav-item active">Compositions</a>
+                    <a href="advanced.html" class="nav-item">Advanced Tips</a>
+                    <a href="formations.html" class="nav-item">Formations</a>
+                    <a href="battle-reports.html" class="nav-item">Reports</a>
+                    <a href="heroes.html" class="nav-item">Heroes</a>
+                </div>
+            </nav>
         </div>
     </header>
 
+    <main id="main-content">
     <div class="container">
         <!-- Composition Navigation Bar -->
-        <div class="comps-nav">
-            <button class="comp-button active" onclick="openTab('comp-1433', event)">1433 Composition</button>
-            <button class="comp-button" onclick="openTab('comp-659', event)">659 Composition</button>
-            <button class="comp-button" onclick="openTab('comp-866', event)">866 Composition</button>
-            <button class="comp-button" onclick="openTab('comp-055', event)">055 Composition</button>
-            <button class="comp-button" onclick="openTab('comp-442', event)">668 Composition</button>
-            <button class="comp-button" onclick="openTab('comp-208', event)">208 Composition</button>
-            <button class="comp-button" onclick="openTab('comp-541', event)">541 Composition</button>
+        <div class="comps-nav" role="tablist" aria-label="Battle compositions">
+            <button class="comp-button active" role="tab" aria-selected="true" aria-controls="comp-1433" onclick="openTab('comp-1433', event)">1433 Composition</button>
+            <button class="comp-button" role="tab" aria-selected="false" aria-controls="comp-659" onclick="openTab('comp-659', event)">659 Composition</button>
+            <button class="comp-button" role="tab" aria-selected="false" aria-controls="comp-866" onclick="openTab('comp-866', event)">866 Composition</button>
+            <button class="comp-button" role="tab" aria-selected="false" aria-controls="comp-055" onclick="openTab('comp-055', event)">055 Composition</button>
+            <button class="comp-button" role="tab" aria-selected="false" aria-controls="comp-668" onclick="openTab('comp-668', event)">668 Composition</button>
+            <button class="comp-button" role="tab" aria-selected="false" aria-controls="comp-208" onclick="openTab('comp-208', event)">208 Composition</button>
+            <button class="comp-button" role="tab" aria-selected="false" aria-controls="comp-541" onclick="openTab('comp-541', event)">541 Composition</button>
         </div>
 
         <!-- 1433 Composition Content -->
-        <div id="comp-1433" class="tab-content active">
+        <div id="comp-1433" class="tab-content active" role="tabpanel">
             <div class="section">
                 <h2>1433 Composition Overview</h2>
                 <p>The 1433 composition is a powerful infantry-focused formation used for rallies against specific enemy compositions. This guide will break down the troop counts, gear requirements, hero selection, and battle strategies for optimizing your 1433 rallies.</p>
@@ -129,7 +147,7 @@
         </div>
 
         <!-- 659 Composition Content -->
-        <div id="comp-659" class="tab-content">
+        <div id="comp-659" class="tab-content" role="tabpanel">
             <div class="section">
                 <h2>659 Composition Overview</h2>
                 <p>The 659 composition is a balanced formation with a strong cavalry focus, making it versatile for various rally scenarios. This guide covers everything you need to know about setting up and executing effective 659 rallies.</p>
@@ -263,7 +281,7 @@
         </div>
 
         <!-- 866 Composition Content -->
-        <div id="comp-866" class="tab-content">
+        <div id="comp-866" class="tab-content" role="tabpanel">
             <div class="section">
                 <h2>866 Composition Overview</h2>
                 <p>The 866 composition is a powerful infantry-focused formation with balanced ranged and cavalry support, effective in specific rally scenarios. This guide covers the optimal setup and execution of 866 rallies.</p>
@@ -393,7 +411,7 @@
         </div>
 
         <!-- 055 Composition Content -->
-        <div id="comp-055" class="tab-content">
+        <div id="comp-055" class="tab-content" role="tabpanel">
             <div class="section">
                 <h2>055 Composition Overview</h2>
                 <p>The 055 composition is a specialized formation with minimal infantry and balanced ranged/cavalry troops, designed for specific counter-rally scenarios. This guide explains how to correctly build and execute an effective 055 rally.</p>
@@ -514,7 +532,7 @@
             </div>
         </div>
         
-<div id="comp-208" class="tab-content">
+<div id="comp-208" class="tab-content" role="tabpanel">
     <div class="section">
         <h2>208 Composition Overview</h2>
         <p>The 208 composition is a cavalry-dominant rally strategy designed to overwhelm infantry-heavy targets with devastating cavalry force while maintaining just enough infantry to absorb ranged damage. It's a precise, formation-dependent setup that thrives on calculated troop ratios and smart target selection.</p>
@@ -688,7 +706,7 @@
 
         
         <!-- Placeholder for 541 Composition -->
-        <div id="comp-541" class="tab-content">
+        <div id="comp-541" class="tab-content" role="tabpanel">
             <div class="section">
                 <h2>541 Composition</h2>
                 <p>Content for 541 composition will be added soon.</p>
@@ -696,7 +714,7 @@
         </div>
         
         <!-- 668 Composition Content -->
-        <div id="comp-442" class="tab-content">
+        <div id="comp-668" class="tab-content" role="tabpanel">
             <div class="section">
                 <h2>668 Composition Overview</h2>
                 <p>The 668 composition is a balanced formation with nearly equal infantry and cavalry emphasis, making it highly versatile for countering specific enemy compositions. This guide covers optimal setup and execution for effective 668 rallies.</p>
@@ -843,6 +861,8 @@
         </div>
     </div>
 
+    </main>
+
     <footer>
         <div class="container">
             <p>Lords Mobile Battle Compositions Guide © 2025</p>
@@ -850,28 +870,6 @@
         </div>
     </footer>
 
-    <script>
-        function openTab(tabName, evt) {
-            // Hide all tab content
-            var tabContent = document.getElementsByClassName("tab-content");
-            for (var i = 0; i < tabContent.length; i++) {
-                tabContent[i].classList.remove("active");
-            }
-            
-            // Remove active class from all buttons
-            var tabButtons = document.getElementsByClassName("comp-button");
-            for (var i = 0; i < tabButtons.length; i++) {
-                tabButtons[i].classList.remove("active");
-            }
-            
-            // Show the selected tab content
-            document.getElementById(tabName).classList.add("active");
-            
-            // Add active class to the clicked button
-            if (evt && evt.currentTarget) {
-                evt.currentTarget.classList.add("active");
-            }
-        }
-    </script>
+    <script src="lords-script.js"></script>
 </body>
 </html>

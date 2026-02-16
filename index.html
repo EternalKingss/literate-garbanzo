@@ -5,24 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lords Mobile Ultimate Guide</title>
     <link rel="stylesheet" href="lords-styles.css">
-    
-    <!-- Preload critical resources -->
-    <link rel="preload" href="lords-styles.css" as="style">
-    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" as="script">
-    
-    <style>
-        :root {
-            --primary-color: #4361ee;
-            --secondary-color: #3a0ca3;
-            --accent-color: #4cc9f0;
-            --dark-bg: #0d1117;
-            --dark-section: #161b22;
-            --light-text: #e6edf3;
-            --medium-text: #b2becd;
-            --border-color: #30363d;
-            --glow-color: rgba(76, 201, 240, 0.3);
-        }
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" crossorigin="anonymous">
 
+    <!-- Preload critical resources -->
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" as="script">
+
+    <style>
         /* Landing Page Specific Styles */
         body {
             overflow-x: hidden;
@@ -635,16 +623,17 @@
     </style>
 </head>
 <body>
+    <a href="#main-content" class="skip-link">Skip to content</a>
     <div id="particles-js"></div>
-    
+
     <nav class="navbar">
         <h1 class="nav-title">Lords Mobile Battle Guide</h1>
-        
-        <button class="mobile-menu-btn">
-            <i class="fas fa-bars"></i>
+
+        <button class="mobile-menu-btn" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="nav-links">
+            <i class="fas fa-bars" aria-hidden="true"></i>
         </button>
-        
-        <div class="nav-links">
+
+        <div class="nav-links" id="nav-links">
             <a href="index.html" class="active">Home</a>
             <a href="CompGears.html">Compositions</a>
             <a href="advanced.html">Advanced Tips</a>
@@ -654,6 +643,7 @@
         </div>
     </nav>
     
+    <main id="main-content">
     <section class="hero">
         <div class="floating-elements">
             <div class="float-el" style="width: 80px; height: 80px; top: 20%; left: 10%; animation-duration: 20s;"></div>
@@ -681,13 +671,13 @@
             
             <div class="battle-icons">
                 <div class="icon-wrapper">
-                    <i class="fas fa-shield-alt icon"></i>
+                    <i class="fas fa-shield-halved icon" aria-hidden="true"></i>
                 </div>
                 <div class="icon-wrapper">
-                    <i class="fas fa-sword icon"></i>
+                    <i class="fas fa-khanda icon" aria-hidden="true"></i>
                 </div>
                 <div class="icon-wrapper">
-                    <i class="fas fa-horse icon"></i>
+                    <i class="fas fa-horse-head icon" aria-hidden="true"></i>
                 </div>
             </div>
         </div>
@@ -713,29 +703,27 @@
             </div>
             
             <div class="channel-info">
-                <a href="https://www.youtube.com/@crystalbriefs" target="_blank" class="channel-link">
+                <a href="https://www.youtube.com/@crystalbriefs" target="_blank" rel="noopener noreferrer" class="channel-link">
                     <i class="fab fa-youtube"></i>
                     Visit Crystal Briefs Channel
                 </a>
             </div>
         </div>
     </section>
-    
+    </main>
+
     <footer>
         <div class="footer-bottom">
             <p>© 2025 Lords Mobile Battle Guide</p>
         </div>
     </footer>
     
-    <!-- Font Awesome -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"></script>
-    
     <!-- Particles.js -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js"></script>
-    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js" crossorigin="anonymous"></script>
+
     <!-- GSAP -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js" crossorigin="anonymous"></script>
     
     <script>
         // Initialize particles.js
@@ -851,6 +839,8 @@
 
         mobileMenuBtn.addEventListener('click', () => {
             navLinks.classList.toggle('active');
+            const expanded = navLinks.classList.contains('active');
+            mobileMenuBtn.setAttribute('aria-expanded', expanded);
         });
 
         // Navbar scroll effect

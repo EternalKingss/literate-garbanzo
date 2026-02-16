@@ -7,26 +7,44 @@
     <link rel="stylesheet" href="lords-styles.css">
 </head>
 <body>
+    <a href="#main-content" class="skip-link">Skip to content</a>
     <header>
-        <div class="container">
-            <h1>Lords Mobile Battle Guide</h1>
-            <div class="subtitle">Battle Reports</div>
+        <div class="container header-container">
+            <a href="index.html" class="logo">
+                <div class="logo-icon">LM</div>
+                <div class="logo-text">
+                    <h1>Lords Mobile Battle Guide</h1>
+                    <div class="subtitle">Battle Reports</div>
+                </div>
+            </a>
+            <nav class="dropdown-nav">
+                <button class="dropdown-button">Navigate</button>
+                <div class="dropdown-content">
+                    <a href="index.html" class="nav-item">Home</a>
+                    <a href="CompGears.html" class="nav-item">Compositions</a>
+                    <a href="advanced.html" class="nav-item">Advanced Tips</a>
+                    <a href="formations.html" class="nav-item">Formations</a>
+                    <a href="battle-reports.html" class="nav-item active">Reports</a>
+                    <a href="heroes.html" class="nav-item">Heroes</a>
+                </div>
+            </nav>
         </div>
     </header>
 
+    <main id="main-content">
     <div class="container">
         <!-- Navigation Bar -->
-        <div class="comps-nav">
-            <button class="comp-button active" onclick="openTab('report-cav-range', event)">Cavalry vs Range</button>
-            <button class="comp-button" onclick="openTab('report-cav-inf', event)">Cavalry vs Infantry</button>
-            <button class="comp-button" onclick="openTab('report-range-wedge', event)">Range vs Infantry Wedge</button>
-            <button class="comp-button" onclick="openTab('report-high-might', event)">High Might Battle</button>
-            <button class="comp-button" onclick="openTab('report-patterns', event)">Common Patterns</button>
-            <button class="comp-button" onclick="openTab('report-heroes', event)">Hero Impact</button>
+        <div class="comps-nav" role="tablist" aria-label="Battle report sections">
+            <button class="comp-button active" role="tab" aria-selected="true" aria-controls="report-cav-range" onclick="openTab('report-cav-range', event)">Cavalry vs Range</button>
+            <button class="comp-button" role="tab" aria-selected="false" aria-controls="report-cav-inf" onclick="openTab('report-cav-inf', event)">Cavalry vs Infantry</button>
+            <button class="comp-button" role="tab" aria-selected="false" aria-controls="report-range-wedge" onclick="openTab('report-range-wedge', event)">Range vs Infantry Wedge</button>
+            <button class="comp-button" role="tab" aria-selected="false" aria-controls="report-high-might" onclick="openTab('report-high-might', event)">High Might Battle</button>
+            <button class="comp-button" role="tab" aria-selected="false" aria-controls="report-patterns" onclick="openTab('report-patterns', event)">Common Patterns</button>
+            <button class="comp-button" role="tab" aria-selected="false" aria-controls="report-heroes" onclick="openTab('report-heroes', event)">Hero Impact</button>
         </div>
 
         <!-- Battle Report 1: Cavalry Phalanx vs Range Phalanx -->
-        <div id="report-cav-range" class="tab-content active">
+        <div id="report-cav-range" class="tab-content active" role="tabpanel">
             <div class="section">
                 <h2>Cavalry Phalanx vs Range Phalanx</h2>
                 <p>This battle report analyzes a classic counter matchup between Cavalry Phalanx and Range Phalanx formations.</p>
@@ -125,7 +143,7 @@
         </div>
 
         <!-- Battle Report 2: Cavalry Phalanx vs Infantry Phalanx -->
-        <div id="report-cav-inf" class="tab-content">
+        <div id="report-cav-inf" class="tab-content" role="tabpanel">
             <div class="section">
                 <h2>Cavalry Phalanx vs Infantry Phalanx</h2>
                 <p>This battle demonstrates how Infantry Phalanx can effectively counter Cavalry Phalanx even with a might disadvantage.</p>
@@ -185,7 +203,7 @@
         </div>
 
         <!-- Battle Report 3: Range Phalanx vs Infantry Wedge -->
-        <div id="report-range-wedge" class="tab-content">
+        <div id="report-range-wedge" class="tab-content" role="tabpanel">
             <div class="section">
                 <h2>Range Phalanx vs Infantry Wedge</h2>
                 <p>This battle report demonstrates the effectiveness of Infantry Wedge as a defensive formation against Range Phalanx attacks.</p>
@@ -243,7 +261,7 @@
         </div>
 
         <!-- Battle Report 4: Cavalry Phalanx vs Range Phalanx (Higher Might) -->
-        <div id="report-high-might" class="tab-content">
+        <div id="report-high-might" class="tab-content" role="tabpanel">
             <div class="section">
                 <h2>Cavalry Phalanx vs Range Phalanx (Higher Might)</h2>
                 <p>This battle shows how proper execution can overcome a significant might disadvantage.</p>
@@ -313,7 +331,7 @@
         </div>
 
         <!-- Common Battle Patterns -->
-        <div id="report-patterns" class="tab-content">
+        <div id="report-patterns" class="tab-content" role="tabpanel">
             <div class="section">
                 <h2>Common Battle Patterns</h2>
                 <p>After analyzing numerous battle reports, several consistent patterns emerge that can help you predict and plan for battle outcomes.</p>
@@ -359,7 +377,7 @@
         </div>
 
         <!-- Hero & Familiar Impact -->
-        <div id="report-heroes" class="tab-content">
+        <div id="report-heroes" class="tab-content" role="tabpanel">
             <div class="section">
                 <h2>Hero & Familiar Impact on Battle Outcomes</h2>
                 <p>Heroes and familiars significantly influence battle mechanics beyond their direct stat contributions.</p>
@@ -445,6 +463,8 @@
         </div>
     </div>
 
+    </main>
+
     <footer>
         <div class="container">
             <p>Lords Mobile Battle Reports Analysis © 2025</p>
@@ -452,28 +472,6 @@
         </div>
     </footer>
 
-    <script>
-        function openTab(tabName, evt) {
-            // Hide all tab content
-            var tabContent = document.getElementsByClassName("tab-content");
-            for (var i = 0; i < tabContent.length; i++) {
-                tabContent[i].classList.remove("active");
-            }
-            
-            // Remove active class from all buttons
-            var tabButtons = document.getElementsByClassName("comp-button");
-            for (var i = 0; i < tabButtons.length; i++) {
-                tabButtons[i].classList.remove("active");
-            }
-            
-            // Show the selected tab content
-            document.getElementById(tabName).classList.add("active");
-            
-            // Add active class to the clicked button
-            if (evt && evt.currentTarget) {
-                evt.currentTarget.classList.add('active');
-            }
-        }
-    </script>
+    <script src="lords-script.js"></script>
 </body>
 </html>

@@ -7,25 +7,43 @@
     <link rel="stylesheet" href="lords-styles.css">
 </head>
 <body>
+    <a href="#main-content" class="skip-link">Skip to content</a>
     <header>
-        <div class="container">
-            <h1>Lords Mobile Battle Guide</h1>
-            <div class="subtitle">Heroes & Familiars</div>
+        <div class="container header-container">
+            <a href="index.html" class="logo">
+                <div class="logo-icon">LM</div>
+                <div class="logo-text">
+                    <h1>Lords Mobile Battle Guide</h1>
+                    <div class="subtitle">Heroes & Familiars</div>
+                </div>
+            </a>
+            <nav class="dropdown-nav">
+                <button class="dropdown-button">Navigate</button>
+                <div class="dropdown-content">
+                    <a href="index.html" class="nav-item">Home</a>
+                    <a href="CompGears.html" class="nav-item">Compositions</a>
+                    <a href="advanced.html" class="nav-item">Advanced Tips</a>
+                    <a href="formations.html" class="nav-item">Formations</a>
+                    <a href="battle-reports.html" class="nav-item">Reports</a>
+                    <a href="heroes.html" class="nav-item active">Heroes</a>
+                </div>
+            </nav>
         </div>
     </header>
 
+    <main id="main-content">
     <div class="container">
         <!-- Navigation Bar -->
-        <div class="comps-nav">
-            <button class="comp-button active" onclick="openTab('heroes-compositions', event)">Hero Selection</button>
-            <button class="comp-button" onclick="openTab('heroes-retargeting', event)">Retargeting Mechanics</button>
-            <button class="comp-button" onclick="openTab('heroes-gear', event)">Hero Gear</button>
-            <button class="comp-button" onclick="openTab('heroes-familiars', event)">Familiars</button>
-            <button class="comp-button" onclick="openTab('heroes-utility', event)">Utility Familiars</button>
+        <div class="comps-nav" role="tablist" aria-label="Heroes and familiars sections">
+            <button class="comp-button active" role="tab" aria-selected="true" aria-controls="heroes-compositions" onclick="openTab('heroes-compositions', event)">Hero Selection</button>
+            <button class="comp-button" role="tab" aria-selected="false" aria-controls="heroes-retargeting" onclick="openTab('heroes-retargeting', event)">Retargeting Mechanics</button>
+            <button class="comp-button" role="tab" aria-selected="false" aria-controls="heroes-gear" onclick="openTab('heroes-gear', event)">Hero Gear</button>
+            <button class="comp-button" role="tab" aria-selected="false" aria-controls="heroes-familiars" onclick="openTab('heroes-familiars', event)">Familiars</button>
+            <button class="comp-button" role="tab" aria-selected="false" aria-controls="heroes-utility" onclick="openTab('heroes-utility', event)">Utility Familiars</button>
         </div>
 
         <!-- Hero Compositions -->
-        <div id="heroes-compositions" class="tab-content active">
+        <div id="heroes-compositions" class="tab-content active" role="tabpanel">
             <div class="section">
                 <h2>🦸‍♂️ Hero Selection</h2>
                 <p>Selecting the right heroes is critical for maximizing your battle effectiveness. This guide covers the best heroes for each troop type and their specific advantages.</p>
@@ -108,7 +126,7 @@
         </div>
 
         <!-- Heroes' Role in Retargeting -->
-        <div id="heroes-retargeting" class="tab-content">
+        <div id="heroes-retargeting" class="tab-content" role="tabpanel">
             <div class="section">
                 <h2>🎮 Retargeting Mechanics</h2>
                 <p>Understanding how heroes affect squad positioning and targeting is crucial for optimizing battle performance.</p>
@@ -160,7 +178,7 @@
         </div>
 
         <!-- Gear and Stat Considerations -->
-        <div id="heroes-gear" class="tab-content">
+        <div id="heroes-gear" class="tab-content" role="tabpanel">
             <div class="section">
                 <h2>🛡️ Hero Gear</h2>
                 <p>Hero gear selection dramatically affects both individual hero performance and overall battle effectiveness.</p>
@@ -224,7 +242,7 @@
         </div>
 
         <!-- Combat Familiars -->
-        <div id="heroes-familiars" class="tab-content">
+        <div id="heroes-familiars" class="tab-content" role="tabpanel">
             <div class="section">
                 <h2>✨ Combat Familiars</h2>
                 <p>Combat familiars provide significant stat boosts and powerful battle abilities that can turn the tide of battle.</p>
@@ -332,7 +350,7 @@
         </div>
 
         <!-- Utility Familiars -->
-        <div id="heroes-utility" class="tab-content">
+        <div id="heroes-utility" class="tab-content" role="tabpanel">
             <div class="section">
                 <h2>🧰 Utility Familiars</h2>
                 <p>Beyond combat, familiars provide valuable utility functions that can accelerate your growth and resource generation.</p>
@@ -398,6 +416,8 @@
         </div>
     </div>
 
+    </main>
+
     <footer>
         <div class="container">
             <p>Lords Mobile Heroes & Familiars Guide © 2025</p>
@@ -405,28 +425,6 @@
         </div>
     </footer>
 
-    <script>
-        function openTab(tabName, evt) {
-            // Hide all tab content
-            var tabContent = document.getElementsByClassName("tab-content");
-            for (var i = 0; i < tabContent.length; i++) {
-                tabContent[i].classList.remove("active");
-            }
-            
-            // Remove active class from all buttons
-            var tabButtons = document.getElementsByClassName("comp-button");
-            for (var i = 0; i < tabButtons.length; i++) {
-                tabButtons[i].classList.remove("active");
-            }
-            
-            // Show the selected tab content
-            document.getElementById(tabName).classList.add("active");
-            
-            // Add active class to the clicked button
-            if (evt && evt.currentTarget) {
-                evt.currentTarget.classList.add('active');
-            }
-        }
-    </script>
+    <script src="lords-script.js"></script>
 </body>
 </html>
