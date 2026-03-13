@@ -579,6 +579,7 @@ footer {
     .comps-nav {
         flex-wrap: wrap;
         justify-content: center;
+        overflow-x: visible;
     }
 
     .comp-button {
@@ -599,6 +600,7 @@ footer {
 /* Composition Navigation */
 .comps-nav {
     display: flex;
+    width: 100%;
     overflow-x: auto;
     gap: 15px;
     padding: 15px 0;
