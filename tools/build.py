@@ -713,7 +713,7 @@ def page_home():
     rl = "".join(f"<li><b>{E(a)}</b><p>{E(b)}</p></li>" for a, b in rules)
     body = f"""<section class="home-hero">
 <h1>Read a scout, pick the formation.</h1>
-<p class="lede">Type the troop totals from a scout or a rally screen. Add your own numbers to check a Range Phalanx mirror.</p>
+<p class="lede">Type the troop totals from a scout or a rally screen. You get the comp, what to sit in if they hit you, and what to send if you hit them.</p>
 </section>
 
 <form class="scout" id="scout" autocomplete="off" onsubmit="return false">
@@ -721,11 +721,11 @@ def page_home():
 <fieldset>
 <legend>Their troops</legend>
 <div class="trio">
-<div><label class="li" for="ti">Infantry</label><input id="ti" type="text" inputmode="decimal" placeholder="1.55M"></div>
-<div><label class="lr" for="tr">Ranged</label><input id="tr" type="text" inputmode="decimal" placeholder="1.03M"></div>
-<div><label class="lc" for="tc">Cavalry</label><input id="tc" type="text" inputmode="decimal" placeholder="1.73M"></div>
+<div><label class="li" for="ti">Infantry</label><input id="ti" type="text" autocapitalize="off" spellcheck="false" placeholder="1.55M"></div>
+<div><label class="lr" for="tr">Ranged</label><input id="tr" type="text" autocapitalize="off" spellcheck="false" placeholder="1.03M"></div>
+<div><label class="lc" for="tc">Cavalry</label><input id="tc" type="text" autocapitalize="off" spellcheck="false" placeholder="1.73M"></div>
 </div>
-<p class="hint">Add the holder's own march and all allied troops together. 1.55M, 1550k and 1,550,000 all work.</p>
+<p class="hint">Holder's march plus all allied troops. 50k, 1.3m and 1,300,000 all work. Fill any two and the third is worked out from the rally cap.</p>
 </fieldset>
 <fieldset>
 <legend>Your troops (optional)</legend>
@@ -734,8 +734,9 @@ def page_home():
 <div><label class="lr" for="yr">Ranged</label><input id="yr" type="text" inputmode="decimal"></div>
 <div><label class="lc" for="yc">Cavalry</label><input id="yc" type="text" inputmode="decimal"></div>
 </div>
-<p class="hint">Fill these in to check the mirror and your garrison minimums.</p>
+<p class="hint">Leave these empty to get a comp to send. Fill them to check a mirror and your holding minimums.</p>
 </fieldset>
+<div class="row cap"><label for="cap">Rally cap</label><input id="cap" type="text" value="4,313,000" autocapitalize="off" spellcheck="false" style="max-width:9rem"></div>
 <div class="row"><button type="button" id="clear" class="quiet">Clear</button>
 <button type="button" id="example">Try a real scout</button></div>
 </div>
