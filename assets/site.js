@@ -213,7 +213,7 @@
     if (t.some(function (x) { return x == null; })) {
       out.setAttribute("data-empty", "");
       out.innerHTML = T.auto === -2 ? "Those numbers add up to more than the rally cap. Fill all three, or raise the cap."
-        : "Enter at least two of their troop totals to get a read.";
+        : "Enter at least two of their troop totals, then press Get the call.";
       return;
     }
     out.removeAttribute("data-empty");
@@ -274,10 +274,14 @@
     render();
     el.ti.focus();
   });
-  document.getElementById("example").addEventListener("click", function () {
-    // Mc Qai's citadel from log 10, with only two numbers typed
-    ["yi", "yr", "yc"].forEach(function (id) { el[id].value = ""; });
-    el.ti.value = "1.55m"; el.tr.value = "1032k"; el.tc.value = "";
+  document.getElementById("go").addEventListener("click", function () {
+    // write any worked-out number into its box so it's visible, then show the result
+    ["t", "y"].forEach(function (pre) {
+      var r = read(pre);
+      if (r.auto >= 0) [el[pre + "i"], el[pre + "r"], el[pre + "c"]][r.auto].value = fmt(r.v[r.auto]);
+    });
     render();
+    out.scrollIntoView({ behavior: "smooth", block: "start" });
+    out.focus({ preventScroll: true });
   });
 })();

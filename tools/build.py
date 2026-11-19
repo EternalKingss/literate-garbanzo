@@ -717,30 +717,27 @@ def page_home():
 </section>
 
 <form class="scout" id="scout" autocomplete="off" onsubmit="return false">
-<div>
-<fieldset>
+<fieldset class="a-their">
 <legend>Their troops</legend>
 <div class="trio">
-<div><label class="li" for="ti">Infantry</label><input id="ti" type="text" autocapitalize="off" spellcheck="false" placeholder="1.55M"></div>
-<div><label class="lr" for="tr">Ranged</label><input id="tr" type="text" autocapitalize="off" spellcheck="false" placeholder="1.03M"></div>
-<div><label class="lc" for="tc">Cavalry</label><input id="tc" type="text" autocapitalize="off" spellcheck="false" placeholder="1.73M"></div>
+<div><label class="li" for="ti">Infantry</label><input id="ti" type="text" autocapitalize="off" spellcheck="false" placeholder="1.55m"></div>
+<div><label class="lr" for="tr">Ranged</label><input id="tr" type="text" autocapitalize="off" spellcheck="false" placeholder="1.03m"></div>
+<div><label class="lc" for="tc">Cavalry</label><input id="tc" type="text" autocapitalize="off" spellcheck="false" placeholder="1.73m"></div>
 </div>
-<p class="hint">Holder's march plus all allied troops. 50k, 1.3m and 1,300,000 all work. Fill any two and the third is worked out from the rally cap.</p>
+<p class="hint">Holder's march plus all allied troops. 50k, 1.3m and 1,300,000 all work. Fill two and the third is worked out from the rally cap.</p>
+<div class="row go"><button type="button" id="go">Get the call</button><button type="button" id="clear" class="quiet">Clear</button>
+<label for="cap" class="cap-l">Rally cap</label><input id="cap" type="text" value="4,313,000" autocapitalize="off" spellcheck="false"></div>
 </fieldset>
-<fieldset>
+<div class="readout a-read" id="readout" aria-live="polite" data-empty tabindex="-1">Enter at least two of their troop totals, then press Get the call.</div>
+<fieldset class="a-yours">
 <legend>Your troops (optional)</legend>
 <div class="trio">
-<div><label class="li" for="yi">Infantry</label><input id="yi" type="text" inputmode="decimal"></div>
-<div><label class="lr" for="yr">Ranged</label><input id="yr" type="text" inputmode="decimal"></div>
-<div><label class="lc" for="yc">Cavalry</label><input id="yc" type="text" inputmode="decimal"></div>
+<div><label class="li" for="yi">Infantry</label><input id="yi" type="text" autocapitalize="off" spellcheck="false"></div>
+<div><label class="lr" for="yr">Ranged</label><input id="yr" type="text" autocapitalize="off" spellcheck="false"></div>
+<div><label class="lc" for="yc">Cavalry</label><input id="yc" type="text" autocapitalize="off" spellcheck="false"></div>
 </div>
-<p class="hint">Leave these empty to get a comp to send. Fill them to check a mirror and your holding minimums.</p>
+<p class="hint">Leave empty to get a comp to send. Fill them in to check a mirror and your holding minimums.</p>
 </fieldset>
-<div class="row cap"><label for="cap">Rally cap</label><input id="cap" type="text" value="4,313,000" autocapitalize="off" spellcheck="false" style="max-width:9rem"></div>
-<div class="row"><button type="button" id="clear" class="quiet">Clear</button>
-<button type="button" id="example">Try a real scout</button></div>
-</div>
-<div class="readout" id="readout" aria-live="polite" data-empty>Enter their three troop totals to get a read.</div>
 </form>
 
 <h2>Six rules from 20 logged fights</h2>

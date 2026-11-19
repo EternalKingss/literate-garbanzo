@@ -114,7 +114,7 @@ strong { color: #fff; }
 /* Comp code: each digit wears its troop colour. The signature of the site. */
 .code {
   font-family: var(--display); font-weight: 800; letter-spacing: .02em;
-  display: inline-flex; gap: .08em; line-height: 1;
+  display: inline-flex; gap: .22em; line-height: 1;
 }
 .code .i { color: var(--inf); }
 .code .r { color: var(--rng); }
@@ -208,8 +208,12 @@ button {
 button.quiet { background: transparent; color: var(--moss); border: 1px solid var(--line); }
 button.quiet:hover { color: var(--bone); }
 
-.scout { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 2rem; align-items: start; margin-top: 1.5rem; }
-.scout fieldset { border: 1px solid var(--line); border-radius: var(--radius); padding: 1rem 1.1rem 1.2rem; margin: 0 0 1rem; background: var(--raised); }
+.scout { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); grid-template-areas: "their read" "yours read"; grid-template-rows: auto 1fr; gap: 1rem 2rem; align-items: start; margin-top: 1.5rem; }
+.a-their { grid-area: their; } .a-yours { grid-area: yours; align-self: start; } .a-read { grid-area: read; position: sticky; top: 5rem; }
+.row.go { margin-top: 1rem; }
+.row.go .cap-l { margin-left: auto; font-size: var(--step--1); color: var(--moss); }
+.row.go #cap { width: 7.5rem; padding: .4rem .5rem; font-size: var(--step--1); }
+.scout fieldset { border: 1px solid var(--line); border-radius: var(--radius); padding: 1rem 1.1rem 1.2rem; margin: 0; background: var(--raised); }
 .scout legend { font-family: var(--display); font-weight: 700; font-size: var(--step-1); padding: 0 .4rem; }
 .trio { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .6rem; }
 .trio label { display: block; font-size: var(--step--1); margin-bottom: .25rem; }
@@ -217,7 +221,7 @@ button.quiet:hover { color: var(--bone); }
 .scout .hint { font-size: var(--step--1); color: var(--moss); margin: .6rem 0 0; }
 .row { display: flex; gap: .6rem; flex-wrap: wrap; align-items: center; }
 
-.readout { background: var(--sunk); border: 1px solid var(--line); border-radius: var(--radius); padding: 1.25rem; min-height: 12rem; }
+.readout { scroll-margin-top: 7.5rem; background: var(--sunk); border: 1px solid var(--line); border-radius: var(--radius); padding: 1.25rem; min-height: 12rem; }
 .readout[data-empty] { color: var(--moss); display: flex; align-items: center; }
 .readout .code { font-size: clamp(3rem, 9vw, 5.5rem); }
 .readout .call { font-family: var(--display); font-size: var(--step-2); font-weight: 700; margin: .8rem 0 .2rem; }
@@ -254,7 +258,9 @@ footer .inner { max-width: 1120px; margin: 0 auto; padding: 1.5rem 1.25rem 2.5re
   .bar-inner { gap: .75rem; }
   .brand { font-size: 1.2rem; }
   .nav a { padding: .9rem .55rem; }
-  .scout { grid-template-columns: 1fr; }
+  .scout { grid-template-columns: 1fr; grid-template-areas: "their" "read" "yours"; }
+  .a-read { position: static; }
+  .row.go .cap-l { margin-left: 0; }
   .rules li { grid-template-columns: 1fr; gap: .3rem; }
   .bar-inner { flex-wrap: wrap; gap: 0; }
   .brand { padding: .6rem 0 .1rem; }
