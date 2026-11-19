@@ -81,14 +81,28 @@
     ["055", [0.2, 11, 8.8]], ["208", [4.8, 0.6, 14.6]], ["307", [6, 0.6, 13.4]]
   ];
 
-  var ids = ["ti", "tr", "tc", "yi", "yr", "yc"];
+  var ids = ["ti", "tr", "tc", "yi", "yr", "yc", "cap"];
   var el = {};
   ids.forEach(function (id) { el[id] = document.getElementById(id); });
   var out = document.getElementById("readout");
+  var NAMES = ["infantry", "ranged", "cav"];
 
+  function cap() { return parseTroops(el.cap.value) || 4313000; }
+
+  // Read three boxes. If exactly one is empty, fill it from the rally cap.
   function read(prefix) {
-    var v = [el[prefix + "i"].value, el[prefix + "r"].value, el[prefix + "c"].value].map(parseTroops);
-    return v;
+    var boxes = [el[prefix + "i"], el[prefix + "r"], el[prefix + "c"]];
+    var v = boxes.map(function (b) { return parseTroops(b.value); });
+    var missing = v.reduce(function (n, x) { return n + (x == null ? 1 : 0); }, 0);
+    var auto = -1;
+    boxes.forEach(function (b) { b.placeholder = ""; });
+    if (missing === 1) {
+      auto = v.indexOf(null);
+      var rest = cap() - v.reduce(function (s, x) { return s + (x || 0); }, 0);
+      if (rest >= 0) { v[auto] = rest; boxes[auto].placeholder = fmt(rest); }
+      else auto = -2;
+    }
+    return { v: v, auto: auto, empty: missing === 3 };
   }
 
   function nearest(parts) {
@@ -101,94 +115,169 @@
     return best;
   }
 
+  function compTroops(name) {
+    for (var k = 0; k < COMPS.length; k++) {
+      if (COMPS[k][0] === name) {
+        var p = COMPS[k][1], c = cap();
+        return p.map(function (x) { return Math.round(c * x / 20); });
+      }
+    }
+    return null;
+  }
+
   function codeHtml(parts) {
-    var r = parts.map(function (p) { return p >= 9.5 ? Math.round(p) : Math.round(p); });
+    var r = parts.map(function (p) { return Math.round(p); });
     return '<span class="code" aria-label="' + r.join("-") + ' split"><span class="i">' + r[0] +
       '</span><span class="r">' + r[1] + '</span><span class="c">' + r[2] + "</span></span>";
   }
 
+  function mirrorScore(us, them) { return (us[2] - them[2]) + 0.5 * (us[1] - them[1]); }
+
+  function leanText(score) {
+    if (score > 300000) return '<span class="win">strong for you</span>';
+    if (score > 80000) return '<span class="win">leans your way</span>';
+    if (score > -80000) return '<span class="even">coin flip, stats decide</span>';
+    return '<span class="loss">leans their way</span>';
+  }
+
+  // What they are and which formation counters their front.
+  function profile(t) {
+    var total = t[0] + t[1] + t[2];
+    var order = [0, 1, 2].sort(function (a, b) { return t[b] - t[a]; });
+    return {
+      total: total,
+      parts: t.map(function (x) { return x / total * 20; }),
+      big: order[0],
+      close: (t[order[0]] - t[order[1]]) / total < 0.04,
+      second: order[1],
+      is055: t[0] < 200000 && t[1] > 1500000 && t[2] > 1000000
+    };
+  }
+
+  // If they hit you: what to sit in.
+  function defendCall(t, p) {
+    if (p.is055) return ["Ranged Phalanx", "It's a 055: their real front is ranged with cav behind. Your ranged in front kills the cav. Hold 1.1M+ ranged and 1.4M+ infantry."];
+    if (p.big === 2) return ["Ranged Phalanx", "Their cav is the biggest stack (" + fmt(t[2]) + "). Ranged beats cav."];
+    if (p.big === 1) return ["Infantry Phalanx", "Their ranged is the biggest stack (" + fmt(t[1]) + "). Infantry beats ranged."];
+    return ["Cavalry Phalanx", "Their infantry is the biggest stack (" + fmt(t[0]) + "). Cav beats infantry."];
+  }
+
+  // If you hit them: which comp to send and in what. Built from the battle log rules.
+  function attackCall(t, p) {
+    var c = cap(), part = c / 20, notes = [];
+    if (p.is055) {
+      return { comp: "866 or 857", form: "Infantry Phalanx",
+        why: "Their front is a big ranged stack and infantry beats ranged. No logged win against a 055 holder yet (log 9: an 875 lost to one), so treat this as a test.",
+        notes: [] };
+    }
+    if (p.big === 2 || t[2] >= 1600000) {
+      // cav-heavy target: you need more cav than them
+      var pick = null;
+      [["668", 8], ["569", 9], ["659", 9]].some(function (o) {
+        if (o[1] * part > t[2] + 150000) { pick = o[0]; return true; }
+        return false;
+      });
+      if (pick === "659" || (pick === "569" && t[1] > 1300000)) pick = "569";
+      if (!pick) {
+        return { comp: "Skip", form: "—",
+          why: "They have " + fmt(t[2]) + " cav. Even a 9-part cav rally (" + fmt(9 * part) + ") doesn't clearly out-cav them, and more cav wins Range Phalanx mirrors.",
+          notes: t[1] <= 1100000 ? ["A 055 can still work if your lead is clearly stronger (log 10)."] : [] };
+      }
+      if (t[1] <= 1100000) notes.push("If your 055 lead is clearly stronger, a 055 in Infantry Wedge also wins this (log 10).");
+      return { comp: pick, form: "Ranged Phalanx",
+        why: "In a Range Phalanx mirror more cav wins. A " + pick + " brings " + fmt(compTroops(pick)[2]) + " cav against their " + fmt(t[2]) + ".",
+        notes: notes };
+    }
+    if (p.big === 1) {
+      if (t[2] < 1000000) return { comp: "1433", form: "Infantry Phalanx",
+        why: "Ranged-heavy with under 1M cav. Your infantry front beats their ranged, and they have little cav to punish it.",
+        notes: ["Their ranged is over 1.1M, so no 208."] };
+      return { comp: "668", form: "Ranged Phalanx",
+        why: "Ranged-heavy with real cav behind it. Your sheet lists 668 in Range Phalanx as a win against this shape (884).",
+        notes: ["A 055 into about 1.76M ranged traded even twice (logs 8, 14). Fine if you're stronger, not a sure win."] };
+    }
+    // infantry-heavy
+    if (t[2] < 1000000) return { comp: "668", form: "Ranged Phalanx (Cav Phalanx if they sit Inf Phalanx)",
+      why: "Infantry pile with low cav. A 668 out-cavs them by " + fmt(8 * part - t[2]) + "; that won by 527K in log 4.",
+      notes: [] };
+    return { comp: (9 * part > t[2] + 150000) ? "659" : "668", form: "Cavalry Phalanx (Ranged Phalanx if they sit Ranged Phalanx)",
+      why: "Infantry is their biggest stack and cav beats infantry. If they sit Ranged Phalanx instead, it becomes a mirror and your cav count decides it.",
+      notes: [] };
+  }
+
+  function li(xs) { return xs.length ? "<ul>" + xs.map(function (n) { return "<li>" + n + "</li>"; }).join("") + "</ul>" : ""; }
+
   function render() {
-    var t = read("t");
+    var T = read("t");
+    var t = T.v;
     if (t.some(function (x) { return x == null; })) {
       out.setAttribute("data-empty", "");
-      out.innerHTML = "Enter their three troop totals to get a read.";
+      out.innerHTML = T.auto === -2 ? "Those numbers add up to more than the rally cap. Fill all three, or raise the cap."
+        : "Enter at least two of their troop totals to get a read.";
       return;
     }
     out.removeAttribute("data-empty");
-    var total = t[0] + t[1] + t[2];
-    if (!total) return;
-    var parts = t.map(function (x) { return x / total * 20; });
-    var near = nearest(parts);
-    var names = ["infantry", "ranged", "cav"];
-    var order = [0, 1, 2].sort(function (a, b) { return t[b] - t[a]; });
-    var big = order[0];
-    var close = (t[order[0]] - t[order[1]]) / total < 0.04;
+    var p = profile(t);
+    var near = nearest(p.parts);
+    var head = codeHtml(p.parts) +
+      '<p class="muted">' + fmt(p.total) + " total. Closest named comp: <strong>" + esc(near.name) + "</strong>." +
+      (T.auto >= 0 ? ' <span class="auto">' + NAMES[T.auto].charAt(0).toUpperCase() + NAMES[T.auto].slice(1) + " filled from the rally cap: " + fmt(t[T.auto]) + ".</span>" : "") + "</p>";
+    var warn = [];
+    if (p.close && !p.is055) warn.push("Their top two stacks are within 4% (" + NAMES[p.big] + " and " + NAMES[p.second] + "). Wait for final numbers.");
 
-    var call, why;
-    var notes = [];
-    var is055 = t[0] < 200000 && t[1] > 1500000 && t[2] > 1000000;
+    // defend
+    var d = defendCall(t, p);
+    var html = head + "<h3>If they hit you</h3><p class=\"call\">Sit " + esc(d[0]) + "</p><p>" + esc(d[1]) + "</p>";
 
-    if (is055) {
-      call = "Ranged Phalanx";
-      why = "It's a 055: almost no infantry, so their real front is ranged with cav behind. Your ranged in front kills the cav.";
-      notes.push("You need 1.1M+ ranged and 1.4M+ infantry for this to hold. Against a clearly stronger 055 lead it can still lose.");
-    } else if (big === 2) {
-      call = "Ranged Phalanx";
-      why = "Their cav is the biggest stack (" + fmt(t[2]) + "). Ranged beats cav.";
-    } else if (big === 1) {
-      call = "Infantry Phalanx";
-      why = "Their ranged is the biggest stack (" + fmt(t[1]) + "). Infantry beats ranged.";
-      if (t[2] < 1000000) notes.push("Their cav is under 1M, so a 1433 in Infantry Phalanx fits.");
-    } else {
-      call = "Cavalry Phalanx";
-      why = "Their infantry is the biggest stack (" + fmt(t[0]) + "). Cav beats infantry.";
-      if (t[1] > 1100000) notes.push("They still have " + fmt(t[1]) + " ranged. If they sit Range Phalanx, that shoots your cav front.");
-    }
-    if (close && !is055) {
-      notes.push("Their top two stacks are within 4% (" + names[order[0]] + " and " + names[order[1]] + "). Wait for final numbers before you commit.");
-    }
-    if (t[1] > 1100000 && near.name !== "055") notes.push("Over 1.1M ranged: too much for a 208. A 055 traded even at about 1.76M in the logs.");
-
-    // mirror + garrison checks with the user's own numbers
-    var y = read("y");
-    var mirror = "";
-    if (!y.some(function (x) { return x == null; })) {
-      var cavGap = y[2] - t[2], rngGap = y[1] - t[1];
-      var score = cavGap + 0.5 * rngGap;
-      var lean;
-      if (score > 300000) lean = '<span class="win">Strong: hit or hold in Range Phalanx.</span>';
-      else if (score > 80000) lean = '<span class="win">Leans your way.</span>';
-      else if (score > -80000) lean = '<span class="even">Coin flip. Stats decide it.</span>';
-      else lean = '<span class="loss">Leans their way. Skip it or bring more cav.</span>';
-      mirror = is055 ? "" : "<p><strong>If it's a Range Phalanx mirror:</strong> cav gap " + signed(cavGap) +
-        ", ranged gap " + signed(rngGap) + ". " + lean + "</p>";
+    var Y = read("y");
+    var y = Y.v;
+    var haveYours = !y.some(function (x) { return x == null; });
+    if (haveYours) {
       var g = [];
       if (y[0] < 1400000) g.push("infantry under 1.4M (" + fmt(y[0]) + ")");
       if (y[1] < 1100000) g.push("ranged under 1.1M (" + fmt(y[1]) + ")");
       if (y[2] < 1600000) g.push("cav under 1.6M (" + fmt(y[2]) + ")");
-      if (y[0] + y[1] + y[2] < 4200000) g.push("not a full rally (" + fmt(y[0] + y[1] + y[2]) + ")");
-      if (g.length) mirror += '<p class="loss"><strong>If you\'re holding:</strong> ' + esc(g.join(", ")) + ".</p>";
+      if (g.length) html += '<p class="loss"><strong>Holding check:</strong> ' + esc(g.join(", ")) + ".</p>";
+      else html += '<p class="win"><strong>Holding check:</strong> you meet the minimums.</p>';
     }
 
-    out.innerHTML =
-      codeHtml(parts) +
-      '<p class="muted">' + fmt(total) + " total. Closest named comp: <strong>" + esc(near.name) + "</strong>.</p>" +
-      '<p class="call">' + esc(call) + "</p><p>" + esc(why) + "</p>" +
-      (notes.length ? "<ul>" + notes.map(function (n) { return "<li>" + esc(n) + "</li>"; }).join("") + "</ul>" : "") +
-      mirror;
+    // attack
+    html += "<h3>If you hit them</h3>";
+    if (haveYours) {
+      var you = profile(y);
+      var yourNear = nearest(you.parts).name;
+      var score = mirrorScore(y, t);
+      html += '<p class="call">Your ' + esc(yourNear) + ": " + leanText(score) + " in a Range Phalanx mirror</p>" +
+        "<p>Cav gap " + signed(y[2] - t[2]) + ", ranged gap " + signed(y[1] - t[1]) + ".</p>";
+      if (score < -80000) {
+        var a = attackCall(t, p);
+        html += a.comp === "Skip"
+          ? "<p><strong>Skip this one.</strong> " + esc(a.why) + "</p>"
+          : "<p>Better: send a <strong>" + esc(a.comp) + "</strong> in " + esc(a.form) + ". " + esc(a.why) + "</p>";
+      }
+    } else {
+      var a2 = attackCall(t, p);
+      html += '<p class="call">' + (a2.comp === "Skip" ? "Skip them" : "Send " + esc(a2.comp)) + (a2.comp !== "Skip" ? " in " + esc(a2.form) : "") + "</p><p>" + esc(a2.why) + "</p>" + li(a2.notes.map(esc));
+      if (a2.comp !== "Skip" && compTroops(a2.comp.split(" ")[0])) {
+        var ct = compTroops(a2.comp.split(" ")[0]);
+        html += '<p class="muted">At your cap that\'s ' + fmt(ct[0]) + " / " + fmt(ct[1]) + " / " + fmt(ct[2]) + ".</p>";
+      }
+    }
+    html += li(warn.map(esc));
+    out.innerHTML = html;
     out.classList.remove("flash"); void out.offsetWidth; out.classList.add("flash");
   }
 
   ids.forEach(function (id) { el[id].addEventListener("input", render); });
   document.getElementById("clear").addEventListener("click", function () {
-    ids.forEach(function (id) { el[id].value = ""; });
+    ["ti", "tr", "tc", "yi", "yr", "yc"].forEach(function (id) { el[id].value = ""; });
     render();
     el.ti.focus();
   });
   document.getElementById("example").addEventListener("click", function () {
-    // Log 3: their 659-ish sitter vs our rally. We lost by 207K.
-    el.ti.value = "1,371,218"; el.tr.value = "1,035,967"; el.tc.value = "1,824,444";
-    el.yi.value = "1,621,513"; el.yr.value = "1,089,173"; el.yc.value = "1,602,314";
+    // Mc Qai's citadel from log 10, with only two numbers typed
+    ["yi", "yr", "yc"].forEach(function (id) { el[id].value = ""; });
+    el.ti.value = "1.55m"; el.tr.value = "1032k"; el.tc.value = "";
     render();
   });
 })();
