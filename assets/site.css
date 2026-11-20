@@ -264,7 +264,8 @@ footer .inner { max-width: 1120px; margin: 0 auto; padding: 1.5rem 1.25rem 2.5re
   .rules li { grid-template-columns: 1fr; gap: .3rem; }
   .bar-inner { flex-wrap: wrap; gap: 0; }
   .brand { padding: .6rem 0 .1rem; }
-  .nav { margin-left: -.55rem; width: calc(100% + 1.1rem); }
+  .nav { margin-left: -.55rem; width: calc(100% + 1.1rem); flex-wrap: wrap; overflow: visible; gap: 0; }
+  .nav a { padding: .55rem .55rem .5rem; }
   .counts b { font-size: var(--step-1); }
 }
 
@@ -277,3 +278,15 @@ footer .inner { max-width: 1120px; margin: 0 auto; padding: 1.5rem 1.25rem 2.5re
 .row.cap label { font-weight: 700; }
 .readout h3 { font-size: var(--step-1); margin: 1.1rem 0 .2rem; color: var(--moss); }
 .readout .auto { color: var(--cav); }
+.src.cb { border-color: var(--inf); color: var(--inf); }
+.src.cb a, a .src.cb { color: inherit; }
+.status { white-space: nowrap; font-weight: 700; }
+.status.ok { color: var(--win); } .status.bad { color: var(--loss); } .status.open { color: var(--cav); }
+
+@media (max-width: 640px) {
+  table.stack, table.stack tbody, table.stack tr, table.stack td { display: block; width: auto; }
+  table.stack thead { display: none; }
+  table.stack tr { padding: .75rem 0; border-bottom: 1px solid var(--line); }
+  table.stack td { border: 0; padding: .15rem .25rem; }
+  table.stack td:first-child { font-weight: 700; color: var(--bone); }
+}
