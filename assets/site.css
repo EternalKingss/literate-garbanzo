@@ -290,3 +290,14 @@ footer .inner { max-width: 1120px; margin: 0 auto; padding: 1.5rem 1.25rem 2.5re
   table.stack td { border: 0; padding: .15rem .25rem; }
   table.stack td:first-child { font-weight: 700; color: var(--bone); }
 }
+
+/* rulebook */
+.grades { margin: 1rem 0 2rem; color: var(--moss); }
+.grade { display: inline-block; font-size: .75rem; font-weight: 700; letter-spacing: .02em; padding: .2rem .5rem; border-radius: 3px; margin-right: .35rem; vertical-align: .15em; color: var(--field); }
+.grade.proven { background: var(--win); } .grade.strong { background: var(--rng); }
+.grade.working { background: var(--cav); } .grade.theory { background: var(--inf); }
+.rule-card { border-left: 3px solid var(--line); padding: .25rem 0 .25rem 1.1rem; margin: 1.5rem 0; max-width: var(--measure); }
+.rule-card header { display: flex; align-items: baseline; gap: .5rem; flex-wrap: wrap; }
+.rule-card h3 { margin: 0; }
+.rule-card .call { font-weight: 700; color: var(--bone); margin: .5rem 0; }
+.rule-card .ev { color: var(--moss); font-size: var(--step--1); }
