@@ -663,8 +663,8 @@ def page_advanced():
 <p>Every rule below is one of these.</p>
 
 <h2 id="defend">Holding: what to sit in</h2>
-{rule("d055", "working", "Against a 055: check their infantry buffer first.",
-  "About 40K or less: Ranged Phalanx (cheaper). 50K or more: Infantry Phalanx only if you're the stronger account with high infantry HP; your infantry has to survive long enough for your ranged to kill its cav. Not stronger: pull. Running only 1 infantry hero: Ranged Phalanx. Never Ranged Wedge.",
+{rule("d055", "working", "Against a 055: Ranged Phalanx, Infantry Phalanx if you're stronger.",
+  "Default: Ranged Phalanx with only 1 infantry hero. Option: Infantry Phalanx if you're the stronger account with high infantry HP; your infantry has to survive long enough for your ranged to kill its cav. Against a well-built one (50K+ buffer) when you're not stronger: pull. Never Ranged Wedge.",
   "The 055's buffer soaks your opening volleys while its cav closes in and its ranged fires from the back. Once the buffer dies its cav is the front. Against a badly built 055 that cav arrives late and thin, so Ranged Phalanx holds cheaply. Against a well-built one it gets through to your cav. In Infantry Phalanx its fast cav eats your infantry instead, but your ranged sits untouched behind and shoots that cav the whole fight. It holds, at a higher cost. Ranged Wedge hands it the edges.",
   f"40K into Ranged Phalanx: held twice {logref(12, 15)}. 50K into Ranged Phalanx: lost to a much stronger lead {logref(10)}, even {logref(14)}. 50K into Infantry Phalanx: held, but the defender lost 1.14M infantry {logref(29)}. Crystal Briefs: Infantry Phalanx against a 055 is a privilege of the stronger account; everyone else should pull. {cb(V['f055'])} {cb(V['da1'])}")}
 {rule("dcav", "strong", "Cav in front only against a small ranged stack.",
@@ -1049,7 +1049,7 @@ def page_home():
         ("Read numbers, not names", "A 055 sits in \"Infantry Wedge\" with 40K infantry. The biggest stack tells you what's really in front."),
         ("Counter their biggest stack", "Their cav: ranged in front. Their ranged: infantry in front. Their infantry: Ranged Phalanx, or cav in front if they have under 1M cav."),
         ("Mirrors: guard, lead, infantry", "Ranged-heavy needs 3+ parts cav and about 700K more ranged. Otherwise more infantry wins. Called 10 of 12 logged mirrors."),
-        ("055: check the buffer", "Sending: 50–60K infantry, not 40K. Holding: Ranged Phalanx against 40K. Against 50K+, Infantry Phalanx if you're stronger, else pull."),
+        ("055: check the buffer", "Sending: 50–60K infantry, not 40K. Holding: Ranged Phalanx; Infantry Phalanx if you're stronger. Never Ranged Wedge."),
         ("Call off final numbers", "Half-filled rallies change. Switch late, after the last scout."),
         ("Check the rally screen", "Fillers drift toward infantry. Your 668 is useless if it lands as a 758."),
     ]

@@ -177,9 +177,9 @@
 
   // If they hit you: what to sit in.
   function defendCall(t, p) {
-    if (p.is055) return t[0] >= 45000
-      ? ["Infantry Phalanx, or pull", "Well-built 055 (" + fmt(t[0]) + " infantry buffer). Infantry Phalanx held against one (log 29) but cost 1.14M infantry: only do it if you're the stronger account with high infantry HP. Otherwise pull. Ranged Phalanx lost or traded even against these (logs 10, 14). Never Ranged Wedge."]
-      : ["Ranged Phalanx", "055 with a thin buffer (" + fmt(t[0]) + "). Ranged Phalanx held twice against 40K builds (logs 12, 15) and costs less. Never Ranged Wedge."];
+    if (p.is055) return ["Ranged Phalanx", "It's a 055 (" + fmt(t[0]) + " infantry buffer). Ranged Phalanx held against 40K builds (logs 12, 15). Run only 1 infantry hero. Never Ranged Wedge." +
+      (t[0] >= 45000 ? " Well-built one: Ranged Phalanx lost or traded even against these (logs 10, 14), so pull if they're stronger." : ""),
+      "If you're the stronger account with high infantry HP: Infantry Phalanx. It held against a 50K build (log 29) but cost 1.14M infantry."];
     if (p.is208) return ["Ranged Wedge", "Cav-blast style rally (208/307). Ranged Wedge keeps their cav off your infantry; a Cav Shield familiar helps."];
     if (p.big === 2) return ["Ranged Phalanx", "Their cav is the biggest stack (" + fmt(t[2]) + "). Ranged beats cav."];
     if (p.big === 1) return ["Infantry Phalanx", "Their ranged is the biggest stack (" + fmt(t[1]) + "). Infantry beats ranged, and a cav front lost twice to a 2.2M ranged rally (logs 25, 26)."];
@@ -248,7 +248,8 @@
 
     // defend
     var d = defendCall(t, p);
-    var html = head + "<h3>If they hit you</h3><p class=\"call\">Sit " + esc(d[0]) + "</p><p>" + esc(d[1]) + "</p>";
+    var html = head + "<h3>If they hit you</h3><p class=\"call\">Sit " + esc(d[0]) + "</p><p>" + esc(d[1]) + "</p>"
+    if (d[2]) html += "<p><strong>Option:</strong> " + esc(d[2]) + "</p>";
 
     var Y = read("y");
     var y = Y.v;
