@@ -177,7 +177,7 @@
 
   // If they hit you: what to sit in.
   function defendCall(t, p) {
-    if (p.is055) return ["Ranged Phalanx", "It's a 055. Ranged Phalanx held in logs 12, 15 and 16; Infantry Phalanx held in log 29. Never Ranged Wedge. Run only 1 infantry hero: with 2, a 055 reaches both your cav squads."];
+    if (p.is055) return ["Ranged Phalanx", "It's a 055. Ranged Phalanx held in logs 12, 15 and 16: its cav has to cross the field to your ranged while being shot. Infantry Phalanx also held (log 29) but cost 1.14M infantry. Never Ranged Wedge. Run only 1 infantry hero."];
     if (p.is208) return ["Ranged Wedge", "Cav-blast style rally (208/307). Ranged Wedge keeps their cav off your infantry; a Cav Shield familiar helps."];
     if (p.big === 2) return ["Ranged Phalanx", "Their cav is the biggest stack (" + fmt(t[2]) + "). Ranged beats cav."];
     if (p.big === 1) return ["Infantry Phalanx", "Their ranged is the biggest stack (" + fmt(t[1]) + "). Infantry beats ranged, and a cav front lost twice to a 2.2M ranged rally (logs 25, 26)."];
