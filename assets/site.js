@@ -192,7 +192,7 @@
     var c = cap(), part = c / 20;
     if (p.is055) {
       return { comp: "Skip", form: "—",
-        why: "A 055 holder's cav soaks while its ranged stack sits untouched and shoots your back line. An 875 in Infantry Phalanx lost to one by 338K (log 9). No logged win against a 055 holder yet: only hit it with a much stronger lead.",
+        why: "A 055 holder's cav soaks while its ranged stack sits untouched and shoots your back line. Infantry Phalanx into one lost by 704K (log 32), and an 875 lost by 338K (log 9). No logged win against a 055 holder yet: only hit it with a much stronger lead.",
         notes: [] };
     }
     var sh = shape(t), pt = p.parts;

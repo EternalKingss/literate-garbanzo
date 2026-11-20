@@ -177,10 +177,10 @@ BATTLES = [
          al=1_808_860, dl=1_819_800, us="att", tags=["055"],
          lesson="Same shape as log 14 and the same result: an even trade at about 1.76M enemy ranged."),
     dict(id=9, day="19 Nov", group="guild", place="Our wonder (055 garrison)",
-         att=S("Big No0b (from memory)", "875", (1_719_967, 1_536_653, 1_056_379), "Infantry Phalanx (from memory)"),
+         att=S("Attacker", "875", (1_719_967, 1_536_653, 1_056_379), "unknown"),
          dfn=S("T69 garrison", "055", (50_000, 2_755_000, 1_508_000), "unknown"),
          al=1_765_491, dl=1_427_410, us="def", tags=["055"],
-         lesson="Infantry Phalanx into a 055 holder lost by 338K. Our cav soaked (lost 87%) while our 2.75M ranged lost only 71K and shot his ranged (780K lost) and cav (699K lost) all fight."),
+         lesson="An 875 into our 055 holder lost by 338K. Our cav soaked (lost 87%) while our 2.75M ranged lost only 71K and shot his ranged (780K lost) and cav (699K lost) all fight."),
     dict(id=10, day="19 Nov", group="guild", place="Chaos Citadel (Mc Qai)",
          att=S("T69 rally (strongest lead)", "055", (50_000, 2_381_485, 1_870_862), "Infantry Wedge"),
          dfn=S("Mc Qai", "758", (1_546_798, 1_032_137, 1_731_677), "Ranged Phalanx"),
@@ -294,6 +294,11 @@ BATTLES = [
          dfn=S("T69 garrison", "848", (1_688_460, 940_237, 1_684_303), "Ranged Phalanx?"),
          al=1_521_562, dl=1_780_971, us="def", tags=["mirror"],
          lesson="Ranged-heavy rally with 747K LESS cav won by 259K. Its ranged outlived the defender's (38% survived), the same shape as log 7."),
+    dict(id=32, day="19 Nov", group="guild", place="Chaos Citadel (we held it)",
+         att=S("Lucky Bo rally", "?", None, "Infantry Phalanx", total=4_313_000),
+         dfn=S("T69 garrison (Flea Kim)", "055", None, "Infantry Wedge", total=4_237_871),
+         al=1_875_628, dl=1_172_058, us="def", tags=["055"],
+         lesson="Infantry Phalanx into our 055 garrison: we won by 704K. Troop split not captured."),
 ]
 
 # re-number in display order: guild first, then shared, then old
@@ -407,7 +412,7 @@ COMPS = [
                "Works as a garrison too: it beat an 875 " + logref(9)],
          beats=["When you're the stronger lead: 857, 758, 947, 659, 866, 668, 956, 848 " + SRC_SHEET + " " + logref(10),
                 "At equal stats: 659 (harder), 749, 857, 956, 848, 947 " + SRC_SHEET,
-                "An 875 in Infantry Phalanx hitting your 055 garrison: won by 338K " + logref(9)],
+                "An 875 hitting your 055 garrison: won by 338K " + logref(9) + "; Lucky Bo in Infantry Phalanx: won by 704K " + logref(32)],
          loses=["758 or 857 in Range Phalanx when you're not stronger " + logref(12, 15),
                 "Targets with about 1.76M ranged and under 1M cav: expect an even trade, not a win " + logref(8, 14)],
          heroes="4 ranged + 1 cav hero, no infantry hero. Familiars: ranged pact-5s, Cav Shield, cav stacker.", shots=[("055 comp.png", "055 heroes; lead sends the only infantry"), ("055 gear.png", "055 gear"), ("055 option gear.png", "Alternative pieces")],
