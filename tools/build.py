@@ -367,11 +367,10 @@ COMPS = [
                "Defending a 659 hit: sit Cav Phalanx, or Range Phalanx if they run Saberfang or heavy cav gear " + SRC_SHEET],
          beats=["Range Phalanx: 965, 866 " + SRC_SHEET,
                 "Cav Phalanx: 947, 956, 857, 749 " + SRC_SHEET,
-                "Inf Phalanx: 884, 974, but pull if their lead is stronger " + SRC_SHEET,
                 "Range Phalanx mirrors where it had far more cav " + logref(3, 13) + ", but cav alone doesn't decide mirrors " + logref(21)],
          loses=["992 and 055 " + SRC_SITE,
                 "668 in Cav Phalanx " + SRC_SITE + " " + SRC_OPEN,
-                "884: a 442 is a natural counter to 659 " + cb(CB["atkhp"]) + "; your sheet disagrees " + src("open", "disputed")],
+                "884 and 974: a 442 is a natural counter to a 659 " + cb(CB["atkhp"]) + " " + SRC_SITE],
          heroes="Cavalry-focused heroes and familiars.", shots=[("659 comp.png", "659 heroes and familiars"), ("659 gear.png", "659 gear"), ("659 option gear.png", "Alternative pieces")],
          gear="Gear: Cavalry ATK, Cavalry HP and Army stats. Cups can replace the Faith with the same jewels. Main hand: Champion Blade, Skullcrusher or Champion Edge. Off hand: Champion Light, Dragon Fist, Book of the Dead or Mitts."),
     dict(key="569", digits=("5", "6", "9"), parts=(5, 6, 9), name="569",
@@ -386,18 +385,19 @@ COMPS = [
          sub="Balanced attack comp. Range Phalanx by default, with a planned switch against cav-heavy targets.",
          form=["<strong>Range Phalanx</strong> by default " + SRC_SITE + " " + SRC_SHEET,
                "<strong>Cav Phalanx</strong> against 659, 569 and 758 " + SRC_SITE + " " + SRC_OPEN + ". Careful: our only Cav Phalanx defence today lost narrowly when the rally came in Range Phalanx " + logref(2)],
-         beats=["Range Phalanx: 965, 776 " + SRC_SITE + " " + SRC_SHEET + "; 884 is disputed " + src("open", "disputed"),
-                "Range Phalanx: 857 " + SRC_SITE + " or 875 " + SRC_SHEET + " " + src("open", "disputed"),
+         beats=["Range Phalanx: 965, 776 " + SRC_SITE + " " + SRC_SHEET + "",
+                "Range Phalanx: 857 " + SRC_SITE + ", but a 424 mirror is a toss-up on numbers " + logref(22),
                 "1262-style infantry piles with low cav: won by 527K " + logref(4)],
          loses=["Range Phalanx: 659, 569, 758 " + SRC_SITE + " " + SRC_SHEET,
+                "884 in Range Phalanx: a ranged-heavy 442 beats 424-types there " + logref(31) + " " + cb(CB["v442"]),
                 "442 types sitting Ranged Phalanx: their ranged outlives yours " + logref(31) + " " + cb(CB["m442"])],
-         heroes="Sheet: 2 infantry, 2 ranged, 1 cavalry. Crystal Briefs' tests favour 1-2-2 for 424-types, because 2-2-1 is what a 055 or 208 feeds on.", shots=[("668 comp.png", "668 heroes and lead march: 208K T5 + 167K T4 infantry"), ("659 gear.png", "Same gear as 659")],
+         heroes="1 infantry, 2 ranged, 2 cavalry. The sheet's 2-2-1 is what a 055 or 208 feeds on " + cb(CB["s424"]) + ".", shots=[("668 comp.png", "668 lead march: 208K T5 + 167K T4 infantry. The heroes shown are the sheet's 2-2-1; swap one infantry hero for a cav hero"), ("659 gear.png", "Same gear as 659")],
          gear="Same gear as 659. Talents: Infantry 3, Ranged 3 and Cavalry 3 maxed, Army HP 1 and 2 maxed, Infantry 2 maxed, the rest into Ranged 2.",
          warn="Fillers keep turning this into a 758. Logs 1 and 3 landed at about 7.5-5-7.5. Check the rally screen reads about 30% / 30% / 40% before you launch."),
     dict(key="866", digits=("8", "6", "6"), parts=(8, 6, 6), name="866",
          sub="Infantry-heavy Range Phalanx comp for targets with low cav.",
          form=["<strong>Range Phalanx</strong> only, with the lead sending a full infantry march " + SRC_SITE + " " + SRC_SHEET],
-         beats=["974, 884, 712 " + SRC_SITE + " " + SRC_SHEET, "992 " + SRC_SITE, "965: sources disagree " + src("open", "disputed")],
+         beats=["974, 884, 712 " + SRC_SITE + " " + SRC_SHEET, "992 " + SRC_SITE, "965 " + SRC_SITE],
          loses=["659, 569, 758, 857, 208, 055 " + SRC_SITE, "668 " + SRC_SHEET],
          heroes="Infantry-focused heroes. Use 2 ranged heroes for Range Phalanx (the old page said 1–2).", shots=[("866 comp.png", "866 heroes and lead march"), ("866 gear.png", "866 gear"), ("866 option gear.png", "Alternative pieces")],
          gear="Gear: Infantry ATK and HP with some Ranged ATK."),
@@ -550,7 +550,8 @@ def page_formations():
 <div class="table-wrap"><table>
 <thead><tr><th>Their front / biggest stack</th><th>Put in front</th><th>Phalanx to use</th></tr></thead>
 <tbody>
-<tr><td class="t-inf">Infantry</td><td class="t-cav">Cavalry</td><td>Cavalry Phalanx</td></tr>
+<tr><td class="t-inf">Infantry pile, under 1M cav</td><td class="t-cav">Cavalry</td><td>Cavalry Phalanx</td></tr>
+<tr><td class="t-inf">Infantry, in a mixed comp</td><td class="t-rng">Ranged</td><td>Ranged Phalanx {cb(CB["basics"])}</td></tr>
 <tr><td class="t-rng">Ranged</td><td class="t-inf">Infantry</td><td>Infantry Phalanx</td></tr>
 <tr><td class="t-cav">Cavalry</td><td class="t-rng">Ranged</td><td>Ranged Phalanx</td></tr>
 </tbody></table></div>
@@ -787,15 +788,18 @@ def page_mechanics():
 <p>Weak against infantry-heavy 424s, fine against cav-heavy ones. 4-10-6 is the most stable against Ranged Phalanx, but Ranged Wedge kills it. {cb(V["c244"])} Our 5-10-4 beat a Cav Phalanx twice. {logref(25, 26)}</p>
 
 <h2 id="disagree">Where sources disagree</h2>
-<div class="table-wrap"><table class="stack"><thead><tr><th>Question</th><th>What each source says</th><th>Status</th></tr></thead><tbody>
-<tr><td>Who wins a Range Phalanx mirror</td><td>Our first 6 mirrors: more cav. All {n} mirrors: cav called {hits}. Crystal Briefs: timing of the ranged dying, heroes, familiars.</td><td><span class="status bad">Cav rule retired</span></td></tr>
-<tr><td>668 in Ranged Phalanx vs 884</td><td>Sheet: 668 wins. Crystal Briefs: 442s beat 424-types in Ranged Phalanx. Log 31: a 794 beat our 848.</td><td><span class="status bad">Leans against the sheet</span></td></tr>
-<tr><td>659 vs 884</td><td>Sheet: 659 in Infantry Phalanx wins. Old site: never send it. Crystal Briefs: 442 is a natural counter to 659 and won even into Infantry Phalanx.</td><td><span class="status open">Leans old site</span></td></tr>
-<tr><td>Infantry heroes and the 055</td><td>Old site contradicted itself. Crystal Briefs: attacker runs none; defender's 2 infantry heroes are what a 055 feeds on.</td><td><span class="status ok">Settled</span></td></tr>
-<tr><td>Ranged heroes in Ranged Phalanx</td><td>Old site: 1–2 for an 866. Crystal Briefs: exactly 2, tested.</td><td><span class="status ok">Settled: 2</span></td></tr>
-<tr><td>Their infantry is biggest: sit what?</td><td>Our rule: cav in front. Crystal Briefs: Ranged Phalanx holds best against mixed infantry-front rallies. No logged fight yet.</td><td><span class="status open">Open</span></td></tr>
-<tr><td>Taking a 055 in Infantry Phalanx</td><td>Crystal Briefs: loses to a well-built 055, but less badly than Ranged Phalanx when you have 2 infantry heroes. Log 29: Infantry Phalanx held by 178K.</td><td><span class="status ok">Both work</span></td></tr>
-<tr><td>866 vs 965</td><td>Sheet: 866 loses. Old site: 866 wins.</td><td><span class="status open">No data</span></td></tr>
+<p><strong>Order of trust:</strong> Crystal Briefs' tests and our logs first, then the old site, then the sheet. Every conflict below is settled that way, and the rest of the site follows it.</p>
+<div class="table-wrap"><table class="stack"><thead><tr><th>Question</th><th>What each source says</th><th>Followed</th></tr></thead><tbody>
+<tr><td>Who wins a Range Phalanx mirror</td><td>Old rule: more cav. All {n} mirrors: cav called {hits}. Crystal Briefs: timing of the ranged dying, heroes, familiars.</td><td><span class="status ok">Tests + logs: no cav rule</span></td></tr>
+<tr><td>668 in Ranged Phalanx vs 884</td><td>Sheet: 668 wins. Crystal Briefs: 442s beat 424-types in Ranged Phalanx. Log 31: a 794 beat our 848.</td><td><span class="status ok">Tests + logs: 668 loses</span></td></tr>
+<tr><td>659 vs 884</td><td>Sheet: 659 in Infantry Phalanx wins. Old site: never send it. Crystal Briefs: a 442 counters a 659.</td><td><span class="status ok">Tests + site: don't send it</span></td></tr>
+<tr><td>Their infantry is biggest: sit what?</td><td>Old rule: cav in front. Crystal Briefs: against mixed infantry-front rallies, Ranged Phalanx holds best.</td><td><span class="status ok">Tests: Ranged Phalanx (cav front only vs an infantry pile with under 1M cav)</span></td></tr>
+<tr><td>Hero lineup for 424-types (668, 758, 857)</td><td>Sheet: 2-2-1. Crystal Briefs: 1-2-2; 2-2-1 is what 055s and 208s feed on.</td><td><span class="status ok">Tests: 1-2-2</span></td></tr>
+<tr><td>Infantry heroes and the 055</td><td>Old site contradicted itself. Crystal Briefs: attacker runs none; defender holds with 1.</td><td><span class="status ok">Tests</span></td></tr>
+<tr><td>Ranged heroes in Ranged Phalanx</td><td>Old site: 1–2 for an 866. Crystal Briefs: exactly 2.</td><td><span class="status ok">Tests: 2</span></td></tr>
+<tr><td>Taking a 055 in Infantry Phalanx</td><td>Crystal Briefs: works, but loses to a well-built 055. Log 29: held by 178K.</td><td><span class="status ok">Both work</span></td></tr>
+<tr><td>668 in Ranged Phalanx vs 857 or 875</td><td>Old site: beats 857. Sheet: beats 875. Logs: 424 mirrors are a toss-up on numbers.</td><td><span class="status open">Logs: toss-up</span></td></tr>
+<tr><td>866 vs 965</td><td>Old site: 866 wins. Sheet: 866 loses. No test or log.</td><td><span class="status open">Site: 866 wins</span></td></tr>
 </tbody></table></div>
 <p class="muted">Videos used: {len(V)} narrated Crystal Briefs videos. His war-action videos are music only, so they're not included.</p>
 """
@@ -908,7 +912,7 @@ def page_heroes():
 def page_home():
     rules = [
         ("Read numbers, not names", "A 055 sits in \"Infantry Wedge\" with 40K infantry. The biggest stack tells you what's really in front."),
-        ("Counter their biggest stack", "Their infantry: your cav in front. Their ranged: your infantry in front. Their cav: your ranged in front."),
+        ("Counter their biggest stack", "Their cav: ranged in front. Their ranged: infantry in front. Their infantry: Ranged Phalanx, or cav in front if they have under 1M cav."),
         ("Mirrors aren't won by cav count", "Cav count called 6 of 12 mirrors. Heroes, familiars and stats decide them. Hit a mirror only when your lead is clearly stronger."),
         ("Never sit with no infantry", "Hold 1.4M+ infantry, 1.1M+ ranged, 1.6M+ cav, full cap."),
         ("Call off final numbers", "Half-filled rallies change. Switch late, after the last scout."),
