@@ -78,7 +78,7 @@
     ["785", [7, 8, 5]], ["965", [9, 6, 5]], ["947", [9, 4, 7]], ["956", [9, 5, 6]],
     ["749", [7, 4, 9]], ["776", [7, 7, 6]], ["992", [9, 9, 2]], ["974", [9, 7, 4]],
     ["442", [8, 8, 4]], ["1433", [14, 3, 3]], ["1262", [12, 6, 2]],
-    ["055", [0.2, 11, 8.8]], ["208", [4.8, 0.6, 14.6]], ["307", [6, 0.6, 13.4]]
+    ["794", [7, 9, 4]], ["1055", [10, 5, 5]], ["848", [8, 4, 8]], ["055", [0.2, 11, 8.8]], ["208", [4.8, 0.6, 14.6]], ["307", [6, 0.6, 13.4]]
   ];
 
   var ids = ["ti", "tr", "tc", "yi", "yr", "yc", "cap"];
@@ -131,13 +131,21 @@
       '</span><span class="r">' + r[1] + '</span><span class="c">' + r[2] + "</span></span>";
   }
 
-  function mirrorScore(us, them) { return (us[2] - them[2]) + 0.5 * (us[1] - them[1]); }
-
-  function leanText(score) {
-    if (score > 300000) return '<span class="win">strong for you</span>';
-    if (score > 80000) return '<span class="win">leans your way</span>';
-    if (score > -80000) return '<span class="even">coin flip, stats decide</span>';
-    return '<span class="loss">leans their way</span>';
+  // Ranged Phalanx mirrors: troop counts alone called only 6 of 12 logged mirrors.
+  // Most promising so far: ranged-heavy WITH real cav into a 424-type (won 7, 31; lost 13 by 61K). With almost no cav it lost (5, 6).
+  function shape(t) {
+    var tot = t[0] + t[1] + t[2], r = t[1] / tot * 20, c = t[2] / tot * 20;
+    if (r >= 8 && c <= 5 && c >= 3) return "442";   // ranged-heavy that still brings real cav: 884, 794, 785
+    if (r >= 8 && c < 3) return "thin";   // 8-11-1, 992: ranged-heavy with almost no cav
+    if (r <= 6.5 && c >= 6) return "424"; // 857, 758, 659, 848, 749
+    return "mixed";
+  }
+  function mirrorText(y, t) {
+    var a = shape(y), b = shape(t);
+    if (a === "442" && b === "424") return ['<span class="win">promising shape for you</span>', "Ranged-heavy with real cav into a 424-type: won logs 7 and 31, lost log 13 by 61K. Small sample."];
+    if (a === "424" && b === "442") return ['<span class="loss">risky shape for you</span>', "A ranged-heavy rally with real cav beat our 848 this way (log 31). Hit them in Infantry Phalanx or with an infantry-heavy comp instead."];
+    if (a === "thin") return ['<span class="loss">risky shape for you</span>', "Ranged-heavy with almost no cav lost twice into a 758 (logs 5, 6). After the ranged trade nothing shields your infantry."];
+    return ['<span class="even">toss-up on numbers</span>', "Troop counts called only 6 of our 12 mirrors. Heroes, familiars and stats decide this one: hit only if your lead is clearly stronger."];
   }
 
   // What they are and which formation counters their front.
@@ -150,58 +158,56 @@
       big: order[0],
       close: (t[order[0]] - t[order[1]]) / total < 0.04,
       second: order[1],
-      is055: t[0] < 200000 && t[1] > 1500000 && t[2] > 1000000
+      is055: t[0] < 200000 && t[1] > 1500000 && t[2] > 1000000,
+      is208: t[1] < 300000 && t[2] / total > 0.6
     };
   }
 
   // If they hit you: what to sit in.
   function defendCall(t, p) {
-    if (p.is055) return ["Ranged Phalanx", "It's a 055: their real front is ranged with cav behind. Your ranged in front kills the cav. Hold 1.1M+ ranged and 1.4M+ infantry."];
+    if (p.is055) return ["Ranged Phalanx", "It's a 055. Ranged Phalanx held in logs 12, 15 and 16; Infantry Phalanx held in log 29. Never Ranged Wedge. Run only 1 infantry hero: with 2, a 055 reaches both your cav squads."];
+    if (p.is208) return ["Ranged Wedge", "Cav-blast style rally (208/307). Ranged Wedge keeps their cav off your infantry; a Cav Shield familiar helps."];
     if (p.big === 2) return ["Ranged Phalanx", "Their cav is the biggest stack (" + fmt(t[2]) + "). Ranged beats cav."];
-    if (p.big === 1) return ["Infantry Phalanx", "Their ranged is the biggest stack (" + fmt(t[1]) + "). Infantry beats ranged."];
-    return ["Cavalry Phalanx", "Their infantry is the biggest stack (" + fmt(t[0]) + "). Cav beats infantry."];
+    if (p.big === 1) return ["Infantry Phalanx", "Their ranged is the biggest stack (" + fmt(t[1]) + "). Infantry beats ranged, and a cav front lost twice to a 2.2M ranged rally (logs 25, 26)."];
+    return ["Cavalry Phalanx", "Their infantry is the biggest stack (" + fmt(t[0]) + "). Cav beats infantry. Not tested in our logs yet; Crystal Briefs' equal-stat tests favour Ranged Phalanx against mixed infantry-front rallies."];
   }
 
-  // If you hit them: which comp to send and in what. Built from the battle log rules.
+  // If you hit them: which comp to send and in what. Built from the battle log plus Crystal Briefs' tests.
   function attackCall(t, p) {
-    var c = cap(), part = c / 20, notes = [];
+    var c = cap(), part = c / 20;
     if (p.is055) {
       return { comp: "866 or 857", form: "Infantry Phalanx",
         why: "Their front is a big ranged stack and infantry beats ranged. No logged win against a 055 holder yet (log 9: an 875 lost to one), so treat this as a test.",
         notes: [] };
     }
-    if (p.big === 2 || t[2] >= 1600000) {
-      // cav-heavy target: you need more cav than them
-      var pick = null;
-      [["668", 8], ["569", 9], ["659", 9]].some(function (o) {
-        if (o[1] * part > t[2] + 150000) { pick = o[0]; return true; }
-        return false;
-      });
-      if (pick === "659" || (pick === "569" && t[1] > 1300000)) pick = "569";
-      if (!pick) {
-        return { comp: "Skip", form: "—",
-          why: "They have " + fmt(t[2]) + " cav. Even a 9-part cav rally (" + fmt(9 * part) + ") doesn't clearly out-cav them, and more cav wins Range Phalanx mirrors.",
-          notes: t[1] <= 1100000 ? ["A 055 can still work if your lead is clearly stronger (log 10)."] : [] };
-      }
-      if (t[1] <= 1100000) notes.push("If your 055 lead is clearly stronger, a 055 in Infantry Wedge also wins this (log 10).");
-      return { comp: pick, form: "Ranged Phalanx",
-        why: "In a Range Phalanx mirror more cav wins. A " + pick + " brings " + fmt(compTroops(pick)[2]) + " cav against their " + fmt(t[2]) + ".",
+    var sh = shape(t), pt = p.parts;
+    if (sh === "442" || sh === "thin" || (p.big === 1 && sh !== "424")) {
+      if (t[2] < 1000000) return { comp: "1433", form: "Infantry Phalanx",
+        why: "Ranged-heavy with under 1M cav. Your infantry front beats their ranged and they have little cav to punish it.",
+        notes: ["Their ranged is over 1.1M, so no 208."] };
+      return { comp: "947 or 857", form: "Infantry Phalanx",
+        why: "Ranged-heavy (442-type) sitters are short on cav, so infantry-heavy comps are their counter. A 424 in Ranged Phalanx against one lost in log 31.",
+        notes: ["Your sheet lists 668 in Ranged Phalanx against an 884. Our logs and Crystal Briefs' tests point the other way, so it's not the pick here."] };
+    }
+    if (pt[2] >= 12) return { comp: "884 or 794", form: "Ranged Phalanx",
+      why: "Cav-heavy holder with little ranged. Ranged beats cav, and they have almost nothing to answer your ranged with.",
+      notes: ["Bring exactly 2 ranged heroes."] };
+    if (sh === "424") {
+      var notes = ["Bring exactly 2 ranged heroes.", "If their lead is clearly weaker or runs 2 infantry heroes, a 055 in Infantry Wedge is the other option (log 10)."];
+      if (pt[0] >= 9 && t[1] < 1300000) notes.push("Infantry-heavy 424 (947 / 1046 type): this is also the 208's target, sent in Ranged Wedge. Not in our logs yet.");
+      if (t[1] > 1300000) notes.unshift("Their ranged is thick (" + fmt(t[1]) + "): the 442 edge shrinks. Treat as a toss-up.");
+      return { comp: "794 or 884", form: "Ranged Phalanx",
+        why: "Ranged-heavy rally that keeps about 0.9M cav, into a 424-type sitter. Best record so far: won logs 7 and 31 with less cav, lost log 13 by 61K. Don't drop the cav: an 8-11-1 lost twice (logs 5, 6).",
         notes: notes };
     }
-    if (p.big === 1) {
-      if (t[2] < 1000000) return { comp: "1433", form: "Infantry Phalanx",
-        why: "Ranged-heavy with under 1M cav. Your infantry front beats their ranged, and they have little cav to punish it.",
-        notes: ["Their ranged is over 1.1M, so no 208."] };
-      return { comp: "668", form: "Ranged Phalanx",
-        why: "Ranged-heavy with real cav behind it. Your sheet lists 668 in Range Phalanx as a win against this shape (884).",
-        notes: ["A 055 into about 1.76M ranged traded even twice (logs 8, 14). Fine if you're stronger, not a sure win."] };
-    }
-    // infantry-heavy
-    if (t[2] < 1000000) return { comp: "668", form: "Ranged Phalanx (Cav Phalanx if they sit Inf Phalanx)",
-      why: "Infantry pile with low cav. A 668 out-cavs them by " + fmt(8 * part - t[2]) + "; that won by 527K in log 4.",
+    if (t[2] < 1000000) return { comp: "668", form: "Ranged Phalanx",
+      why: "Infantry pile with low cav. A 668 brings " + fmt(8 * part) + " cav against " + fmt(t[2]) + "; that won by 527K in log 4.",
       notes: [] };
-    return { comp: (9 * part > t[2] + 150000) ? "659" : "668", form: "Cavalry Phalanx (Ranged Phalanx if they sit Ranged Phalanx)",
-      why: "Infantry is their biggest stack and cav beats infantry. If they sit Ranged Phalanx instead, it becomes a mirror and your cav count decides it.",
+    if (pt[0] >= 9 && t[1] < 1300000) return { comp: "208", form: "Ranged Wedge",
+      why: "Infantry-heavy with modest ranged: the 208's target. A little infantry eats their ranged and the cav reaches their infantry.",
+      notes: ["Not in our logs yet. Risky if their lead is much stronger."] };
+    return { comp: "668", form: "Ranged Phalanx",
+      why: "Balanced comp with no clear weak spot. Numbers won't decide this one: heroes, familiars and stats will. Hit only if your lead is clearly stronger.",
       notes: [] };
   }
 
@@ -243,26 +249,22 @@
 
     // attack
     html += "<h3>If you hit them</h3>";
+    var a2 = attackCall(t, p);
     if (haveYours) {
       var you = profile(y);
       var yourNear = nearest(you.parts).name;
-      var score = mirrorScore(y, t);
-      html += '<p class="call">Your ' + esc(yourNear) + ": " + leanText(score) + " in a Range Phalanx mirror</p>" +
-        "<p>Cav gap " + signed(y[2] - t[2]) + ", ranged gap " + signed(y[1] - t[1]) + ".</p>";
-      if (score < -80000) {
-        var a = attackCall(t, p);
-        html += a.comp === "Skip"
-          ? "<p><strong>Skip this one.</strong> " + esc(a.why) + "</p>"
-          : "<p>Better: send a <strong>" + esc(a.comp) + "</strong> in " + esc(a.form) + ". " + esc(a.why) + "</p>";
-      }
+      var mt = mirrorText(y, t);
+      html += '<p class="call">Your ' + esc(yourNear) + " in a Range Phalanx mirror: " + mt[0] + "</p><p>" + esc(mt[1]) + "</p>" +
+        '<p class="muted">Cav gap ' + signed(y[2] - t[2]) + ", ranged gap " + signed(y[1] - t[1]) + ".</p>";
+      html += "<p>Best comp from the logs: <strong>" + esc(a2.comp) + "</strong> in " + esc(a2.form) + ". " + esc(a2.why) + "</p>";
     } else {
-      var a2 = attackCall(t, p);
-      html += '<p class="call">' + (a2.comp === "Skip" ? "Skip them" : "Send " + esc(a2.comp)) + (a2.comp !== "Skip" ? " in " + esc(a2.form) : "") + "</p><p>" + esc(a2.why) + "</p>" + li(a2.notes.map(esc));
-      if (a2.comp !== "Skip" && compTroops(a2.comp.split(" ")[0])) {
+      html += '<p class="call">Send ' + esc(a2.comp) + " in " + esc(a2.form) + "</p><p>" + esc(a2.why) + "</p>" + li(a2.notes.map(esc));
+      if (compTroops(a2.comp.split(" ")[0])) {
         var ct = compTroops(a2.comp.split(" ")[0]);
         html += '<p class="muted">At your cap that\'s ' + fmt(ct[0]) + " / " + fmt(ct[1]) + " / " + fmt(ct[2]) + ".</p>";
       }
     }
+    html += '<p class="muted"><strong>Before you lock in:</strong> 2 ranged heroes if you sit or send Ranged Phalanx. Hell Drider only if their biggest squad is the troop type that counters your front.</p>';
     html += li(warn.map(esc));
     out.innerHTML = html;
     out.classList.remove("flash"); void out.offsetWidth; out.classList.add("flash");
