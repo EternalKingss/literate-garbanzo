@@ -169,7 +169,8 @@
     if (p.is208) return ["Ranged Wedge", "Cav-blast style rally (208/307). Ranged Wedge keeps their cav off your infantry; a Cav Shield familiar helps."];
     if (p.big === 2) return ["Ranged Phalanx", "Their cav is the biggest stack (" + fmt(t[2]) + "). Ranged beats cav."];
     if (p.big === 1) return ["Infantry Phalanx", "Their ranged is the biggest stack (" + fmt(t[1]) + "). Infantry beats ranged, and a cav front lost twice to a 2.2M ranged rally (logs 25, 26)."];
-    return ["Cavalry Phalanx", "Their infantry is the biggest stack (" + fmt(t[0]) + "). Cav beats infantry. Not tested in our logs yet; Crystal Briefs' equal-stat tests favour Ranged Phalanx against mixed infantry-front rallies."];
+    if (t[2] < 1000000) return ["Cavalry Phalanx", "Infantry pile with under 1M cav (" + fmt(t[2]) + "). Cav beats infantry and they have little cav to punish it."];
+    return ["Ranged Phalanx", "Their infantry is the biggest stack (" + fmt(t[0]) + "), but it's a mixed rally. Crystal Briefs' tests: a cav front gets worn down by their back line, while Ranged Phalanx keeps your cav hitting at full strength. Not in our logs yet."];
   }
 
   // If you hit them: which comp to send and in what. Built from the battle log plus Crystal Briefs' tests.
