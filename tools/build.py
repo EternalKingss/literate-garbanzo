@@ -658,10 +658,10 @@ def page_advanced():
 <p>Every rule below is one of these.</p>
 
 <h2 id="defend">Holding: what to sit in</h2>
-{rule("d055", "proven", "Against a 055: Ranged or Infantry Phalanx. Never Ranged Wedge.",
-  "Sit Ranged Phalanx with only 1 infantry hero. Infantry Phalanx also holds but costs more troops.",
-  "The 055's infantry buffer soaks your opening volleys while its cav closes in and its ranged fires from the back. Once the buffer dies, its cav is the front. In Ranged Phalanx that cav has to cross the field to your ranged while being shot, and arrives thinned out; with only 1 infantry hero on your side it can reach just one of your cav squads. In Infantry Phalanx its fast cav does eat your infantry, but your ranged sits untouched behind and shoots that cav the whole fight. It holds, at a higher cost. Ranged Wedge hands it the edges.",
-  f"Ranged Phalanx held 3 times, defender losing 1.20–1.24M {logref(12, 15, 16)}. Infantry Phalanx held once: the defender lost 1.14M infantry (1.39M total), but its ranged took no losses and the 055 lost 88% of its cav {logref(29)}. {cb(V['f055'])} {cb(V['da2'])}")}
+{rule("d055", "working", "Against a 055: check their infantry buffer first.",
+  "About 40K or less: Ranged Phalanx (cheaper). 50K or more: Infantry Phalanx, and expect to lose more infantry. Running only 1 infantry hero: stay in Ranged Phalanx. Never Ranged Wedge.",
+  "The 055's buffer soaks your opening volleys while its cav closes in and its ranged fires from the back. Once the buffer dies its cav is the front. Against a badly built 055 that cav arrives late and thin, so Ranged Phalanx holds cheaply. Against a well-built one it gets through to your cav. In Infantry Phalanx its fast cav eats your infantry instead, but your ranged sits untouched behind and shoots that cav the whole fight. It holds, at a higher cost. Ranged Wedge hands it the edges.",
+  f"40K into Ranged Phalanx: held twice {logref(12, 15)}. 50K into Ranged Phalanx: lost to a much stronger lead {logref(10)}, even {logref(14)}. 50K into Infantry Phalanx: held, but the defender lost 1.14M infantry {logref(29)}. {cb(V['f055'])} {cb(V['da1'])}")}
 {rule("dcav", "strong", "Cav in front only against a small ranged stack.",
   "Cav Phalanx holds against about 1.1M ranged. Against 2M+ ranged, don't.",
   "Their ranged gets about three full volleys into your cav before your infantry reaches it. Each volley scales with how much ranged they have, so a 2M stack shreds the cav in phase 1.",
@@ -1044,7 +1044,7 @@ def page_home():
         ("Read numbers, not names", "A 055 sits in \"Infantry Wedge\" with 40K infantry. The biggest stack tells you what's really in front."),
         ("Counter their biggest stack", "Their cav: ranged in front. Their ranged: infantry in front. Their infantry: Ranged Phalanx, or cav in front if they have under 1M cav."),
         ("Mirrors: guard, lead, infantry", "Ranged-heavy needs 3+ parts cav and about 700K more ranged. Otherwise more infantry wins. Called 10 of 12 logged mirrors."),
-        ("055: 50–60K infantry, not 40K", "Both 40K 055s failed against today's ranged. Hold against one in Ranged or Infantry Phalanx, never Ranged Wedge."),
+        ("055: check the buffer", "Sending: 50–60K infantry, not 40K. Holding: Ranged Phalanx against 40K, Infantry Phalanx against 50K+. Never Ranged Wedge."),
         ("Call off final numbers", "Half-filled rallies change. Switch late, after the last scout."),
         ("Check the rally screen", "Fillers drift toward infantry. Your 668 is useless if it lands as a 758."),
     ]
