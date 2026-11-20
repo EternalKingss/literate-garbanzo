@@ -642,7 +642,7 @@ def page_advanced():
 </div>
 <ul class="section-nav">
 <li><a href="#idea">The core idea</a></li><li><a href="#defend">Holding</a></li><li><a href="#mirror">Mirrors</a></li>
-<li><a href="#c055">055</a></li><li><a href="#c208">208</a></li><li><a href="#garrison">Garrison</a></li><li><a href="#drift">Habits</a></li>
+<li><a href="#c055">055</a></li><li><a href="#c208">208</a></li><li><a href="#garrison">Garrison</a></li><li><a href="#boost">What to boost</a></li><li><a href="#drift">Habits</a></li>
 </ul>
 <div class="grades"><p>{grade("proven")} our logs and his tests agree. {grade("strong")} 3+ of our fights, all the same way. {grade("working")} fits our fights but was fitted to them: the next fights test it. {grade("theory")} his tests only, not in our logs yet.</p></div>
 
@@ -728,6 +728,20 @@ def page_advanced():
   "Exactly 2 ranged heroes whenever you sit Ranged Phalanx. 1-2-2 on a 424.",
   "A squad with a hero stands one step back, which changes who reaches whom. With 1 or 3 ranged heroes your middle ranged squads end up out of line.",
   f"{cb(V['rh'])} {cb(V['s424'])}")}
+
+<h2 id="boost">What to boost</h2>
+<p>Gear, jewels and talents should feed the part of the fight your comp has to win. Find the troop that has to survive or has to kill, and boost that stat. {cb(V["atkhp"])} {cb(V["research"])}</p>
+<div class="table-wrap"><table class="stack"><thead><tr><th>Comp</th><th>Boost first</th><th>Why</th></tr></thead><tbody>
+<tr><td>442: 884, 794, 875</td><td><span class="t-rng">Ranged HP</span>, then <span class="t-inf">Infantry ATK</span>, then <span class="t-cav">Cav HP</span></td><td>The 442 win needs your ranged alive after theirs is dead. Infantry attack kills their ranged sooner. Cav HP keeps the guard standing. Log 13 lost with a 527K ranged lead, short of the line.</td></tr>
+<tr><td>424 in Ranged Phalanx: 857, 758, 668</td><td><span class="t-inf">Infantry HP</span> and <span class="t-cav">Cav HP</span>; don't stack <span class="t-rng">Ranged ATK</span></td><td>Infantry soaks phase 2, which is why more infantry wins these mirrors. In his test, raising attack made this mirror worse while HP helped. Keep cav stats within about 100 of ranged.</td></tr>
+<tr><td>Any comp sitting Cav Phalanx</td><td><span class="t-cav">Cav HP</span> + Cav Shield</td><td>Your cav eats about three full ranged volleys before your infantry arrives.</td></tr>
+<tr><td>055</td><td><span class="t-rng">Ranged ATK</span> and <span class="t-cav">Cav HP</span>; skip ranged HP</td><td>Ranged attack breaks their front faster. Your cav is the real front line in Infantry Wedge. Your ranged should never take hits except from familiars.</td></tr>
+<tr><td>208</td><td><span class="t-cav">Cav ATK and HP</span> equally; <span class="t-inf">Infantry ATK</span> against thick ranged</td><td>Cav does the killing and has to survive the walk in. Infantry attack only matters when their ranged is thick enough to slow your infantry.</td></tr>
+<tr><td>1433 / Infantry Phalanx</td><td><span class="t-inf">Infantry HP and ATK</span></td><td>Infantry is both the front and the damage.</td></tr>
+<tr><td>Holding a wonder in Ranged Phalanx</td><td><span class="t-rng">Ranged HP</span>, <span class="t-inf">Infantry HP</span>, <span class="t-cav">Cav ATK</span></td><td>Ranged is your front. Infantry is your answer to their ranged. Cav kills their infantry in phase 2.</td></tr>
+</tbody></table></div>
+<p><strong>Before any of that:</strong> counter stats, the enemy-debuff research and T5 multiply everything. Flat stats only add. {cb(V["research"])}</p>
+<p class="muted">Reading a loss: if your front died before theirs, that troop needed HP. If theirs lived too long, your counter troop needed attack.</p>
 
 <h2 id="drift">Habits</h2>
 {rule("hfinal", "strong", "Call off final numbers only.",
