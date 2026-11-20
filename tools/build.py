@@ -659,9 +659,9 @@ def page_advanced():
 
 <h2 id="defend">Holding: what to sit in</h2>
 {rule("d055", "proven", "Against a 055: Ranged or Infantry Phalanx. Never Ranged Wedge.",
-  "Sit Ranged Phalanx with only 1 infantry hero, or Infantry Phalanx.",
-  "A 055 wins by breaking your ranged front at the edges and walking its ranged onto your cav. In Infantry Phalanx your front is infantry, the one troop its ranged can't beat, so it never gets through. In Ranged Phalanx it needs your 2 infantry heroes to reach both cav squads; with 1, it reaches one. Ranged Wedge hands it the edges.",
-  f"Held in Ranged Phalanx {logref(12, 15, 16)} and Infantry Phalanx {logref(29)}; in log 29 your cav lost only 13%. {cb(V['f055'])} {cb(V['da2'])}")}
+  "Sit Ranged Phalanx with only 1 infantry hero. Infantry Phalanx also holds but costs more troops.",
+  "The 055's infantry buffer soaks your opening volleys while its cav closes in and its ranged fires from the back. Once the buffer dies, its cav is the front. In Ranged Phalanx that cav has to cross the field to your ranged while being shot, and arrives thinned out; with only 1 infantry hero on your side it can reach just one of your cav squads. In Infantry Phalanx its fast cav does eat your infantry, but your ranged sits untouched behind and shoots that cav the whole fight. It holds, at a higher cost. Ranged Wedge hands it the edges.",
+  f"Ranged Phalanx held 3 times, defender losing 1.20–1.24M {logref(12, 15, 16)}. Infantry Phalanx held once: the defender lost 1.14M infantry (1.39M total), but its ranged took no losses and the 055 lost 88% of its cav {logref(29)}. {cb(V['f055'])} {cb(V['da2'])}")}
 {rule("dcav", "strong", "Cav in front only against a small ranged stack.",
   "Cav Phalanx holds against about 1.1M ranged. Against 2M+ ranged, don't.",
   "Their ranged gets about three full volleys into your cav before your infantry reaches it. Each volley scales with how much ranged they have, so a 2M stack shreds the cav in phase 1.",
@@ -698,11 +698,11 @@ def page_advanced():
 <h2 id="c055">The 055</h2>
 {rule("e055", "proven", "Infantry buffer: 50–60K, T4 or better. Not 40K.",
   "Only the lead sends infantry: 50–60K at T4 or above. Nobody else sends any.",
-  "The buffer is a timer. At the start every enemy squad aims at the closest 055 squads, which is the infantry at the tip. It stays locked on until that squad dies. The buffer has to soak their opening, including their infantry heroes' big skill hits, and die at the right moment so their squads retarget where the 055 wants. Die too early and the 055 never reaches their cav. Last too long and it never does either: in his test, 100K left their cav completely untouched. How long it lasts depends on how hard their ranged hits, and today's top accounts hit far harder than his 2022 tests. That's why our 40K 055s failed and 50K got through.",
+  "The buffer is a timer. At the start every enemy squad aims at the closest 055 squads, the infantry at the tip, and has to kill it squad by squad while your cav closes in and your ranged fires from the back. It stays locked on until that squad dies. The buffer has to soak their opening, including their infantry heroes' big skill hits, and die at the right moment so their squads retarget where the 055 wants. Die too early and the 055 never reaches their cav. Last too long and it never does either: in his test, 100K left their cav completely untouched. How long it lasts depends on how hard their ranged hits, and today's top accounts hit far harder than his 2022 tests. That's why our 40K 055s failed and 50K got through.",
   f"40K into Ranged Phalanx lost twice and barely touched their cav (0 and 11%) {logref(12, 15)}. 50K won by 1.1M {logref(10)} and traded even into 1.77M ranged, reaching 35% of their cav {logref(14)}. {cb(V['f055'])} {cb(V['c055'])}")}
 {rule("t055", "proven", "Who to hit with a 055.",
   "A 424 sitting Ranged Phalanx with 2 infantry heroes. Not an Infantry Phalanx sitter.",
-  "Its ranged has to break their ranged front to reach the cav. Against an infantry front it's fighting its counter, so it never gets through. If you know they sit Infantry Phalanx, Crystal Briefs sends the 055 in Ranged Phalanx instead.",
+  "Against a Ranged Phalanx its cav reaches their ranged-backed cav squads. Against an Infantry Phalanx its cav gets stuck eating infantry while their untouched ranged shoots it. If you know they sit Infantry Phalanx, Crystal Briefs sends the 055 in Ranged Phalanx instead.",
   f"Into Infantry Phalanx it lost by 178K and reached 13% of their cav {logref(29)}. {cb(V['f055'])}")}
 {rule("b055", "theory", "How to build it.",
   "Infantry Wedge. Heroes: 4 ranged, 1 cav, no infantry hero. Familiars: ranged pact-5s, Cav Shield, cav stacker. Gear: ranged attack and cav HP first. Did it work? About half their cav dead means yes.",
