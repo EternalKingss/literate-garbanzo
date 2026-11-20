@@ -191,8 +191,8 @@
   function attackCall(t, p) {
     var c = cap(), part = c / 20;
     if (p.is055) {
-      return { comp: "866 or 857", form: "Infantry Phalanx",
-        why: "Their front is a big ranged stack and infantry beats ranged. No logged win against a 055 holder yet (log 9: an 875 lost to one), so treat this as a test.",
+      return { comp: "Skip", form: "—",
+        why: "A 055 holder's cav soaks while its ranged stack sits untouched and shoots your back line. An 875 in Infantry Phalanx lost to one by 338K (log 9). No logged win against a 055 holder yet: only hit it with a much stronger lead.",
         notes: [] };
     }
     var sh = shape(t), pt = p.parts;
@@ -271,9 +271,9 @@
       var mt = mirrorText(y, t);
       html += '<p class="call">Your ' + esc(yourNear) + " in a Range Phalanx mirror: " + mt[0] + "</p><p>" + esc(mt[1]) + "</p>" +
         '<p class="muted">Cav gap ' + signed(y[2] - t[2]) + ", ranged gap " + signed(y[1] - t[1]) + ".</p>";
-      html += "<p>Best comp from the logs: <strong>" + esc(a2.comp) + "</strong> in " + esc(a2.form) + ". " + esc(a2.why) + "</p>";
+      html += a2.comp === "Skip" ? "<p><strong>Skip this one.</strong> " + esc(a2.why) + "</p>" : "<p>Best comp from the logs: <strong>" + esc(a2.comp) + "</strong> in " + esc(a2.form) + ". " + esc(a2.why) + "</p>";
     } else {
-      html += '<p class="call">Send ' + esc(a2.comp) + " in " + esc(a2.form) + "</p><p>" + esc(a2.why) + "</p>" + li(a2.notes.map(esc));
+      html += '<p class="call">' + (a2.comp === "Skip" ? "Skip them" : "Send " + esc(a2.comp) + " in " + esc(a2.form)) + "</p><p>" + esc(a2.why) + "</p>" + li(a2.notes.map(esc));
       if (compTroops(a2.comp.split(" ")[0])) {
         var ct = compTroops(a2.comp.split(" ")[0]);
         html += '<p class="muted">At your cap that\'s ' + fmt(ct[0]) + " / " + fmt(ct[1]) + " / " + fmt(ct[2]) + ".</p>";
