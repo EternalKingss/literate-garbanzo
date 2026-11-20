@@ -577,86 +577,173 @@ def page_formations():
     return shell("formations.html", "Formations", "Real squad layouts for all six Lords Mobile formations and how they counter each other.", body)
 
 
-# ================================================================ WONDER RULES
-def mirror_rows():
-    rows = []
-    # (log id, our cav, their cav, our rng, their rng, margin for us)
-    data = [(4, None, None, None, None, 527_000)]
-    picks = [1, 3, 5, 6, 7, 13]
+# ================================================================ WONDER RULES (rulebook)
+def _parts(t):
+    T = sum(t)
+    return [x / T * 20 for x in t]
+
+
+def mirror_model(a, d):
+    """Working mirror rule. Returns ('ATT'|'DEF'|'EVEN', reason)."""
+    pa, pd = _parts(a), _parts(d)
+    heavy = lambda p: p[1] >= 7.5
+    if heavy(pa) and pa[2] < 3:
+        return "DEF", "attacker is ranged-heavy with no cav guard"
+    if heavy(pd) and pd[2] < 3:
+        return "ATT", "defender is ranged-heavy with no cav guard"
+    if heavy(pa) and not heavy(pd):
+        lead = a[1] - d[1]
+        return ("ATT" if lead >= 700_000 else "DEF"), f"442 attacker, ranged lead {m(lead)}"
+    if heavy(pd) and not heavy(pa):
+        lead = d[1] - a[1]
+        return ("DEF" if lead >= 700_000 else "ATT"), f"442 defender, ranged lead {m(lead)}"
+    gap = a[0] - d[0]
+    return ("ATT" if gap > 0 else "DEF"), f"424 mirror, infantry gap {'+' if gap >= 0 else '−'}{m(abs(gap))}"
+
+
+def mirror_model_rows():
+    out = ['<div class="table-wrap"><table><thead><tr><th>Log</th><th>Fight</th><th>Rule says</th>'
+           '<th class="num">Result</th><th></th></tr></thead><tbody>']
+    hits = n = 0
     for b in BATTLES:
-        if b["id"] not in picks:
+        if "mirror" not in b["tags"] or not b["att"]["tr"] or not b["dfn"]["tr"]:
             continue
         a, d = b["att"]["tr"], b["dfn"]["tr"]
+        pred, why = mirror_model(a, d)
         margin, *_ = result(b)
-        if b["us"] == "def":
-            us, them, mm = d, a, -margin
-        else:
-            us, them, mm = a, d, margin
-        rows.append((b["id"], us[2] - them[2], us[1] - them[1], mm, b["us"] is None))
-    out = ['<div class="table-wrap"><table><thead><tr><th>Log</th><th class="num">Cav gap</th><th class="num">Ranged gap</th><th class="num">Result</th></tr></thead><tbody>']
-    for i, cg, rg, mm, shared in rows:
-        who = " (attacker's view)" if shared else ""
-        res = f'<span class="{"win" if mm>0 else "loss"}">{"+" if mm>0 else "−"}{m(abs(mm))}</span>'
-        out.append(f'<tr><td><a href="battle-reports.html#log-{i}">{i}</a>{who}</td>'
-                   f'<td class="num t-cav">{"+" if cg>=0 else "−"}{m(abs(cg))}</td>'
-                   f'<td class="num t-rng">{"+" if rg>=0 else "−"}{m(abs(rg))}</td><td class="num">{res}</td></tr>')
+        act = "ATT" if margin > 0 else "DEF"
+        ok = pred == act
+        hits += ok; n += 1
+        out.append(f'<tr><td><a href="battle-reports.html#log-{b["id"]}">{b["id"]}</a></td>'
+                   f'<td>{E(b["att"]["comp"])} into {E(b["dfn"]["comp"])}</td>'
+                   f'<td>{"Attacker" if pred == "ATT" else "Defender"}: {E(why)}</td>'
+                   f'<td class="num">{"Attacker" if act == "ATT" else "Defender"} by {m(abs(margin))}</td>'
+                   f'<td><span class="status {"ok" if ok else "bad"}">{"✓" if ok else "✗"}</span></td></tr>')
     out.append("</tbody></table></div>")
-    return "".join(out)
+    return "".join(out), hits, n
+
+
+def grade(g):
+    label = {"proven": "Proven", "strong": "Strong", "working": "Working", "theory": "Theory"}[g]
+    return f'<span class="grade {g}">{label}</span>'
+
+
+def rule(gid, g, title, call, why, evidence):
+    return (f'<article class="rule-card" id="{gid}"><header>{grade(g)}<h3>{title}</h3></header>'
+            f'<p class="call">{call}</p><p><strong>Why:</strong> {why}</p><p class="ev">{evidence}</p></article>')
 
 
 def page_advanced():
+    mrows, mhits, mn = mirror_model_rows()
+    V = CB
     body = f"""<div class="page-head">
 <h1>Wonder rules</h1>
-<p class="lede">What {len(BATTLES)} logged Wonder fights actually showed. Each rule links to the fights behind it. Where the old site and your sheet disagree and no fight has settled it, it's listed as open.</p>
+<p class="lede">Every rule here says what to do, why it works, and how sure we are. Built from all {len(BATTLES)} logged fights and Crystal Briefs' tests. When they disagree, tests and logs beat the old site, which beats the sheet.</p>
 </div>
 <ul class="section-nav">
-<li><a href="#mirror">Range Phalanx mirrors</a></li><li><a href="#garrison">Garrison minimums</a></li><li><a href="#c055">055</a></li>
-<li><a href="#drift">Comp drift</a></li><li><a href="#stats">Stats</a></li><li><a href="#open">Open questions</a></li>
+<li><a href="#idea">The core idea</a></li><li><a href="#defend">Holding</a></li><li><a href="#mirror">Mirrors</a></li>
+<li><a href="#c055">055</a></li><li><a href="#c208">208</a></li><li><a href="#garrison">Garrison</a></li><li><a href="#drift">Habits</a></li>
 </ul>
+<div class="grades"><p>{grade("proven")} our logs and his tests agree. {grade("strong")} 3+ of our fights, all the same way. {grade("working")} fits our fights but was fitted to them: the next fights test it. {grade("theory")} his tests only, not in our logs yet.</p></div>
 
-<h2 id="mirror">Range Phalanx mirrors: shape, not cav</h2>
-<p>The old rule here said more cav wins a mirror. It held for our first 6 mirrors and then missed all 6 new ones. The full check is on <a href="mechanics.html#mirrors">How fights work</a>.</p>
-<div class="note open"><p><strong>Most promising so far:</strong> a ranged-heavy rally that keeps about 0.9M cav (794, 884), sent into a 424-type sitter. It won twice with less cav and lost once by 61K. {logref(7, 31, 13)} {cb(CB["m442"])} With almost no cav it lost twice. {logref(5, 6)} Small sample: a lead, not a rule.</p></div>
+<h2 id="idea">The core idea</h2>
+<p>Every Wonder fight has two phases. <strong>Phase 1, the front trade:</strong> the fronts meet and each side's troops hit the troop they counter. Whatever is still standing goes into <strong>phase 2</strong>, where the targeting sends each side's back line onto whatever the other side has left. {cb(V["squads2"])} {cb(V["basics"])}</p>
+<p>You win by doing two things: <strong>win the front trade, and still have a guard for phase 2.</strong> Every comp is a different way of doing that:</p>
 <ul>
-<li><strong>Otherwise it's a toss-up on numbers.</strong> Heroes, familiars and stats decide it. Hit only if your lead is clearly stronger.</li>
-<li><strong>Sit with exactly 2 ranged heroes.</strong> {cb(CB["rh"])}</li>
-<li><strong>Refill your ranged after every mirror.</strong> It's always gone.</li>
+<li><strong>442s</strong> win phase 1 with sheer ranged, and their cav guards their infantry in phase 2.</li>
+<li><strong>055s</strong> skip the front trade: they break through at the edges and hit your cav directly.</li>
+<li><strong>208s</strong> send a little infantry to win the trade against your ranged while their cav runs straight for phase 2.</li>
+<li><strong>A garrison with no infantry</strong> can't fight phase 1 at all.</li>
 </ul>
+<p>Every rule below is one of these.</p>
 
-<h2 id="garrison">Garrison minimums</h2>
-<div class="note warn"><p><strong>Never sit with no infantry.</strong> In log 11 we had more cav and more ranged than the attacker and lost by 1.46M, because his infantry hit our ranged with nothing in the way. {logref(11)}</p></div>
-<div class="table-wrap"><table><thead><tr><th>Troop</th><th class="num">Hold at least</th><th>Why</th></tr></thead><tbody>
-<tr><td class="t-inf">Infantry</td><td class="num">1.4M</td><td>Shields your ranged from infantry rallies.</td></tr>
-<tr><td class="t-rng">Ranged</td><td class="num">1.1M</td><td>Your front in Range Phalanx. Without it, any cav-heavy rally or 055 walks in.</td></tr>
-<tr><td class="t-cav">Cavalry</td><td class="num">1.6M (1.75M+ better)</td><td>Wins the mirrors. Each mirror chips 200–400K off it.</td></tr>
-<tr><td>Total</td><td class="num">Full cap</td><td>Log 11 was 460K short.</td></tr>
-</tbody></table></div>
-<p>A 1433 is an attack comp. Don't sit in it: a cav-heavy rally eats it.</p>
+<h2 id="defend">Holding: what to sit in</h2>
+{rule("d055", "proven", "Against a 055: Ranged or Infantry Phalanx. Never Ranged Wedge.",
+  "Sit Ranged Phalanx with only 1 infantry hero, or Infantry Phalanx.",
+  "A 055 wins by breaking your ranged front at the edges and walking its ranged onto your cav. In Infantry Phalanx your front is infantry, the one troop its ranged can't beat, so it never gets through. In Ranged Phalanx it needs your 2 infantry heroes to reach both cav squads; with 1, it reaches one. Ranged Wedge hands it the edges.",
+  f"Held in Ranged Phalanx {logref(12, 15, 16)} and Infantry Phalanx {logref(29)}; in log 29 your cav lost only 13%. {cb(V['f055'])} {cb(V['da2'])}")}
+{rule("dcav", "strong", "Cav in front only against a small ranged stack.",
+  "Cav Phalanx holds against about 1.1M ranged. Against 2M+ ranged, don't.",
+  "Their ranged gets about three full volleys into your cav before your infantry reaches it. Each volley scales with how much ranged they have, so a 2M stack shreds the cav in phase 1.",
+  f"Won or even at about 1.1M {logref(2, 17, 20, 23)}; lost at 2.2M twice {logref(25, 26)}. {cb(V['basics'])}")}
+{rule("d442", "theory", "Against a ranged-heavy 442: Infantry Phalanx.",
+  "Sit Infantry Phalanx.",
+  "Infantry is the counter to ranged, so you win phase 1, and a 442 only has about 4 parts of cav to punish your infantry front. A cav front would face their 2M ranged (see above).",
+  f"{cb(V['basics'])} {cb(V['v442'])}")}
+{rule("d208", "theory", "Against a 208: Ranged Wedge.",
+  "Sit Ranged Wedge, with a Cav Shield familiar if you have it.",
+  "A 208 needs its cav to reach your infantry. In Ranged Wedge your cav stands in front of your infantry and blocks it, and two of its infantry squads end up stacked on one of your ranged squads, so its front trade slows down.",
+  f"{SRC_SHEET} {cb(V['f055'])} {cb(V['c208'])}")}
+{rule("dmix", "theory", "Against a mixed rally with infantry biggest: Ranged Phalanx.",
+  "Ranged Phalanx. Cav in front only against an infantry pile with under 1M cav.",
+  "With a cav front, their ranged and cav back line wear your cav down through phase 1. In Ranged Phalanx your cav sits behind and hits their infantry at full strength in phase 2.",
+  f"{cb(V['basics'])}")}
 
-<h2 id="c055">The 055, in numbers</h2>
-<ul>
-<li><strong>Infantry:</strong> the lead sends 40–50K and nobody else sends any. Every logged 055 used 40K or 50K.</li>
-<li><strong>Ranged limit:</strong> the old "avoid over 1.1M ranged" is too strict. Into about 1.76M ranged with under 1M cav it traded even twice. {logref(8, 14)}</li>
-<li><strong>Into 758/857 Range Phalanx:</strong> stats decide. Not stronger: defender wins {logref(12, 15)}. Clearly stronger: won by 1.1M {logref(10)}.</li>
-<li><strong>As a garrison:</strong> beat an 875 from a stronger account. {logref(9)}</li>
-<li><strong>Heroes:</strong> the 055 runs 4 ranged + 1 cav and no infantry hero. A defender with 2 infantry heroes is what it feeds on; holding with 1 limits it to one cav squad. {cb(CB["c055"])} {cb(CB["f055"])}</li>
-<li><strong>Holding against one:</strong> Ranged Phalanx {logref(12, 15, 16)} or Infantry Phalanx {logref(29)}. Never Ranged Wedge.</li>
-</ul>
+<h2 id="mirror">Ranged Phalanx mirrors</h2>
+{rule("mguard", "proven", "A ranged-heavy comp needs its cav guard.",
+  "Keep at least 3 of 20 parts in cav (about 650K). Never send an 8-11-1.",
+  "A 442 wins the ranged trade, then the other side's infantry and cav go looking for targets. Its cav is what stands in the way. Without it, they run straight into its infantry.",
+  f"8-11-1 lost twice into a 758 {logref(5, 6)}; a 1262 with 385K cav lost by 527K {logref(4)}. {cb(V['c992'])}")}
+{rule("m442", "working", "A 442 needs a big ranged lead.",
+  "A ranged-heavy rally wins when it brings about 700K more ranged than the target. Under that, the target wins.",
+  "The 442 win only happens if their ranged is dead before half of yours is. That takes a big ranged surplus plus enough infantry; a small surplus just turns it into a slugging match the 424 wins.",
+  f"Won with +717K and +907K {logref(7, 31)}; lost with +527K {logref(13)}. {cb(V['m442'])}")}
+{rule("m424", "working", "424 against 424: more infantry wins.",
+  "When neither side is ranged-heavy, the side with more infantry usually wins. Within about 100K, it's stats and heroes.",
+  "With the ranged fronts gone, infantry is the troop that soaks the other side's back line and keeps killing. Exception so far: a 222K cav edge beat a 250K infantry edge in log 3.",
+  f"Fits logs 1, 21, 24, 27 and 28; misses log 3, and log 22 was a 36K coin flip. Crystal Briefs adds that in a true even mirror, whoever's ranged dies first can flip it. {cb(V['m424'])}")}
+<p><strong>The working rule called {mhits} of {mn} logged mirrors.</strong> The old "more cav wins" called 6. It was fitted to these same fights, so the real test is the next ones. Every mirror you screenshot gets checked here automatically.</p>
+{mrows}
 
-<h2 id="drift">Comp drift and bad calls</h2>
-<ul>
-<li><strong>Fillers drift toward infantry.</strong> Rallies sent as 668 landed as 7.5-5-7.5 twice. Check the rally screen percentages before you launch. {logref(1, 3)}</li>
-<li><strong>Call off final numbers only.</strong> Scouting a rally that's still filling gave the wrong formation. {logref(2)}</li>
-<li><strong>Pull when outmatched.</strong> A big stat or T5 gap beats the right formation. Skip a stronger lead in a mirror, or let another rally soften it first. {cb(CB["da2"])}</li>
-</ul>
+<h2 id="c055">The 055</h2>
+{rule("e055", "proven", "Infantry buffer: 50–60K, T4 or better. Not 40K.",
+  "Only the lead sends infantry: 50–60K at T4 or above. Nobody else sends any.",
+  "The buffer is a timer. At the start every enemy squad aims at the closest 055 squads, which is the infantry at the tip. It stays locked on until that squad dies. The buffer has to soak their opening, including their infantry heroes' big skill hits, and die at the right moment so their squads retarget where the 055 wants. Die too early and the 055 never reaches their cav. Last too long and it never does either: in his test, 100K left their cav completely untouched. How long it lasts depends on how hard their ranged hits, and today's top accounts hit far harder than his 2022 tests. That's why our 40K 055s failed and 50K got through.",
+  f"40K into Ranged Phalanx lost twice and barely touched their cav (0 and 11%) {logref(12, 15)}. 50K won by 1.1M {logref(10)} and traded even into 1.77M ranged, reaching 35% of their cav {logref(14)}. {cb(V['f055'])} {cb(V['c055'])}")}
+{rule("t055", "proven", "Who to hit with a 055.",
+  "A 424 sitting Ranged Phalanx with 2 infantry heroes. Not an Infantry Phalanx sitter.",
+  "Its ranged has to break their ranged front to reach the cav. Against an infantry front it's fighting its counter, so it never gets through. If you know they sit Infantry Phalanx, Crystal Briefs sends the 055 in Ranged Phalanx instead.",
+  f"Into Infantry Phalanx it lost by 178K and reached 13% of their cav {logref(29)}. {cb(V['f055'])}")}
+{rule("b055", "theory", "How to build it.",
+  "Infantry Wedge. Heroes: 4 ranged, 1 cav, no infantry hero. Familiars: ranged pact-5s, Cav Shield, cav stacker. Gear: ranged attack and cav HP first. Did it work? About half their cav dead means yes.",
+  "Ranged heroes speed up breaking their front. Your cav ends up as the front line in Infantry Wedge, so it needs HP and the shield. An infantry hero breaks the targeting the buffer sets up.",
+  f"{cb(V['c055'])}")}
 
-<h2 id="stats">Stats</h2>
-<p>Most of today's fights were between accounts with similar gear, so formation and comp decided them. A clearly stronger lead flips close matchups: the same 055-into-758 matchup lost twice and then won by 1.1M with the strongest lead. {logref(10, 12, 15)}</p>
+<h2 id="c208">The 208</h2>
+{rule("e208", "theory", "Who to hit with a 208, and how.",
+  "Hit infantry-heavy 424s (947, 1046 type) sitting Ranged Phalanx with about 1.1M ranged or less. Send it in Ranged Wedge.",
+  "Each of its infantry squads takes one of their ranged squads, which is its counter, while the two front cav squads go past the ranged to reach their infantry. Its infantry must survive the whole fight; any damage on the 208's infantry in the report means it failed. Thick ranged means the infantry can't finish in time. Ranged Wedge on their side blocks the cav, and a 442's ranged is too much.",
+  f"{cb(V['c208'])} {SRC_SHEET}")}
 
-<h2 id="open">Open questions</h2>
-<p>Where your sheet, the old site and Crystal Briefs' tests line up and where they don't is on <a href="mechanics.html#disagree">How fights work</a>. Screenshot the full report whenever one of these comes up.</p>
+<h2 id="garrison">Garrison</h2>
+{rule("g0inf", "strong", "Never hold with no infantry.",
+  "Hold 1.4M+ infantry, 1.1M+ ranged, 1.6M+ cav, at full cap.",
+  "Infantry is your only answer to their ranged. With none, their ranged survives the front trade untouched and shoots your cav for the whole fight, while their infantry eats your ranged. Ranged is your front in Ranged Phalanx. Cav is your phase-2 guard.",
+  f"More cav and ranged than the attacker, no infantry, lost by 1.46M {logref(11)}.")}
+{rule("gstat", "proven", "A big stat or T5 gap beats the right formation.",
+  "Don't take or send a hit into a much stronger lead and expect the counter to save you.",
+  "Each squad's strength is stats × tier × count. A big enough gap wins the front trade no matter how it's set up.",
+  f"The same 055-into-758 matchup lost twice and then won by 1.1M with the strongest lead {logref(10, 12, 15)}. {cb(V['da2'])}")}
+{rule("gheroes", "theory", "Heroes set where your squads stand.",
+  "Exactly 2 ranged heroes whenever you sit Ranged Phalanx. 1-2-2 on a 424.",
+  "A squad with a hero stands one step back, which changes who reaches whom. With 1 or 3 ranged heroes your middle ranged squads end up out of line.",
+  f"{cb(V['rh'])} {cb(V['s424'])}")}
+
+<h2 id="drift">Habits</h2>
+{rule("hfinal", "strong", "Call off final numbers only.",
+  "Switch formation after the last scout, not while the rally is filling.",
+  "The comp you're countering changes until it lands.",
+  f"Switched off a half-filled scout and lost {logref(2)}.")}
+{rule("hdrift", "strong", "Check the rally screen before launch.",
+  "Your 668 should read about 30 / 30 / 40.",
+  "Fillers drift toward infantry, and a 668 that lands as a 758 is a different comp.",
+  f"Landed at about 7.5-5-7.5 twice {logref(1, 3)}.")}
+{rule("hrefill", "strong", "Refill ranged after every mirror.",
+  "Top your ranged back up before the next hit lands.",
+  "Both ranged fronts die in every mirror.",
+  f"{logref(1, 3, 5, 6, 22, 27, 28)}")}
 """
-    return shell("advanced.html", "Wonder rules", "Rules for Lords Mobile Wonder battles, backed by logged battle reports.", body)
+    return shell("advanced.html", "Wonder rules", "Lords Mobile Wonder rules with the reason behind each one and how strong the evidence is.", body)
 
 
 # ================================================================ HOW FIGHTS WORK
@@ -727,7 +814,7 @@ def page_mechanics():
 <li><strong>442 vs 424:</strong> results swing to big wins or big losses, rarely close. The 442 wins big if the 424's ranged is dead before half the 442's ranged is. You can spot it in the report: about half the 442's ranged survives. {cb(V["m442"])} {cb(V["v442"])} Logs 7 and 31 look exactly like this: a ranged-heavy rally won both, once with 747K less cav. {logref(7, 31)}</li>
 <li><strong>A 442 still needs its cav.</strong> After it wins the ranged trade, its cav is what keeps the enemy off its infantry. {cb(V["c992"])} Our 8-11-1 rallies, with under 400K cav, lost twice into a 758. {logref(5, 6)}</li>
 </ul>
-<div class="note warn"><p><strong>The old cav rule is retired.</strong> "More cav wins a mirror" was fitted to our first 6 mirrors. Across all {n} mirrors with numbers it called {hits}. "More infantry wins" called 5. "Whoever's ranged dies first" called 7. Troop counts alone don't decide mirrors; heroes, familiars and stats do. The most promising pattern is a ranged-heavy rally that keeps about 0.9M cav, sent into a 424-type: 2 wins and a 61K loss {logref(7, 31, 13)}. That's a small sample, so treat it as a lead, not a rule.</p></div>
+<div class="note warn"><p><strong>The old cav rule is retired.</strong> "More cav wins a mirror" was fitted to our first 6 mirrors. Across all {n} mirrors with numbers it called {hits}. "More infantry wins" called 5. "Whoever's ranged dies first" called 7. Troop counts alone don't decide mirrors; heroes, familiars and stats do. The working rule that replaced it (cav guard, ranged lead, then infantry) is on <a href="advanced.html#mirror">Wonder rules</a>.</p></div>
 {rows}
 
 <h2 id="heroes">Heroes</h2>
@@ -819,7 +906,7 @@ def page_mechanics():
 <h2 id="disagree">Where sources disagree</h2>
 <p><strong>Order of trust:</strong> Crystal Briefs' tests and our logs first, then the old site, then the sheet. Every conflict below is settled that way, and the rest of the site follows it.</p>
 <div class="table-wrap"><table class="stack"><thead><tr><th>Question</th><th>What each source says</th><th>Followed</th></tr></thead><tbody>
-<tr><td>Who wins a Range Phalanx mirror</td><td>Old rule: more cav. All {n} mirrors: cav called {hits}. Crystal Briefs: timing of the ranged dying, heroes, familiars.</td><td><span class="status ok">Tests + logs: no cav rule</span></td></tr>
+<tr><td>Who wins a Range Phalanx mirror</td><td>Old rule: more cav. All {n} mirrors: cav called {hits}. Crystal Briefs: timing of the ranged dying, heroes, familiars.</td><td><span class="status ok">Tests + logs: <a href="advanced.html#mirror">working rule</a></span></td></tr>
 <tr><td>668 in Ranged Phalanx vs 884</td><td>Sheet: 668 wins. Crystal Briefs: 442s beat 424-types in Ranged Phalanx. Log 31: a 794 beat our 848.</td><td><span class="status ok">Tests + logs: 668 loses</span></td></tr>
 <tr><td>659 vs 884</td><td>Sheet: 659 in Infantry Phalanx wins. Old site: never send it. Crystal Briefs: a 442 counters a 659.</td><td><span class="status ok">Tests + site: don't send it</span></td></tr>
 <tr><td>Their infantry is biggest: sit what?</td><td>Old rule: cav in front. Crystal Briefs: against mixed infantry-front rallies, Ranged Phalanx holds best.</td><td><span class="status ok">Tests: Ranged Phalanx (cav front only vs an infantry pile with under 1M cav)</span></td></tr>
@@ -942,8 +1029,8 @@ def page_home():
     rules = [
         ("Read numbers, not names", "A 055 sits in \"Infantry Wedge\" with 40K infantry. The biggest stack tells you what's really in front."),
         ("Counter their biggest stack", "Their cav: ranged in front. Their ranged: infantry in front. Their infantry: Ranged Phalanx, or cav in front if they have under 1M cav."),
-        ("Mirrors aren't won by cav count", "Cav count called 6 of 12 mirrors. Heroes, familiars and stats decide them. Hit a mirror only when your lead is clearly stronger."),
-        ("Never sit with no infantry", "Hold 1.4M+ infantry, 1.1M+ ranged, 1.6M+ cav, full cap."),
+        ("Mirrors: guard, lead, infantry", "Ranged-heavy needs 3+ parts cav and about 700K more ranged. Otherwise more infantry wins. Called 10 of 12 logged mirrors."),
+        ("055: 50–60K infantry, not 40K", "Both 40K 055s failed against today's ranged. Hold against one in Ranged or Infantry Phalanx, never Ranged Wedge."),
         ("Call off final numbers", "Half-filled rallies change. Switch late, after the last scout."),
         ("Check the rally screen", "Fillers drift toward infantry. Your 668 is useless if it lands as a 758."),
     ]

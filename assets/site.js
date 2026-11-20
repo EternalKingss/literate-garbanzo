@@ -135,17 +135,29 @@
   // Most promising so far: ranged-heavy WITH real cav into a 424-type (won 7, 31; lost 13 by 61K). With almost no cav it lost (5, 6).
   function shape(t) {
     var tot = t[0] + t[1] + t[2], r = t[1] / tot * 20, c = t[2] / tot * 20;
-    if (r >= 8 && c <= 5 && c >= 3) return "442";   // ranged-heavy that still brings real cav: 884, 794, 785
-    if (r >= 8 && c < 3) return "thin";   // 8-11-1, 992: ranged-heavy with almost no cav
+    if (r >= 7.5 && c <= 5 && c >= 3) return "442";   // ranged-heavy that still brings real cav: 884, 794, 785
+    if (r >= 7.5 && c < 3) return "thin";   // 8-11-1, 992: ranged-heavy with almost no cav
     if (r <= 6.5 && c >= 6) return "424"; // 857, 758, 659, 848, 749
     return "mixed";
   }
+  // Working mirror rule (Wonder rules page): cav guard, then a 442 needs ~700K ranged lead, then more infantry wins. Called 10 of 12 logged mirrors.
   function mirrorText(y, t) {
-    var a = shape(y), b = shape(t);
-    if (a === "442" && b === "424") return ['<span class="win">promising shape for you</span>', "Ranged-heavy with real cav into a 424-type: won logs 7 and 31, lost log 13 by 61K. Small sample."];
-    if (a === "424" && b === "442") return ['<span class="loss">risky shape for you</span>', "A ranged-heavy rally with real cav beat our 848 this way (log 31). Hit them in Infantry Phalanx or with an infantry-heavy comp instead."];
-    if (a === "thin") return ['<span class="loss">risky shape for you</span>', "Ranged-heavy with almost no cav lost twice into a 758 (logs 5, 6). After the ranged trade nothing shields your infantry."];
-    return ['<span class="even">toss-up on numbers</span>', "Troop counts called only 6 of our 12 mirrors. Heroes, familiars and stats decide this one: hit only if your lead is clearly stronger."];
+    var py = y.map(function (x) { return x / (y[0] + y[1] + y[2]) * 20; });
+    var pt = t.map(function (x) { return x / (t[0] + t[1] + t[2]) * 20; });
+    var hy = py[1] >= 7.5, ht = pt[1] >= 7.5;
+    var W = '<span class="win">leans your way</span>', L = '<span class="loss">leans their way</span>', T = '<span class="even">toss-up</span>';
+    if (hy && py[2] < 3) return [L, "You're ranged-heavy with almost no cav. Nothing guards your infantry once the ranged trade is done (8-11-1 lost twice, logs 5 and 6)."];
+    if (ht && pt[2] < 3) return [W, "They're ranged-heavy with almost no cav, so nothing guards their infantry after the ranged trade (logs 5, 6)."];
+    if (hy && !ht) return (y[1] - t[1] >= 700000)
+      ? [W, "Ranged-heavy with a " + fmt(y[1] - t[1]) + " ranged lead: the 442 win (logs 7, 31)."]
+      : [L, "Ranged-heavy but only " + signed(y[1] - t[1]) + " ranged ahead. Under about 700K the 424 wins (log 13)."];
+    if (ht && !hy) return (t[1] - y[1] >= 700000)
+      ? [L, "They're ranged-heavy with a " + fmt(t[1] - y[1]) + " ranged lead: the 442 win for them (log 31). Hit in Infantry Phalanx instead."]
+      : [W, "They're ranged-heavy but their lead is under about 700K, so the 442 win shouldn't trigger (log 13)."];
+    var g = y[0] - t[0];
+    if (Math.abs(g) < 100000) return [T, "424 mirror with infantry within 100K: stats and heroes decide (log 22)."];
+    return g > 0 ? [W, "424 mirror and you have " + fmt(g) + " more infantry (logs 1, 21, 24, 27, 28). Watch for a big cav edge on their side (log 3)."]
+                 : [L, "424 mirror and they have " + fmt(-g) + " more infantry (logs 1, 21, 24, 27, 28)."];
   }
 
   // What they are and which formation counters their front.
