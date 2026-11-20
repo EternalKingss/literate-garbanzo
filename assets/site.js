@@ -178,7 +178,7 @@
   // If they hit you: what to sit in.
   function defendCall(t, p) {
     if (p.is055) return t[0] >= 45000
-      ? ["Infantry Phalanx", "Well-built 055 (" + fmt(t[0]) + " infantry buffer). Infantry Phalanx held against one (log 29) but cost 1.14M infantry; Ranged Phalanx lost or traded even (logs 10, 14). If you run only 1 infantry hero, sit Ranged Phalanx. Never Ranged Wedge."]
+      ? ["Infantry Phalanx, or pull", "Well-built 055 (" + fmt(t[0]) + " infantry buffer). Infantry Phalanx held against one (log 29) but cost 1.14M infantry: only do it if you're the stronger account with high infantry HP. Otherwise pull. Ranged Phalanx lost or traded even against these (logs 10, 14). Never Ranged Wedge."]
       : ["Ranged Phalanx", "055 with a thin buffer (" + fmt(t[0]) + "). Ranged Phalanx held twice against 40K builds (logs 12, 15) and costs less. Never Ranged Wedge."];
     if (p.is208) return ["Ranged Wedge", "Cav-blast style rally (208/307). Ranged Wedge keeps their cav off your infantry; a Cav Shield familiar helps."];
     if (p.big === 2) return ["Ranged Phalanx", "Their cav is the biggest stack (" + fmt(t[2]) + "). Ranged beats cav."];
