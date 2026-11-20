@@ -386,10 +386,10 @@ COMPS = [
          form=["<strong>Range Phalanx</strong> by default " + SRC_SITE + " " + SRC_SHEET,
                "<strong>Cav Phalanx</strong> against 659, 569 and 758 " + SRC_SITE + " " + SRC_OPEN + ". Careful: our only Cav Phalanx defence today lost narrowly when the rally came in Range Phalanx " + logref(2)],
          beats=["Range Phalanx: 965, 776 " + SRC_SITE + " " + SRC_SHEET + "",
-                "Range Phalanx: 857 " + SRC_SITE + ", but a 424 mirror is a toss-up on numbers " + logref(22),
+                "857 in Range Phalanx: a toss-up. To hit an 857, a 442 (884, 794) is the better send " + cb(CB["v442"]),
                 "1262-style infantry piles with low cav: won by 527K " + logref(4)],
          loses=["Range Phalanx: 659, 569, 758 " + SRC_SITE + " " + SRC_SHEET,
-                "884 in Range Phalanx: a ranged-heavy 442 beats 424-types there " + logref(31) + " " + cb(CB["v442"]),
+                "884, 794 and 875 in Range Phalanx: the 442 win. Against them use Cav Phalanx with a stat edge, or an infantry-heavy comp " + logref(31) + " " + cb(CB["v442"]),
                 "442 types sitting Ranged Phalanx: their ranged outlives yours " + logref(31) + " " + cb(CB["m442"])],
          heroes="1 infantry, 2 ranged, 2 cavalry. The sheet's 2-2-1 is what a 055 or 208 feeds on " + cb(CB["s424"]) + ".", shots=[("668 comp.png", "668 lead march: 208K T5 + 167K T4 infantry. The heroes shown are the sheet's 2-2-1; swap one infantry hero for a cav hero"), ("659 gear.png", "Same gear as 659")],
          gear="Same gear as 659. Talents: Infantry 3, Ranged 3 and Cavalry 3 maxed, Army HP 1 and 2 maxed, Infantry 2 maxed, the rest into Ranged 2.",
@@ -695,7 +695,7 @@ def page_mechanics():
 <ul class="section-nav">
 <li><a href="#engine">The engine</a></li><li><a href="#formations">Formations</a></li><li><a href="#mirrors">Range Phalanx mirrors</a></li>
 <li><a href="#heroes">Heroes</a></li><li><a href="#familiars">Familiars</a></li><li><a href="#stats">Stats &amp; research</a></li>
-<li><a href="#playbooks">Comp playbooks</a></li><li><a href="#disagree">Where sources disagree</a></li>
+<li><a href="#playbooks">Comp playbooks</a></li><li><a href="#why">Why each comp wins</a></li><li><a href="#disagree">Where sources disagree</a></li>
 </ul>
 <p class="muted">Tags: {src("cb", "Crystal Briefs")} links to the video. {src("log", "log N")} is one of our fights. {SRC_SHEET} is your spreadsheet.</p>
 
@@ -787,6 +787,35 @@ def page_mechanics():
 <h3>Ranged-cav comps (4-8-8, 4-10-6, our 5-10-4)</h3>
 <p>Weak against infantry-heavy 424s, fine against cav-heavy ones. 4-10-6 is the most stable against Ranged Phalanx, but Ranged Wedge kills it. {cb(V["c244"])} Our 5-10-4 beat a Cav Phalanx twice. {logref(25, 26)}</p>
 
+<h2 id="why">Why each comp wins</h2>
+<p>To call a matchup nobody has logged, check how each comp wins and whether the other comp can stop that from happening. Five mechanics cover almost everything:</p>
+<ol>
+<li><strong>The ranged trade.</strong> In Ranged Phalanx the two ranged fronts kill each other first. Your infantry kills their ranged; their infantry kills yours. More infantry means their ranged dies faster; more ranged means yours lasts longer. {cb(V["m442"])} {cb(V["m424"])}</li>
+<li><strong>The 442 win.</strong> A ranged-heavy comp wins big if the other side's ranged is dead before half of its own is. Its surviving ranged then shoots their cav, and their cav is stuck fighting the troop that counters it. Needs lots of ranged <em>and</em> enough infantry. {cb(V["m442"])} {logref(7, 31)}</li>
+<li><strong>The cav guard.</strong> After a 442 wins the ranged trade, its cav is what keeps their infantry and cav off its own infantry. Under about 2 parts of cav, that guard breaks. {cb(V["c992"])} {logref(5, 6)}</li>
+<li><strong>Back-line formations.</strong> Ranged Phalanx beats Infantry Phalanx, Infantry Phalanx beats Cav Phalanx, Cav Phalanx beats Ranged Phalanx. The winner's back line hits at full strength while it eats the other side's front. Cav into ranged is the weakest of the three. {cb(V["basics"])}</li>
+<li><strong>Breaking through.</strong> 055 and 208 get past a ranged front to the infantry and cav behind it. A 055 needs a defender with 2 infantry heroes; a 208 needs thin ranged and an infantry-heavy target. {cb(V["c055"])} {cb(V["c208"])}</li>
+</ol>
+
+<div class="table-wrap"><table class="stack"><thead><tr><th>Family</th><th>How it wins</th><th>How it loses</th></tr></thead><tbody>
+<tr><td>Cav-heavy 424<br><small>659, 569, 749</small></td><td>Ranged trade, then its big cav runs through their infantry. Cav Phalanx against comps with little ranged.</td><td>A 442 wins the ranged trade and shoots its cav (it only has 5–6 infantry to stop that). A 055's favourite target.</td></tr>
+<tr><td>Balanced 424<br><small>668, 758, 857, 848</small></td><td>Flexible: every formation works but Cav Wedge. Wins mirrors on stats, heroes and familiars.</td><td>A well-built 442 in Ranged Phalanx. 055 and 208 when it runs 2 infantry heroes.</td></tr>
+<tr><td>Infantry-heavy<br><small>947, 956, 965, 866, 1046</small></td><td>Its infantry wins the ranged trade fast. The natural counter to 442s, and solid in Infantry Phalanx.</td><td>208 in Ranged Wedge, and cav-heavy comps once its thin cav is gone.</td></tr>
+<tr><td>442 family<br><small>884, 875, 794, 785, 974</small></td><td>The 442 win against 424s in Ranged Phalanx. 794 and 785 also dodge Hell Drider.</td><td>Infantry-heavy comps in Infantry Phalanx; Cav Phalanx with a stat edge. Without its cav guard (8-11-1, 992) it falls apart.</td></tr>
+</tbody></table></div>
+
+<h3>Matchups worked out this way</h3>
+<div class="table-wrap"><table class="stack"><thead><tr><th>Matchup</th><th>Working</th><th>Call</th></tr></thead><tbody>
+<tr><td>668 into 875 (Ranged Phalanx)</td><td>875 is a 442. Its 8 infantry kills the 668's 6 ranged fast; the 668's 6 infantry is slow on the 875's 7 ranged. That's the 442 win. Even an 857, with 8 infantry, only just beat an 875 in his test.</td><td><span class="status bad">875 wins. Sheet overruled</span></td></tr>
+<tr><td>668 into 884 or 794</td><td>Same as above but worse: more of their ranged to chew through. Log 31 is this shape and the 424 lost.</td><td><span class="status bad">668 loses</span></td></tr>
+<tr><td>Answering an 884 or 875 with a 668</td><td>Don't trade ranged with it. Cav Phalanx with Cav Shield or Griffin is the 424's best formation against a 442; an 857 in Cav Phalanx nearly held an 884 at equal stats. Better: an infantry-heavy comp in Infantry Phalanx.</td><td><span class="status open">Cav Phalanx, needs a stat edge</span></td></tr>
+<tr><td>668 into 857 (Ranged Phalanx)</td><td>A true 424 mirror. 857's extra infantry kills your ranged faster, but it has fewer ranged so its own front dies sooner too: the two cancel out. Heroes and stats decide. To hit an 857, send an 884 or 794 instead: that's the 442 win.</td><td><span class="status open">Toss-up. Send a 442 instead</span></td></tr>
+<tr><td>659 into 884</td><td>659 has 6 infantry against 8 ranged and 5 ranged against 8 infantry: the 442 win in its clearest form. His test: an 884 beat a 659 even when the 659 sat Infantry Phalanx.</td><td><span class="status bad">Don't send it</span></td></tr>
+<tr><td>866 into 965</td><td>Both infantry-heavy with 6 ranged. The 965's extra infantry kills the 866's ranged first, which in a 424-style mirror helps the 866. After the trade, the 866's 6 cav beats the 965's 5 on their infantry.</td><td><span class="status ok">Edge 866, agrees with old site</span></td></tr>
+<tr><td>668 Cav Phalanx into 659, 569, 758</td><td>Cav into ranged is the weakest counter, but these sit about 1.1M ranged. Cav fronts held or broke even there and only lost against a 2.2M ranged stack.</td><td><span class="status ok">Works if their ranged is about 1.1M {logref(17, 20, 23, 25)}</span></td></tr>
+</tbody></table></div>
+<p class="muted">These calls come from mechanics, not logged fights. Each one is a guess with a reason; screenshot the report when you see one and it goes in the log.</p>
+
 <h2 id="disagree">Where sources disagree</h2>
 <p><strong>Order of trust:</strong> Crystal Briefs' tests and our logs first, then the old site, then the sheet. Every conflict below is settled that way, and the rest of the site follows it.</p>
 <div class="table-wrap"><table class="stack"><thead><tr><th>Question</th><th>What each source says</th><th>Followed</th></tr></thead><tbody>
@@ -798,8 +827,8 @@ def page_mechanics():
 <tr><td>Infantry heroes and the 055</td><td>Old site contradicted itself. Crystal Briefs: attacker runs none; defender holds with 1.</td><td><span class="status ok">Tests</span></td></tr>
 <tr><td>Ranged heroes in Ranged Phalanx</td><td>Old site: 1–2 for an 866. Crystal Briefs: exactly 2.</td><td><span class="status ok">Tests: 2</span></td></tr>
 <tr><td>Taking a 055 in Infantry Phalanx</td><td>Crystal Briefs: works, but loses to a well-built 055. Log 29: held by 178K.</td><td><span class="status ok">Both work</span></td></tr>
-<tr><td>668 in Ranged Phalanx vs 857 or 875</td><td>Old site: beats 857. Sheet: beats 875. Logs: 424 mirrors are a toss-up on numbers.</td><td><span class="status open">Logs: toss-up</span></td></tr>
-<tr><td>866 vs 965</td><td>Old site: 866 wins. Sheet: 866 loses. No test or log.</td><td><span class="status open">Site: 866 wins</span></td></tr>
+<tr><td>668 in Ranged Phalanx vs 857 or 875</td><td>Old site: beats 857. Sheet: beats 875. Worked out <a href="#why">above</a>: vs 857 a toss-up, vs 875 a loss.</td><td><span class="status ok">Mechanics: 857 toss-up, 875 loses</span></td></tr>
+<tr><td>866 vs 965</td><td>Old site: 866 wins. Sheet: 866 loses. Worked out <a href="#why">above</a>: edge 866.</td><td><span class="status ok">Mechanics + site: 866</span></td></tr>
 </tbody></table></div>
 <p class="muted">Videos used: {len(V)} narrated Crystal Briefs videos. His war-action videos are music only, so they're not included.</p>
 """
